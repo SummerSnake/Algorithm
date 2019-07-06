@@ -1,3 +1,6 @@
+/**
+ * 格式化 tree
+ */
 let arr = [
     {
         "id": "1",
@@ -73,7 +76,7 @@ console.log(setTreeData(arr)); // 输出整理后的数据
 let list = []; // 存储最终数据
 
 arr.forEach((obj, i) => {
-    if (obj.parent === "0") {
+    if (obj.parentId === "0") {
         recursion(obj);
         list.push(obj);
         delete arr[i];
@@ -82,7 +85,7 @@ arr.forEach((obj, i) => {
 
 function recursion(json) {
     arr.forEach((obj, i) => {
-        if (obj.parent === json.id) {
+        if (obj.parentId === json.id) {
             if (json.children) {
                 json.children.push(obj);
             } else {

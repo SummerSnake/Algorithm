@@ -6,7 +6,7 @@ function findMaxDuplicateChar(str = '') {
         return str;
     }
     let charObj = {};
-    Array.prototype.map.call(str, (item)=> {
+    Array.prototype.forEach.call(str, item => {
         if (!charObj[item]) {
             charObj[item] = 1;
         } else {

@@ -52,7 +52,7 @@ function charEqual(arr = []) {
     let isExist = false;
     let arrZero = arr[0].toLowerCase();
     let arrOne = arr[1].toLowerCase();
-    Array.prototype.forEach.call(arrOne, (item)=> {
+    Array.prototype.forEach.call(arrOne, item => {
         isExist = (arrZero.indexOf(item) !== -1);
     });
     console.log(isExist);

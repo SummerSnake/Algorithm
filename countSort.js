@@ -4,7 +4,7 @@
 
 let arr = [1, 2, 3, 4, 5, 1, 3, 2, 5, 2, 1, 3, 3, 3, 2];
 let obj = {};
-arr.forEach((item) => {
+arr.forEach(item => {
     if (obj[item]) {
         obj[item] += 1;
     } else {

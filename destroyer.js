@@ -23,7 +23,7 @@ function destroyer(arr) {
     for (let i = 1; i < arguments.length; i += 1) {
         destroyEleArr.push(arguments[i]);
     }
-    filtered = arguments[0].filter((arg)=> {
+    filtered = arguments[0].filter(arg => {
         return !destroyEleArr.includes(arg);
     });
     console.log(filtered);
