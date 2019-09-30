@@ -23,7 +23,6 @@ function getIndex(arr, target) {
 // console.log(getIndex(array, target));
 
 // 哈希表
-
 function getIndex2(arr, target) {
     const arrMap = new Map();
     const len = arr.length;
