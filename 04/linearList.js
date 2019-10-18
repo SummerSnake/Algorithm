@@ -87,14 +87,38 @@ class LinkedList {
     /**
      * 删除节点
      */
-    this.remove = function (node) {
-
+    this.remove = function (element) {
+      const node = this.find(element);
+      // 所要删除的节点刚好是第一个，也就是head指向的节点，
+      // 将head指向所要删除节点的下一个节点(node.next)。
+      if (node.element === this.head.element) {
+        this.head = this.head.next;
+      }
+      // 寻找到所要删除节点的上一个节点(prevNode)
+      let prevNode = this.head;
+      // 循环判断当前节点指针域是否指向要删除的节点，如果不是则将指向的节点赋值给当前节点，进行下一次遍历
+      while (prevNode.next.element !== node.element) {
+        prevNode = prevNode.next;
+      }
+      // 要删除的节点为最后一个节点
+      // 寻找到所要删除节点的上一个节点(prevNode)，将prevNode中的指针指向NULL。
+      if (node.next === null) {
+        prevNode.next = null;
+      }
+      // 在列表中间删除某个节点
+      // 将prevNode中的指针指向当前要删除的这个节点的下一个节点
+      if (node.next) {
+        prevNode.next = node.next;
+      }
+      this.length -= 1;
     }
   }
 }
 
 const LList = new LinkedList();
+
 LList.insert('second', 'head');
 LList.insert('third', 'second');
 console.log(LList);
 console.warn(LList.find('third'));
+LList.remove('third');
