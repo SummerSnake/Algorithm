@@ -55,9 +55,20 @@ class LinkedList {
     this.length = 1; // 链表长度
 
     /**
+     * 查找节点
+     */
+    this.find = function (element) {
+      let node = this.head;
+      while (node !== null && node.element !== element) {
+        node = node.next;
+      }
+      return node;
+    };
+
+    /**
      * 向单向链表中某个位置插入元素
      * @param newElement 要插入的节点
-     * @param currElement 要插入其后的元素
+     * @param currElement 要插入哪个节点后面
      */
     this.insert = function (newElement, currElement) {
       let newNode = new Node(newElement);
@@ -74,17 +85,6 @@ class LinkedList {
     };
 
     /**
-     * 查找节点
-     */
-    this.find = function (element) {
-      let node = this.head;
-      while (node !== null && node.element !== element) {
-        node = node.next;
-      }
-      return node;
-    };
-
-    /**
      * 删除节点
      */
     this.remove = function (element) {
@@ -93,6 +93,8 @@ class LinkedList {
       // 将head指向所要删除节点的下一个节点(node.next)。
       if (node.element === this.head.element) {
         this.head = this.head.next;
+        this.length -= 1;
+        return;
       }
       // 寻找到所要删除节点的上一个节点(prevNode)
       let prevNode = this.head;
@@ -104,21 +106,104 @@ class LinkedList {
       // 寻找到所要删除节点的上一个节点(prevNode)，将prevNode中的指针指向NULL。
       if (node.next === null) {
         prevNode.next = null;
+        this.length -= 1;
+        return;
       }
       // 在列表中间删除某个节点
       // 将prevNode中的指针指向当前要删除的这个节点的下一个节点
       if (node.next) {
         prevNode.next = node.next;
+        this.length -= 1;
       }
-      this.length -= 1;
     }
   }
 }
 
-const LList = new LinkedList();
+/**
+ * 双向链表
+ */
+class LinkedList2 {
+  constructor() {
+    /**
+     * 双向链表节点的构造函数
+     * @param element 要传入链表的节点
+     */
+    const Node = function (element) {
+      this.element = element;
+      this.previous = null;
+      this.next = null;
+    };
 
-LList.insert('second', 'head');
-LList.insert('third', 'second');
-console.log(LList);
-console.warn(LList.find('third'));
-LList.remove('third');
+    // this.head = null; // 不带头节点
+    this.head = new Node('head'); // 带头节点
+    this.length = 1; // 链表长度
+
+    /**
+     * 查找节点
+     */
+    this.find = function (element) {
+      let node = this.head;
+      while (node !== null && node.element !== element) {
+        node = node.next;
+      }
+      return node;
+    };
+
+
+    /**
+     * 向双向链表中某个位置插入元素
+     * @param newElement 要插入的节点
+     * @param currElement 要插入哪个节点后面
+     */
+    this.insert = function (newElement, currElement) {
+      let newNode = new Node(newElement);
+      let currNode = this.find(currElement);
+
+      if (this.head) {
+        newNode.next = currNode.next;
+        newNode.previous = currNode;
+        currNode.next = newNode;
+      } else {
+        newNode.next = null;
+        newNode.previous = null;
+        this.head = newNode;
+      }
+      this.length += 1;
+    };
+    /**
+     * 删除节点
+     */
+    this.remove = function (element) {
+      const node = this.find(element);
+
+      // 所要删除的节点刚好是第一个，也就是head指向的节点，
+      // 将head指向所要删除节点的下一个节点(node.next)。
+      if (node.element === this.head.element) {
+        this.head = this.head.next;
+        this.head.previous = null;
+        this.length -= 1;
+        return;
+      }
+      // 寻找到所要删除节点的上一个节点(prevNode)
+      let prevNode = this.head;
+      // 循环判断当前节点指针域是否指向要删除的节点，如果不是则将指向的节点赋值给当前节点，进行下一次遍历
+      while (prevNode.next.element !== node.element) {
+        prevNode = prevNode.next;
+      }
+      // 要删除的节点为最后一个节点
+      // 寻找到所要删除节点的上一个节点(prevNode)，将prevNode中的指针指向NULL。
+      if (node.next === null) {
+        prevNode.next = null;
+        this.length -= 1;
+        return;
+      }
+      // 在列表中间删除某个节点
+      // 将prevNode中的指针指向当前要删除的这个节点的下一个节点
+      if (node.next) {
+        prevNode.next = node.next;
+        node.next.previous = prevNode;
+        this.length -= 1;
+      }
+    }
+  }
+}
