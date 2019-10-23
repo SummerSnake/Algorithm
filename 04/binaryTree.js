@@ -68,6 +68,70 @@ class BinarySearchTree {
       }
       // 将新节点的 parent 指针指向prev
       node.parent = prev;
+    };
+
+    /**
+     * @desc 查找节点
+     */
+    this.find = function (val) {
+      let prev = this.root;
+      if (!prev) {
+        return '空树';
+      }
+      while (prev && prev.val !== val) {
+        if (prev.val > val) {
+          prev = prev.left;
+        } else {
+          prev = prev.right;
+        }
+      }
+      return prev;
+    };
+
+    /**
+     * @desc 遍历
+     *
+     * 1. 中序遍历(inorder)：先遍历左节点，再遍历自己，最后遍历右节点，输出的刚好是有序的列表;
+     * 2. 前序遍历(preorder)：先自己，再遍历左节点，最后遍历右节点;
+     * 3. 后序遍历(postorder)：先左节点，再右节点，最后自己。
+     *
+     * 最常用的一般是中序遍历，因为中序遍历可以得到一个已经排好序的列表，这也是为什么会用二叉搜索树排序的原因
+     */
+    function* _inOrder(element) {
+      if (!element) {
+        return '空树';
+      }
+      // 1. 中序遍历
+      yield* _inOrder(element.left);
+      yield element;
+      yield* _inOrder(element.right);
+      // 2. 前序遍历
+      // yield element;
+      // yield* _inOrder(element.left);
+      // yield* _inOrder(element.right);
+      // 3. 后序遍历
+      // yield* _inOrder(element.left);
+      // yield* _inOrder(element.right);
+      // yield element;
     }
+
+    this.inOrder = function () {
+      return _inOrder(this.root);
+    };
   }
 }
+
+const tree = new BinarySearchTree;
+tree.insert('first', 10);
+tree.insert('second', 11);
+tree.insert('third', 6);
+tree.insert('fourth', 3);
+tree.insert('fifth', 13);
+console.log(tree.find(13));
+const result = tree.inOrder();
+// let arr = [...tree.inOrder()].map(item => item.val);
+const arr = [];
+for (let key of result) {
+  arr.push(key.val);
+}
+console.warn(arr);
