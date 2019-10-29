@@ -98,12 +98,12 @@ class AVLTree {
       }
       const leftHeight = getHeight(node.left);
       const rightHeight = getHeight(node.right);
-      // 如果左右高度相等，则为平衡树，不做任何操作
-      if (leftHeight === rightHeight) {
+      // 如果左右子树平衡因子为-1,0,1，则为平衡树，不做任何操作
+      if (leftHeight - rightHeight >= -1 && leftHeight - rightHeight <= 1) {
         return node;
       }
       // 如果左子树高度比右子树高度大
-      if (leftHeight - rightHeight >= 1) {
+      if (leftHeight - rightHeight > 1) {
         // 如果左子树的左子树高度大于等于左子树的右子树高度，进行右单旋，否则需要先左后右双旋
         node = getHeight(node.left.left) >= getHeight(node.left.right) ? rotateRR(node) : rotateLR(node);
       } else { // 右子树高度比左子树高度大
