@@ -8,18 +8,19 @@
  * ~ 重复步骤1~3，直到排序完成。
  */
 function bubbleSort(arr = []) {
-    let len = arr.length;
-    // 数组的长度为11，所以i最大是9，当i等于9的时候，j只能等于0，所以最后比较的是arr[0]和arr[1]，刚好是数组的前两位。
-    for (let i = 0; i < len - 1; i += 1) {
-        for (let j = 0; j < len - 1 - i; j += 1) { // 嵌套 for 循环，外层走一次，内层走一轮
-            if (arr[j] > arr[j + 1]) {
-                let temp = arr[j + 1];
-                arr[j + 1] = arr[j];
-                arr[j] = temp;
-            }
-        }
+  const len = arr.length;
+  let temp = 0;
+  // 数组的长度为11，所以i最大是9，当i等于9的时候，j只能等于0，所以最后比较的是arr[0]和arr[1]，刚好是数组的前两位。
+  for (let i = 0; i < len - 1; i += 1) {
+    for (let j = 0; j < len - 1 - i; j += 1) { // 嵌套 for 循环，外层走一次，内层走一轮
+      if (arr[j] > arr[j + 1]) {
+        temp = arr[j + 1];
+        arr[j + 1] = arr[j];
+        arr[j] = temp;
+      }
     }
-    console.log(arr);
+  }
+  console.log(arr);
 }
 
 let arr1 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
@@ -34,24 +35,25 @@ bubbleSort(arr1);
  * ~ 重复步骤1~2，直到排序完成。
  */
 function selectionSort(arr) {
-    let len = arr.length;
-    let minIndex = 0;
-    let temp = 0;
-    for (let i = 0; i < len - 1; i += 1) {
-        minIndex = i;
-        for (let j = i + 1; j < len; j += 1) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
-            }
-        }
-        temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
+  const len = arr.length;
+  let minIndex = 0;
+  let temp = 0;
+
+  for (let i = 0; i < len - 1; i += 1) {
+    minIndex = i;
+    for (let j = i + 1; j < len; j += 1) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
     }
-    console.log(arr);
+    temp = arr[i];
+    arr[i] = arr[minIndex];
+    arr[minIndex] = temp;
+  }
+  console.log(arr);
 }
 
-let arr2 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
+const arr2 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 selectionSort(arr2);
 
 /**
@@ -66,19 +68,60 @@ selectionSort(arr2);
  * ~ 重复步骤2~5。
  */
 function insertionSort(arr = []) {
-    let len = arr.length;
-    let preIndex = 0;
-    let current = 0;
-    for (let i = 0; i < len; i++) {
-        preIndex = i - 1;
-        current = arr[i]; // 新元素
-        while (preIndex >= 0 && arr[preIndex] > current) { // 已排序元素大于新元素
-            arr[preIndex + 1] = arr[preIndex]; // 新元素等于已排序元素
-            preIndex--;
-        }
-        arr[preIndex + 1] = current; // 已排序元素等于新元素
+  const len = arr.length;
+  let preIndex = 0;
+  let current = 0;
+
+  for (let i = 0; i < len; i += 1) {
+    preIndex = i - 1;
+    current = arr[i]; // 新元素
+    while (preIndex >= 0 && arr[preIndex] > current) { // 已排序元素大于新元素
+      arr[preIndex + 1] = arr[preIndex]; // 将已排序元素赋值给新元素
+      preIndex--;
     }
-    console.log(arr);
+    arr[preIndex + 1] = current; // 将新元素赋值给已排序元素
+  }
+  console.log(arr);
 }
-let arr3 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
+
+const arr3 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 insertionSort(arr3);
+
+/**
+ * 排序算法
+ * 4. 希尔排序
+ *
+ * ~ 先让数组中间隔为 gap 的元素有序；
+ * ~ 刚开始 gap 的大小为 n = 3 * gap + 1；
+ * ~ 接着让 gap = (gap - 1) / 3，让 gap 一直缩小，间隔递减；
+ * ~ 当 gap = 1 时，排序完成。
+ */
+function shellSort(arr) {
+  let len = arr.length;
+  let gap = 1;
+
+  while (gap < len / 3) {
+    gap = 3 * gap + 1;//设置间隔
+  }
+
+  while (gap >= 1) {
+    for (let i = gap; i < len; i += 1) {
+      // gap=4，则 当前index 与 index+4 进行比较，j -= gap j进行递减，小于gap退出循环
+      for (let j = i; j >= gap && arr[j - gap] > arr[j]; j -= gap) {
+        swap(arr, j, j - gap);
+      }
+    }
+    // 间隔递减
+    gap = (gap - 1) / 3;
+  }
+  console.log(arr)
+}
+
+function swap(array, left, right) { // 两个数调换
+  var temp = array[right];
+  array[right] = array[left];
+  array[left] = temp;
+}
+
+const arr4 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
+shellSort(arr4);
