@@ -221,3 +221,54 @@ const arr5 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 const mergeSort = new MergeSort();
 
 console.log(mergeSort.sort(arr5));
+
+/**
+ * 排序算法
+ * 4. 快速排序
+ *
+ * ~ <1> 从数组中选择一个元素作为基准点；
+ * ~ <2> 排序数组，所有比基准值小的元素摆放在左边，而大于基准值的摆放在右边；
+ * ~ <3> 将左边的数组和右边的数组进行递归，重复<1>和<2>操作。
+ */
+class QuickSort {
+  constructor() {
+    /**
+     * @desc sort1 写法缺点
+     *
+     * ~ <1> 获取基准点使用了一个splice操作，在js中splice会对数组进行一次拷贝的操作，而它最坏的情况下复杂度为O(n)；
+     * ~ <2> 每次执行都会使用到两个数组空间，产生空间复杂度；
+     * ~ <3> concat操作会对数组进行一次拷贝，而它的复杂度也会是O(n)；
+     * ~ <4> 对大量数据的排序来说相对会比较慢。
+     */
+    this.sort1 = arr => {
+      if (arr.length <= 1) {
+        return arr;
+      }
+      // 中心点下标
+      let pivotIndex = Math.floor(arr.length / 2);
+      // 中心点值
+      let pivot = arr.splice(pivotIndex, 1)[0];
+      // 左侧数组，小于中心点的值所组成的数组
+      const left = [];
+      // 左侧数组，大于中心点的值所组成的数组
+      const right = [];
+
+      // 循环对比插入相应的数组
+      let i = 0;
+      while (i < arr.length) {
+        if (arr[i] < pivot) {
+          left.push(arr[i]);
+        } else {
+          right.push(arr[i]);
+        }
+        i += 1;
+      }
+      // 递归循环左右数组，并与中心点融合成排序完成的数组
+      return this.sort1(left).concat([pivot], this.sort1(right));
+    }
+  }
+}
+
+const arr6 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
+const quickSort = new QuickSort();
+console.log(quickSort.sort1(arr6));
