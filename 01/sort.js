@@ -125,3 +125,79 @@ function swap(array, left, right) { // 两个数调换
 
 const arr4 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 shellSort(arr4);
+
+/**
+ * 排序算法
+ * 4. 归并排序
+ *
+ * ~ 把大的数组分成两个小数组，然后对这两个小数组分别进行排序；
+ * ~ 把两个小数组合并成一个有序的数组。
+ *
+ * ~ 通过递归的方式将大的数组一直分割，直到数组的大小为 1，此时只有一个元素，那么该数组即是有序的；
+ * ~ 再把两个数组大小为1的数组合并成一个大小为2的数组，再把两个大小为2数组的合并成4的数组...；
+ * ~ 直到全部小的数组合并起来，排序完成。
+ */
+class MergeSort {
+  constructor() {
+    /**
+     * @desc 分割数组
+     * @param { number } start 开始下标
+     * @param { number } end 结束下标
+     */
+    const divide = (start, end) => Math.floor((start + end) / 2);
+
+    /**
+     * @desc 合并排序完成的数组
+     * @param { array } arr 要分割的数组
+     * @param { number } start 开始下标
+     * @param { number } divider 分割位置下标
+     * @param { number } end 结束下标
+     */
+    const merge = (arr, start, divider, end) => {
+      const arr1 = arr.slice(start, divider);
+      const arr2 = arr.slice(divider, end);
+      // 哨兵，往 arr1 和 arr2 里push一个最大值，比如防止 arr1 里的数都比较小，导致第三次遍历某个数组里没有值
+      // Number.MAX_SAFE_INTEGER 常量表示在 JavaScript 中最大的安全整数
+      arr1.push(Number.MAX_SAFE_INTEGER);
+      arr2.push(Number.MAX_SAFE_INTEGER);
+
+      let i = start;
+      let j = 0;
+      let k = 0;
+      // 循环做比较，每次取出较小的那个值，赋值到初始数组相应位置
+      while (i < end) {
+        if (arr1[j] < arr2[k]) {
+          arr[i] = arr1[j];
+          j += 1;
+        } else {
+          arr[i] = arr2[k];
+          k += 1;
+        }
+        i += 1;
+      }
+    };
+
+    /**
+     * @desc 数组排序
+     * @param { array } arr 要排序的数组
+     * @param { number } start 开始下标
+     * @param { number } end 结束下标
+     */
+    this.sort = (arr, start = 0, end) => {
+      let endClone = end || arr.length;
+      if (endClone - start === 1) {
+        return arr;
+      }
+      const divider = divide(start, endClone);
+      this.sort(arr, start, divider);
+      this.sort(arr, divider, endClone);
+      merge(arr, start, divider, endClone);
+      return arr;
+    }
+  }
+}
+
+const arr5 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
+const mergeSort = new MergeSort();
+
+console.log(mergeSort.sort(arr5));
