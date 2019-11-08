@@ -96,35 +96,52 @@ insertionSort(arr3);
  * ~ 接着让 gap = (gap - 1) / 3，让 gap 一直缩小，间隔递减；
  * ~ 当 gap = 1 时，排序完成。
  */
-function shellSort(arr) {
-  let len = arr.length;
-  let gap = 1;
+class ShellSort {
+  constructor() {
+    /**
+     * @desc 两个数位置互换
+     * @param { array } array 归属数组
+     * @param { array } left 左边的数（较大的数）
+     * @param { array } right 右边的数（较小的数）
+     */
+    const swap = (array, left, right) => {
+      var temp = array[right];
+      array[right] = array[left];
+      array[left] = temp;
+    };
 
-  while (gap < len / 3) {
-    gap = 3 * gap + 1;//设置间隔
-  }
+    /**
+     * @desc 数组排序
+     * @param { array } arr 要排序的数组
+     * @return 排序完成的数组
+     */
+    this.sort = arr => {
+      let len = arr.length;
+      let gap = 1;
 
-  while (gap >= 1) {
-    for (let i = gap; i < len; i += 1) {
-      // gap=4，则 当前index 与 index+4 进行比较，j -= gap j进行递减，小于gap退出循环
-      for (let j = i; j >= gap && arr[j - gap] > arr[j]; j -= gap) {
-        swap(arr, j, j - gap);
+      while (gap < len / 3) {
+        gap = 3 * gap + 1;//设置间隔
       }
-    }
-    // 间隔递减
-    gap = (gap - 1) / 3;
-  }
-  console.log(arr)
-}
 
-function swap(array, left, right) { // 两个数调换
-  var temp = array[right];
-  array[right] = array[left];
-  array[left] = temp;
+      while (gap >= 1) {
+        for (let i = gap; i < len; i += 1) {
+          // gap=4，则 当前index 与 index+4 进行比较，j -= gap j进行递减，小于gap退出循环
+          for (let j = i; j >= gap && arr[j - gap] > arr[j]; j -= gap) {
+            swap(arr, j, j - gap);
+          }
+        }
+        // 间隔递减
+        gap = (gap - 1) / 3;
+      }
+
+      return arr;
+    }
+  }
 }
 
 const arr4 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
-shellSort(arr4);
+const shellSort = new ShellSort();
+console.log(shellSort.sort(arr4));
 
 /**
  * 排序算法
@@ -143,6 +160,7 @@ class MergeSort {
      * @desc 分割数组
      * @param { number } start 开始下标
      * @param { number } end 结束下标
+     * @return { number } 分割位置下标
      */
     const divide = (start, end) => Math.floor((start + end) / 2);
 
@@ -182,6 +200,7 @@ class MergeSort {
      * @param { array } arr 要排序的数组
      * @param { number } start 开始下标
      * @param { number } end 结束下标
+     * @return { array } 排序完成的数组
      */
     this.sort = (arr, start = 0, end) => {
       let endClone = end || arr.length;
@@ -192,6 +211,7 @@ class MergeSort {
       this.sort(arr, start, divider);
       this.sort(arr, divider, endClone);
       merge(arr, start, divider, endClone);
+
       return arr;
     }
   }
