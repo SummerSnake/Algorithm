@@ -14,14 +14,29 @@ class BinaryHeap {
     this.size = this.data.length;
 
     /**
-     * @desc 将当前值与根节点值互换
-     * @param { array } arr 归属数组
-     * @param { number } index 当前值下标
+     * @desc 当前值的左节点
+     * @param { number } index 当前值的下标
+     * @return { number } 当前值的左节点下标
      */
-    const swap = (arr, index) => {
-      const tmp = arr[0];
-      arr[0] = arr[index];
-      arr[index] = tmp;
+    const left = index => index * 2 + 1;
+
+    /**
+     * @desc 当前值的右节点
+     * @param { number } index 当前值的下标
+     * @return { number } 当前值的右节点下标
+     */
+    const right = index => index * 2 + 2;
+
+    /**
+     * @desc 将当前值与要取出的值互换
+     * @param { array } arr 归属数组
+     * @param { number } i 要取出的值的下标
+     * @param { number } j 当前值的下标
+     */
+    const swap = (arr, i, j) => {
+      const tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
     };
 
     /**
@@ -36,37 +51,33 @@ class BinaryHeap {
         return;
       }
 
-      const left = index * 2 + 1; // 当前序号的左节点
-      const right = index * 2 + 2; // 当前序号的右节点
+      const leftIndex = left(index);
+      const rightIndex = right(index);
 
       // 取当前节点与其左节点较大值
-      if (left < this.size && this.data[left] > this.data[max]) {
-        max = left;
+      if (leftIndex < this.size && this.data[leftIndex] > this.data[max]) {
+        max = leftIndex;
       }
       // 取当前节点与其右节点较大值
-      if (right < this.size && this.data[right] > this.data[max]) {
-        max = right;
+      if (rightIndex < this.size && this.data[rightIndex] > this.data[max]) {
+        max = rightIndex;
       }
       // 最终max节点是其本身,则已经满足最大堆性质，停止操作
       if (max === index) {
         return;
       }
-      // 父节点与最大值节点做交换
-      const tmp = this.data[i];
-      this.data[i] = this.data[max];
-      this.data[max] = tmp;
+      // 当前节点与最大值节点做交换
+      swap(this.data, index, max);
       // 递归整个堆
-      return maxHeapify(max);
+      maxHeapify(max);
     };
 
     /**
-     * @desc 重构堆, 使整个堆满足二叉堆特性
-     *
-     * 依照特性6, 所有非叶子节点, 即小于Math.floor(n/2)序号的都是需要调整的节点。
+     * @desc 构建堆
+     * @param { array } arr 要构建成堆的数组
      */
-    const rebuildHeap = () => {
-      const len = Math.floor(this.size / 2);
-      let i = len - 1;
+    const buildHeap = arr => {
+      let i = Math.floor(arr.length / 2);
 
       while (i >= 0) {
         maxHeapify(i);
@@ -83,14 +94,20 @@ class BinaryHeap {
      * 4. 重复 1-3 步骤，直到 size=0, 排序完成。
      */
     this.maxSort = () => {
+      buildHeap(this.data);
       let index = this.size - 1;
 
       while (index > 0) {
-        swap(this.data, index);
+        swap(this.data, 0, index);
         this.size -= 1;
         maxHeapify(0);
         index -= 1;
       }
-    }
+      return this.data;
+    };
   }
 }
+
+const arr = [15, 21, 3, 12, 5, 2, 8, 4, 7];
+const binaryHeap = new BinaryHeap(arr);
+console.log(binaryHeap.maxSort());
