@@ -74,15 +74,35 @@ class BinaryHeap {
 
     /**
      * @desc 构建堆
-     * @param { array } arr 要构建成堆的数组
      */
-    const buildHeap = arr => {
-      let i = Math.floor(arr.length / 2);
-
+    const buildHeap = () => {
+      let i = Math.floor(this.size / 2);
       while (i >= 0) {
         maxHeapify(i);
         i -= 1;
       }
+    };
+
+    /**
+     * @desc 验证是否是最大堆
+     * @return { boolean } flag
+     */
+    const isHeap = () => {
+      let i = Math.floor(this.size / 2);
+      let flag = true;
+
+      while (i >= 0) {
+        const leftNode = this.data[left(i)] || Number.MIN_SAFE_INTEGER;
+        const rightNode = this.data[right(i)] || Number.MIN_SAFE_INTEGER;
+        const max = Math.max(this.data[i], leftNode, rightNode);
+
+        if (max !== this.data[i]) {
+          flag = false;
+          break;
+        }
+        i -= 1;
+      }
+      return flag;
     };
 
     /**
@@ -94,7 +114,7 @@ class BinaryHeap {
      * 4. 重复 1-3 步骤，直到 size=0, 排序完成。
      */
     this.maxSort = () => {
-      buildHeap(this.data);
+      !isHeap() && buildHeap();
       let index = this.size - 1;
 
       while (index > 0) {
@@ -105,9 +125,44 @@ class BinaryHeap {
       }
       return this.data;
     };
+
+    /**
+     * @desc 插入元素
+     * @param { any } element 要插入的元素
+     *
+     * 1. 插入到堆末尾;
+     * 2. 堆的 size+1;
+     * 3. 判断插入后是否还是最大堆;
+     * 4. 如果不是最大堆则进行重新构建堆。
+     */
+    this.insert = element => {
+      this.data[this.size] = element;
+      this.size += 1;
+      !isHeap() && buildHeap();
+    };
+
+    /**
+     * @desc 删除元素
+     * @param { any } element 要删除的元素
+     *
+     * 1. indexOf() 查找元素在堆中的位置, 调用数组 splice() 方法删除元素;
+     * 2. 堆的 size-1;
+     * 3. 判断插入后是否还是最大堆;
+     * 4. 如果不是最大堆则进行重新构建堆。
+     */
+    this.remove = element => {
+      const index = this.data.indexOf(element);
+
+      this.data.splice(index, 1);
+      this.size -= 1;
+      !isHeap() && buildHeap();
+    }
   }
 }
 
 const arr = [15, 21, 3, 12, 5, 2, 8, 4, 7];
 const binaryHeap = new BinaryHeap(arr);
-console.log(binaryHeap.maxSort());
+binaryHeap.remove(3);
+binaryHeap.insert(13);
+binaryHeap.maxSort();
+console.log(binaryHeap.data);
