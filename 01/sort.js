@@ -283,3 +283,66 @@ class QuickSort {
 const arr6 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 const quickSort = new QuickSort();
 console.log(quickSort.sort1(arr6));
+
+/**
+ * 排序算法
+ * 7. 计数排序
+ *
+ * ~ <1> 就是把数组元素作为数组的下标，然后用一个临时数组统计该元素出现的次数,
+ *       例如temp[i] = m, 表示元素 i 一共出现了 m 次；
+ * ~ <2> 再把临时数组统计的数据从小到大汇总起来，此时汇总起来是数据是有序的。
+ *
+ * ~ 时间复杂度：O(n+k); 空间复杂度：O(k); 稳定排序; 非原地排序。
+ */
+class CountSort {
+  constructor() {
+    /**
+     * @desc 数组排序
+     * @param { array } arr 要排序的数组
+     * @return { array } 排序完成的数组
+     */
+    this.sort = arr => {
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      let len = arr.length;
+      let min = arr[0];
+      let max = arr[0];
+      // 获取数组中的最大值和最小值
+      for (let i = 1; i < len; i += 1) {
+        if (arr[i] > max) {
+          max = arr[i];
+        }
+        if (arr[i] < min) {
+          min = arr[i];
+        }
+      }
+      // 创建大小为 max-min+1 的临时数组，+1确保数组的最后一个下标是 max
+      // 例如取值范围为 0-10的数组，需要长度为11的数组才能存储完所有的数
+      let tempArr = new Array(max - min + 1);
+      // 统计元素 i 出现的次数
+      for (let i = 0; i < len; i += 1) {
+        let tempIndex = tempArr[arr[i] - min]; // min 作为偏移量，用以记录相同元素的位置
+
+        tempArr[arr[i] - min] = tempIndex ? tempIndex += 1 : 1;
+      }
+
+      // 把临时数组统计好的数据汇总到原数组
+      let k = 0;
+      for (let i = 0; i < tempArr.length; i += 1) { // 遍历临时数组，max 为临时数组长度
+        // 遍历每个数，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
+        for (let j = tempArr[i]; j > 0; j -= 1) {
+          arr[k] = i + min; // 赋值给原始数组
+          k += 1;
+        }
+      }
+
+      return arr;
+    }
+  }
+}
+
+const arr7 = [91, 93, 45, 32, 66, 92, 79, 36, 90, 99, 111];
+const countSort = new CountSort();
+console.log(countSort.sort(arr7));
