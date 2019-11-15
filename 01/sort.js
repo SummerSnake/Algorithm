@@ -276,13 +276,82 @@ class QuickSort {
       }
       // 递归循环左右数组，并与中心点融合成排序完成的数组
       return this.sort1(left).concat([pivot], this.sort1(right));
+    };
+
+    /**
+     * @desc 高效方法
+     *
+     * ~ <1> 初始化指针 i=-1， 选择基准点 pivot；
+     * ~ <2> 循环数组，每找到一个比 pivot 小的数就将 i 向右移动一个位置，并将所找到的数与当前下标i处的元素交换，
+     *       例如：i=-1+1, arr[i]=找到的数；
+     * ~ <3> 循环结束后，将 pivot 与i+1位置的元素进行交换。
+     */
+    this.sort2 = arr => {
+      /**
+       * @desc 两个数位置互换
+       * @param { array } array 归属数组
+       * @param { array } left 左边的数，比基准点小的数
+       * @param { array } right 右边的数，当前i位置的数
+       */
+      const swap = (array, left, right) => {
+        if(left === right){
+          return;
+        }
+        var temp = array[right];
+        array[right] = array[left];
+        array[left] = temp;
+      };
+
+      /**
+       * @desc 拆分数组
+       * @param { array } arr 拆分后的归属数组
+       * @param { array } start 起始下标
+       * @param { array } end 结束下标
+       */
+      const divide = (arr, start, end) => {
+        const pivot = arr[end - 1]; // 基准点，数组最后一个元素
+        let i = start - 1; // 初始化指针 i=-1
+        let j = start;
+
+        while (j < end - 1) { // 循环数组
+          if (arr[j] <= pivot) { // 如果比基准点小就将 i 向右移动一个位置，然后交换元素位置
+            i += 1;
+            swap(arr, i, j);
+          }
+          j += 1;
+        }
+        // 最后将基准点插入到 i+1 的位置
+        swap(arr, i + 1, end - 1);
+
+        return i + 1; // 返回指针i的最后位置+1
+      };
+
+      /**
+       * @desc 排序方法
+       * @param { array } arr 要排序的数组
+       * @param { array } start 起始下标 arr[0]
+       * @param { array } end 结束下标 arr[arr.length - 1]
+       */
+      const sortFunc = (arr, start = 0, end) => {
+        const endClone = end || arr.length;
+
+        if (start < endClone - 1) {
+          let divider = divide(arr, start, endClone); // 首次拆分数组，分成左右两部分
+          sortFunc(arr, start, divider); // 递归拆左半部分
+          sortFunc(arr, divider + 1, endClone); // 递归拆分右半部分
+        }
+
+        return arr;
+      };
+
+      return sortFunc(arr);
     }
   }
 }
 
 const arr6 = [1, 3, 45, 32, 66, 12, 79, 36, 0, 99, 111];
 const quickSort = new QuickSort();
-console.log(quickSort.sort1(arr6));
+console.log(quickSort.sort2(arr6));
 
 /**
  * 排序算法

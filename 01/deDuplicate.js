@@ -60,4 +60,5 @@ let arr3 = [1, 13, 24, 11, 11, 14, 1, 2];
 const set = new Set([...arr3].sort((a, b) => {
     return a - b;
 }));
+
 console.log(Array.from(set));
