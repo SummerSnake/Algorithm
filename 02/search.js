@@ -35,7 +35,7 @@ class Search {
     };
 
     /**
-     * @desc 折半查找(要求数据为有序表)    时间复杂度O(logn)
+     * @desc 二分查找(要求数据为有序表) 时间复杂度O(logn)
      * @param { array } arr 要查找的数据所属数组
      * @param { any } data 要查找的数据
      */
