@@ -81,7 +81,7 @@ class Graph {
     };
 
     /**
-     * @desc 广度优先搜索算法
+     * @desc 广度优先遍历算法
      * @param { any } v 搜索起始顶点
      *
      * 从顶点v开始的广度优先搜索算法遵循的步骤为：
@@ -119,6 +119,47 @@ class Graph {
       }
 
       return str;
+    };
+
+    /**
+     * @desc 访问顶点方法
+     * @param { any } u 当前访问顶点
+     * @param { array } color 标识图的各顶点颜色的数组
+     */
+    let str = '深度优先遍历的顺序为：';
+    const dfsVisit = (u, color) => {
+      color[u] = 'gray';
+      str += u + ' ';
+      const neighbors = this.adjacencyList.get(u); // 获取顶点u的所有相邻顶点
+      // 依次访问 顶点v 的所有未被访问的相邻顶点
+      for (let i = 0; i < neighbors.length; i += 1) {
+        const w = neighbors[i];
+
+        if (color[w] === 'white') {
+          dfsVisit(w, color);
+        }
+      }
+      color[u] = 'black'; // 将 u 标注为已被探索过的(黑色)
+    };
+
+    /**
+     * @desc 深度优先遍历算法
+     *
+     * 从顶点v开始的广度优先搜索算法遵循的步骤为：
+     * 1. 将 顶点v 标注为被访问过的(灰色的)；
+     * 2. 依次访问 顶点v 的所有未被访问的相邻顶点，将 顶点v 标注为已被探索过的(黑色)；
+     * 3. 递归步骤 1、2。
+     */
+    this.dfs = () => {
+      const color = initColor();
+
+      for (let i = 0; i < this.vertices.length; i += 1) {
+        const w = this.vertices[i];
+        if (color[w] === 'white') {
+          dfsVisit(w, color);
+        }
+      }
+      return str;
     }
   }
 }
@@ -144,3 +185,4 @@ graph.addEdge('E', 'I');
 
 console.log(graph.showGraph());
 console.log(graph.bfs(vertices[6]));
+console.log(graph.dfs());
