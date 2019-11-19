@@ -52,12 +52,70 @@ class Graph {
 
       for (let i = 0; i < this.vertices.length; i += 1) {
         str += vertices[i] + ' => '; // 将顶点数组依次加入到字符串
-        let neighbors = this.adjacencyList.get(vertices[i]); // 取得每个顶点的邻接表
+        const neighbors = this.adjacencyList.get(vertices[i]); // 取得每个顶点的邻接表
 
         for (let j = 0; j < neighbors.length; j += 1) {
           str += neighbors[j] + ' '; // 将邻接表中的相邻顶点加入到字符串中
         }
         str += '\n';  // 每输出一个顶点的邻接表，加一个换行
+      }
+
+      return str;
+    };
+
+    /**
+     * @desc 给图的顶点标注不同的颜色来代表顶点的状态
+     *
+     * 1. 白色：表示该顶点还没有被访问过
+     * 2. 灰色：表示该顶点被访问过，但是没有被探索过
+     * 3. 黑色：表示该顶点被访问过且被完全探索过
+     */
+    const initColor = () => {
+      const color = [];
+
+      for (let i = 0; i < this.vertices.length; i += 1) {
+        color[this.vertices[i]] = 'white';
+      }
+
+      return color;
+    };
+
+    /**
+     * @desc 广度优先搜索算法
+     * @param { any } v 搜索起始顶点
+     *
+     * 从顶点v开始的广度优先搜索算法遵循的步骤为：
+     * 1. 创建一个队列 queue，此处以数组模拟；
+     * 2. 将顶点v标注为被访问过的(灰色的)，并将v推入队列queue；
+     * 3. 如果 queue 非空，则运行以下步骤：
+     *  <1> 将顶点 u 作为标注，弹出队列；
+     *  <2> 将 u 标注为被访问过的(灰色)；
+     *  <3> 将 u 所有未被访问过的相邻顶点(白色)，标注为被访问过(灰色)，并推入队列；
+     *  <4> 将 u 标注为已被探索过的(黑色)。
+     */
+    this.bfs = v => {
+      const color = initColor();
+      const queue = [];
+      queue.push(v);
+      let str = '广度优先遍历的顺序为：';
+
+      while (queue.length > 0) {
+        const u = queue.shift();
+        color[u] = 'gray'; // 将 u 标注为被访问过的(灰色)
+        const neighbors = this.adjacencyList.get(u); // 获取顶点u的所有相邻顶点
+
+        // 将 u 所有未被访问过的相邻顶点(白色)，标注为被访问过(灰色)，并推入队列
+        for (let i = 0; i < neighbors.length; i += 1) {
+          const w = neighbors[i];
+
+          if (color[w] === 'white') {
+            color[w] = 'gray';
+            queue.push(w);
+          }
+        }
+
+        color[u] = 'black'; // 将 u 标注为已被探索过的(黑色)
+        str += u + ' ';
       }
 
       return str;
@@ -85,3 +143,4 @@ graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
 console.log(graph.showGraph());
+console.log(graph.bfs(vertices[6]));
