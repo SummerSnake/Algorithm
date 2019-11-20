@@ -30,3 +30,24 @@ function maxSubArray(nums) {
 
 const arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
 console.log(maxSubArray(arr));
+
+// 动态规划
+function maxSubArray2(nums) {
+  let maxSum = nums[0];
+  let tempSum = nums[0];
+  let i = 1;
+  let len = nums.length;
+
+  while (i < len) {
+    // 如果 tempSum>0 则对结果有增益效果，继而求和，否则将 tempSum 值替换为当前值
+    tempSum = tempSum > 0 ? tempSum + nums[i] : nums[i];
+    if (tempSum > maxSum) {
+      maxSum = tempSum;
+    }
+    i += 1;
+  }
+
+  return maxSum;
+}
+
+console.log(maxSubArray2(arr));
