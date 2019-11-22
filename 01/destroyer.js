@@ -30,3 +30,36 @@ function destroyer(arr) {
 }
 
 destroyer([3, 5, 7, 9, 'Willa'], 'Willa', 9);
+
+/**
+ * 验证一个数是否是素数
+ *
+ * 质数又称素数。一个大于1的自然数，除了1和它自身外，不能被其他自然数整除的数叫做质数。
+ *
+ * 1. 如果这个数是 2 或 3，一定是素数;
+ * 2. 如果是偶数，一定不是素数;
+ * 3. 如果这个数不能被3 ~ 它的平方根中的任一数整除，则必定是素数，而且除数可以每次递增2(排除偶数)
+ */
+function isPrime(num) {
+    if (num === 2 || num === 3) {
+        return true;
+    }
+    if (num % 2 === 0) {
+        return false;
+    }
+
+    let divisor = 3; // 除数
+    const limit = Math.sqrt(num); // 求平方根
+
+    while (limit >= divisor) { // 3 ~ num 的平方根
+        if (num % divisor === 0) { // 素数不能被3整除
+            return false;
+        } else {
+            divisor += 2; // 除数可以每次递增2(排除偶数)
+        }
+    }
+
+    return true;
+}
+
+console.log(isPrime(37));
