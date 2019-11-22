@@ -44,6 +44,22 @@ class HashMap {
       }
     };
 
+
+    // --------------  碰撞处理：开链法  --------------
+
+    // 开链法：当碰撞发生时，仍然将键存储到通过散列算法产生的索引位置上，
+    // 但实际上，每个数组元素又是一个新的数据结构，比如另一个数组，这样就能存储多个键了（即用二维数组实现）。
+
+
+    /**
+     * @desc 创建二维数组
+     */
+    const buildChains = () => {
+      for (let i = 0; i < this.size; i += 1) {
+        this.table[i] = [];
+      }
+    };
+
     /**
      * @desc 往哈希表中存储值
      * @param { string } key 要存入哈希表的数据的键
@@ -51,7 +67,14 @@ class HashMap {
      */
     const put = (key, data) => {
       const index = hashCode(key);
-      this.table[index] = data;
+      let i = 0;
+
+      while (this.table[index][i]) {
+        i += 1;
+      }
+
+      this.table[index][i] = key;
+      this.table[index][i + 1] = data;
     };
 
     /**
@@ -60,12 +83,19 @@ class HashMap {
      */
     const get = key => {
       const index = hashCode(key);
+      let i = 0;
 
-      return this.table[index];
+      while (this.table[index][i] !== key) {
+        i += 2;
+      }
+
+      return this.table[index][i + 1];
     };
 
     this.table = new Array(137);
+    this.hashCode = hashCode;
     this.showData = showData;
+    this.buildChains = buildChains;
     this.put = put;
     this.get = get;
     this.size = this.table.length;
@@ -73,6 +103,7 @@ class HashMap {
 }
 
 const hashMap = new HashMap();
+hashMap.buildChains();
 hashMap.put('青岛', '八大关');
 hashMap.put('黄岛', '金沙滩');
-console.log(hashMap.get('黄岛'));
+console.log(hashMap.table);
