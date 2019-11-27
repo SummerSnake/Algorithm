@@ -52,6 +52,34 @@ function isPalindrome3(x) {
   return y === x;
 }
 
+/**
+ * @desc 反转数字后半部分，然后与前半部分进行比较
+ *
+ * 1. 对于数字 1221，如果执行 1221 % 10，得到最后一位数字 1；
+ * 2. 要得到倒数第二位数字，先通过除以 10 把最后一位数字从 1221 中移除，Math.floor(1221 / 10) = 122，
+ *    再重复步骤一，122 % 10 = 2，就可以得到倒数第二位数字。
+ * 3. 如果我们把最后一位数字(步骤一结果)乘以 10，再加上倒数第二位数字(步骤二结果)，1 * 10 + 2 = 12，
+ *    就得到了我们想要的反转后的数字。
+ * 4. 将原始数字除以 10，然后给反转后的数字乘上 10，当原始数字小于反转后的数字时，就意味着我们已经处理了一半位数的数字
+ */
+function isPalindrome4(x) {
+  // 所有负数都不可能是回文，例如：-123 不是回文，因为 - 不等于 3；
+  // 如果数字的最后一位是 0，为了使该数字为回文，则其第一位数字也应该是 0，只有 0 满足这一属性
+  if (x < 0 || x % 10 < 0 && x !== 0) {
+    return false;
+  }
+
+  let reverseNum = 0;
+
+  while (x > reverseNum) {
+    reverseNum = reverseNum * 10 + x % 10;
+    x = Math.floor(x/10);
+  }
+
+  return x === reverseNum || x === Math.floor(reverseNum / 10); // 处理奇数数字 reverseNum 比原始数字多一位的情况
+}
+
 console.log(isPalindrome(121));
 console.log(isPalindrome2(121));
 console.log(isPalindrome3(121));
+console.log(isPalindrome4(121));
