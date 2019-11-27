@@ -73,7 +73,7 @@ function isPalindrome4(x) {
 
   while (x > reverseNum) {
     reverseNum = reverseNum * 10 + x % 10;
-    x = Math.floor(x/10);
+    x = Math.floor(x / 10);
   }
 
   return x === reverseNum || x === Math.floor(reverseNum / 10); // 处理奇数数字 reverseNum 比原始数字多一位的情况
