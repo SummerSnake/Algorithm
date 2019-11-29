@@ -53,7 +53,9 @@ class TrieTree {
   }
 
   /**
-   * @desc 插入节点
+   * @desc 插入字符串
+   * @param { string } word 要插入的字符串
+   * @return { boolean } 是否插入成功
    *
    * 插入后形成的树是以唯一字符为头结点的单链表
    */
@@ -79,8 +81,35 @@ class TrieTree {
         cur = node;
       }
 
-      cur.isEnd = true;
+      cur.isEnd = true; // 循环结束，当前节点即为最后一个节点
       cur.numEnd++;
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @desc 在字典树中查找是否存在某字符串为前缀开头的字符串(包括前缀字符串本身)
+   * @param { string } word 要查找的字符串
+   * @return { boolean } 是否查询成功
+   */
+  isContainPrefix(word) {
+    if (TrieTree.isValid(word)) {
+      let cur = this.root;
+      let c = null;
+
+      for (let i = 0; i < word.length; i += 1) {
+        c = word.charCodeAt(i);
+        c = TrieTree.getIndex(c);
+
+        if (cur.edges[c]) { // 如果树中存在当前字符，则将当前字符所在的边指向的节点设为当前元素，进行下一次循环
+          cur = cur.edges[c];
+        } else {
+          return false;
+        }
+      }
 
       return true;
     } else {
@@ -93,4 +122,6 @@ const TT = new TrieTree();
 TT.insert('word');
 TT.insert('Hello');
 TT.insert('Haha');
+TT.insert('Heha');
+console.log(TT.isContainPrefix('Hel'));
 console.log(TT);
