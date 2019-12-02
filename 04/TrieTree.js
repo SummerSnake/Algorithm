@@ -90,6 +90,48 @@ class TrieTree {
     }
   }
 
+  /**
+   * @desc 删除字符串
+   * @param { string } word 要删除的字符串
+   * @return { boolean } 是否删除成功
+   */
+  remove(word) {
+    if (TrieTree.isValid(word)) {
+      const len = word.length;
+      let cur = this.root;
+      let arr = [];
+      let c = null;
+
+      for (let i = 0; i < len; i += 1) { // 遍历查找要删除的字符串是否在树中存在
+        c = word.charCodeAt(i);
+        c = TrieTree.getIndex(c);
+        let node = cur.edges[c];
+
+        if (node) {
+          arr.push(node);
+          cur = node;
+        } else {
+          return false;
+        }
+      }
+      // 此处删除只改变字符状态，并未将字符从树中移除
+      if (arr.length === len) { // 判断存在成功，进行删除操作
+        arr.forEach((elem) => elem.numPass--); // 将每个字符的经过次数减一(利用引用数据类型特性)
+        cur.numEnd--; // 将最后一个字符，即尾结点的结束状态减一
+        if (cur.numEnd === 0) { // 如果尾结点的结束状态为0，将尾结点标识符设为false
+          cur.isEnd = false;
+          return true;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @desc 前序遍历
+   * @param { function } callback 回调函数
+   */
   preTraversal(callback) {
     function _preTraversal(root, word, callback) {
       callback(root, word);
@@ -224,4 +266,8 @@ console.log(TT.isContainPrefix('Ha'));
 console.log(TT.isContainWord('Hello'));
 console.log(TT.countPrefix('He'));
 console.log(TT.countWord('Hello'));
-TT.preTraversal((root, word) =>{console.log(word)});
+TT.preTraversal((root, word) => {
+  console.log(word)
+});
+console.log(TT.remove('Hello'));
+console.log(TT);
