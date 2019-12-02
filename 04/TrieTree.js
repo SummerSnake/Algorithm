@@ -90,6 +90,23 @@ class TrieTree {
     }
   }
 
+  preTraversal(callback) {
+    function _preTraversal(root, word, callback) {
+      callback(root, word);
+      const len = root && root.edges.length;
+
+      for (let i = 0; i < len; i += 1) {
+        let node = root.edges[i];
+
+        if (node) {
+          _preTraversal(node, word + node.value, callback);
+        }
+      }
+    }
+
+    _preTraversal(this.root, '', callback);
+  }
+
   /**
    * @desc 在字典树中查找是否存在某字符串为前缀开头的字符串(包括前缀字符串本身)
    * @param { string } word 要查找的字符串
@@ -207,4 +224,4 @@ console.log(TT.isContainPrefix('Ha'));
 console.log(TT.isContainWord('Hello'));
 console.log(TT.countPrefix('He'));
 console.log(TT.countWord('Hello'));
-console.log(TT);
+TT.preTraversal((root, word) =>{console.log(word)});
