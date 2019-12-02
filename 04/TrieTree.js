@@ -18,7 +18,7 @@ class TrieNode {
   constructor() {
     this.value = ''; // value 为单个字符
     this.numPass = 0; // 有多少个单词经过这节点
-    this.numEnd = 0; // 有多少个单词就此结束
+    this.numEnd = 0; // 有多少个单词在此结束
     this.edges = [];
     this.isEnd = false; // 是否是尾结点
   }
@@ -143,6 +143,59 @@ class TrieTree {
       return false;
     }
   }
+
+  /**
+   * @desc 统计以指定字符串为前缀的字符串数量
+   * @param { string } word 要统计的字符串
+   * @return { number } 统计数量
+   */
+  countPrefix(word) {
+    if (TrieTree.isValid(word)) {
+      let cur = this.root;
+      let c = null;
+
+      for (var i = 0; i < word.length; i++) {
+        c = word.charCodeAt(i);
+        c = TrieTree.getIndex(c);
+
+        if (cur.edges[c]) {
+          cur = cur.edges[c];
+        } else {
+          return 0;
+        }
+      }
+
+      return cur.numPass;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * @desc 统计某字符串出现的次数(不为前缀)
+   * @param { string } word 要统计的字符串
+   * @return { number } 统计数量
+   */
+  countWord(word) {
+    if (TrieTree.isValid(word)) {
+      let cur = this.root;
+      let c = null;
+
+      for (var i = 0; i < word.length; i++) {
+        c = word.charCodeAt(i);
+        c = TrieTree.getIndex(c);
+
+        if (cur.edges[c]) {
+          cur = cur.edges[c];
+        } else {
+          return 0;
+        }
+      }
+      return cur.numEnd;
+    } else {
+      return 0;
+    }
+  }
 }
 
 const TT = new TrieTree();
@@ -152,4 +205,6 @@ TT.insert('Haha');
 TT.insert('Heha');
 console.log(TT.isContainPrefix('Ha'));
 console.log(TT.isContainWord('Hello'));
+console.log(TT.countPrefix('He'));
+console.log(TT.countWord('Hello'));
 console.log(TT);
