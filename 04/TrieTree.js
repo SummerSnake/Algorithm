@@ -12,7 +12,7 @@
  */
 
 /**
- * @desc 创建二叉树节点
+ * @desc 创建 Trie树 节点
  */
 class TrieNode {
   constructor() {
@@ -116,6 +116,33 @@ class TrieTree {
       return false;
     }
   }
+
+  /**
+   * @desc 在字典树中查找是否存在某字符串(不为前缀，精确匹配)
+   * @param { string } word 要查找的字符串
+   * @return { boolean } 是否存在
+   */
+  isContainWord(word) {
+    if (TrieTree.isValid(word)) {
+      let cur = this.root;
+      let c = null;
+
+      for (let i = 0; i < word.length; i += 1) {
+        c = word.charCodeAt(i);
+        c = TrieTree.getIndex(c);
+
+        if (cur.edges[c]) {
+          cur = cur.edges[c];
+        } else {
+          return false;
+        }
+      }
+
+      return cur.isEnd;
+    } else {
+      return false;
+    }
+  }
 }
 
 const TT = new TrieTree();
@@ -123,5 +150,6 @@ TT.insert('word');
 TT.insert('Hello');
 TT.insert('Haha');
 TT.insert('Heha');
-console.log(TT.isContainPrefix('Hel'));
+console.log(TT.isContainPrefix('Ha'));
+console.log(TT.isContainWord('Hello'));
 console.log(TT);
