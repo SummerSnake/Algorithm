@@ -106,7 +106,46 @@ const rangeSumBST = (root, L, R) => {
   return num;
 };
 
-const num = rangeSumBST(tree.root, 6, 10);
-const num2 = rangeSumBST(tree2.root, 7, 15);
+/**
+ * @desc 迭代算法 (迭代法也称辗转法，是一种不断用变量的旧值递推新值的过程)
+ * @param { TreeNode } root 二叉搜索树根节点
+ * @param { number } L 左子树边界值
+ * @param { number } R 右子树边界值
+ * @return { number }
+ *
+ * 1.先将root入栈；
+ * 2.while条件直到栈空，每次取出栈顶元素，如果是节点不存在，直接continue跳出该次while；
+ * 3.如果存在则判断节点大小，如果在L R之间，则说明左右两边都有可能还有符合条件的值 左右节点入栈 并加上值；
+ * 4.如果 < L，则说明可能的值在右侧子树 右节点入栈，反之左节点入栈。
+ */
+const rangeSumBST2 = (root, L, R) => {
+  let num = 0;
+  const stack = []; // 栈
+  stack.push(root);
+
+  while (stack.length > 0) {
+    let curr = stack.pop(); // 取出栈顶元素
+
+    if (!curr) {
+      continue;
+    }
+    if (curr.val >= L && curr.val <= R) {
+      stack.push(curr.left);
+      stack.push(curr.right);
+      num += curr.val;
+    }
+    if (curr.val < L) {
+      stack.push(curr.right);
+    }
+    if (curr.val > R) {
+      stack.push(curr.left);
+    }
+  }
+
+  return num;
+};
+
+const num = rangeSumBST2(tree.root, 6, 10);
+const num2 = rangeSumBST2(tree2.root, 7, 15);
 console.log(num);
 console.log(num2);
