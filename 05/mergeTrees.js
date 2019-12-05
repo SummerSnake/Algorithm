@@ -1,5 +1,5 @@
 /**
- * 给定两个二叉树，、合并为一个新的二叉树。
+ * 给定两个二叉树，合并为一个新的二叉树。
  * 合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，
  * 否则不为 NULL 的节点将直接作为新二叉树的节点。
  */
@@ -22,7 +22,7 @@ class BinaryTreeNode {
 }
 
 /**
- * @desc 创建二叉树
+ * @desc 创建二叉搜索树
  */
 class BinarySearchTree {
   constructor() {
@@ -82,10 +82,11 @@ tree2.insert(null);
 tree2.insert(18);
 
 /**
- * 我们可以对这两棵树同时进行前序遍历，并将对应的节点进行合并。
- * 在遍历时，如果两棵树的当前节点均不为空，我们就将它们的值进行相加，并对它们的左孩子和右孩子进行递归合并；
+ * @desc 前序遍历(递归)
+ *
  * 如果其中有一棵树为空，那么我们返回另一颗树作为结果；
  * 如果两棵树均为空，此时返回任意一棵树均可（因为都是空）。
+ * 1. 在遍历时，如果两棵树的当前节点均不为空，我们就将它们的值进行相加，并对它们的左孩子和右孩子进行递归合并；
  */
 const mergeTrees = (t1, t2) => {
   if (t1 && t2) {
@@ -97,5 +98,43 @@ const mergeTrees = (t1, t2) => {
   return t1 || t2;
 };
 
-const newTree = mergeTrees(tree.root, tree2.root);
-console.log(newTree);
+// const newTree = mergeTrees(tree.root, tree2.root);
+// console.log(newTree);
+
+/**
+ * @desc 迭代算法
+ */
+const mergeTrees2 = (t1, t2) => {
+  if (t1 && t2) {
+    const stack = [[t1, t2]]; // 新建栈，两棵树的根节点入栈
+
+    while (stack.length > 0) {
+      const node = stack.pop(); // 取出栈顶元素
+
+      if (!node[1]) { // 空节点跳出本次循环(node[1]为t2节点，如果为空则保留t1节点)
+        continue;
+      }
+
+      node[0].val += node[1].val; // 两节点同时存在值相加
+
+      if (!node[0].left) { // t1左节点为空，则将t2左节点赋值给t1
+        node[0].left = node[1].left;
+      } else { // t1左节点不为空，则将t1左节点、t2左节点入栈
+        stack.push([node[0].left, node[1].left]);
+      }
+
+      if (!node[0].right) { // t1右节点为空，则将t2右节点赋值给t1
+        node[0].right = node[1].right;
+      } else { // t1右节点不为空，则将t1右节点、t2右节点入栈
+        stack.push([node[0].right, node[1].right]);
+      }
+    }
+
+    return t1;
+  }
+
+  return t1 || t2;
+};
+
+const newTree2 = mergeTrees2(tree.root, tree2.root);
+console.log(newTree2);
