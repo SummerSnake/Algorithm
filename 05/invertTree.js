@@ -78,5 +78,33 @@ const invertTree = root => {
   return root;
 };
 
-invertTree(tree.root);
+// invertTree(tree.root);
+// console.log(tree);
+
+const invertTree2 = root => {
+  if (!root) {
+    return root;
+  }
+  const stack = [root]; // 根节点入栈
+
+  while (stack.length > 0) {
+    let node = stack.pop(); // 当前节点出栈
+
+    // 左右节点交换
+    const tmp = node.left;
+    node.left = node.right;
+    node.right = tmp;
+
+    if (node.left) { // 交换后当前节点左子节点入栈
+      stack.push(node.left);
+    }
+    if (node.right) { // 交换后当前节点右子节点入栈，进入下次循环
+      stack.push(node.right);
+    }
+  }
+
+  return root;
+};
+
+invertTree2(tree.root);
 console.log(tree);
