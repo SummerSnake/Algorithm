@@ -76,3 +76,22 @@ function formatNumberToRMB(num) {
 }
 
 console.log(formatNumberToRMB(12345678));
+
+/**
+ * @desc 统计从1到n的零总数
+ *
+ *  如果有一个1到50的数字，那么这个数值就是5，就是50除以10.
+ *  然而，如果这个数值是100，100/10 = 10 和 10/10 = 1, 这个数值就是11
+ */
+function countZero(n) {
+  let count = 0;
+
+  while (n > 0) {
+    count += Math.floor(n / 10);
+    n /= 10;
+  }
+
+  return count;
+}
+
+console.log(countZero(2019));
