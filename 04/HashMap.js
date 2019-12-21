@@ -14,7 +14,8 @@ class HashMap {
   constructor() {
     /**
      * @desc 散列函数
-     * @param { string }  data 要映射的值
+     * @param { string } data 要映射的值
+     * @return { number } hashCode
      *
      * 霍纳算法是一种比较好的散列函数算法，计算时仍然先计算字符串中各字符的 ASCII 码值，不过求和时每次要乘以一个质数。
      * 为了避免碰撞，首先要确保散列表中用来存储数据的数组其大小是个质数。这一点和计算散列值时使用的取余运算有关。
@@ -31,17 +32,6 @@ class HashMap {
       total = total % this.table.length;
 
       return parseInt(total);
-    };
-
-    /**
-     * @desc 打印哈希表中的值
-     */
-    const showData = () => {
-      for (let i = 0; i < this.size; i += 1) {
-        if (this.table[i]) {
-          console.log(`${i}：${this.table[i]}`);
-        }
-      }
     };
 
 
@@ -80,6 +70,7 @@ class HashMap {
     /**
      * @desc 从哈希表中获取值
      * @param { string } key 要获取的数据的键
+     * @return { any } 查找到的值
      */
     const get = key => {
       const index = hashCode(key);
@@ -92,12 +83,54 @@ class HashMap {
       return this.table[index][i + 1];
     };
 
+
+    // --------------  碰撞处理：线性探测法  --------------
+
+    // 当发生碰撞时，线性探测法检查散列表中的下一个位置是否为空，
+    // 如果为空， 就将数据存入该位置；如果不为空，则继续检查下一个位置，直到找到一个空的位置为止。
+    // 当存储数据使用的数组特别大时，选择线性探测法要比开链法好。
+
+
+    /**
+     * @desc 往哈希表中存储值
+     * @param { string } key 要存入哈希表的数据的键
+     * @param { string } data 要存入哈希表的数据
+     */
+    function put2(key, data) {
+      let index = hashCode(key);
+
+      while (this.table[index]) {
+        index += 1;
+      }
+      this.table[index] = { [key]: data };
+    }
+
+    /**
+     * @desc 从哈希表中获取值
+     * @param { string } key 要获取的数据的键
+     * @return { any } 查找到的值，null 为未找到
+     */
+    function get2(key) {
+      const table = this.table;
+      let index = hashCode(key);
+
+      while (table[index]) {
+        for (let hashKey in table[index]) {
+          if (hashKey === key) {
+            return table[index][key];
+          }
+        }
+        index += 1;
+      }
+      return 'null';
+    }
+
     this.table = new Array(137);
-    this.hashCode = hashCode;
-    this.showData = showData;
     this.buildChains = buildChains;
     this.put = put;
     this.get = get;
+    this.put2 = put2;
+    this.get2 = get2;
     this.size = this.table.length;
   }
 }
@@ -106,4 +139,4 @@ const hashMap = new HashMap();
 hashMap.buildChains();
 hashMap.put('青岛', '八大关');
 hashMap.put('黄岛', '金沙滩');
-console.log(hashMap.table);
+console.log(hashMap.get('黄岛'));
