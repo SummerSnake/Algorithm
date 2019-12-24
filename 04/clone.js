@@ -25,20 +25,20 @@ obj4.b = 'obj4.b';
 
 // 2. 递归
 function recursionDeepClone(initialObj) {
-    let finalObj = Array.isArray(initialObj) ? [] : {};
-    if (initialObj && typeof initialObj === 'object') {
-        for (key in initialObj) {
-            if (initialObj.hasOwnProperty(key)) {
-                // 判断 object 子元素是否为对象，如果是，递归复制。
-                if (initialObj[key] && typeof initialObj[key] === 'object') {
-                    finalObj[key] = recursionDeepClone(initialObj[key]);
-                } else {// 如果不是，简单复制。
-                    finalObj[key] = initialObj[key];
-                }
-            }
+  let finalObj = Array.isArray(initialObj) ? [] : {};
+  if (initialObj && typeof initialObj === 'object') {
+    for (key in initialObj) {
+      if (initialObj.hasOwnProperty(key)) {
+        // 判断 object 子元素是否为对象，如果是，递归复制。
+        if (initialObj[key] && typeof initialObj[key] === 'object') {
+          finalObj[key] = recursionDeepClone(initialObj[key]);
+        } else {// 如果不是，简单复制。
+          finalObj[key] = initialObj[key];
         }
+      }
     }
-    return finalObj;
+  }
+  return finalObj;
 }
 
 const obj5 = recursionDeepClone(obj4);

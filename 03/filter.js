@@ -2,11 +2,11 @@
  * multiple是一个计算乘积的函数，接收一些number类型的参数，并返回乘积结果。
  */
 function multiple() {
-    let result = 1;
-    for (let i = 0, len = arguments.length; i < len; i += 1) {
-        result = result * arguments[i];
-    }
-    console.log(result);
+  let result = 1;
+  for (let i = 0, len = arguments.length; i < len; i += 1) {
+    result = result * arguments[i];
+  }
+  console.log(result);
 }
 
 multiple(2, 3, 4);
@@ -22,12 +22,12 @@ let ages = [19, 20];
 let students = [[19, 'Male', '80kg'], [20, 'Female', '50kg'], [20, 'Female', '51kg'], [24, 'Female', '60kg']];
 
 const filteredData = students.filter(function (value) { // 不可以使用箭头函数
-    for (let i = 0; i < this.length; i += 1) { // this 指向ages
-        if (this[i] === value[0]) {
-            return true;
-        }
+  for (let i = 0; i < this.length; i += 1) { // this 指向ages
+    if (this[i] === value[0]) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }, ages);
 
 console.log(filteredData);
@@ -36,9 +36,9 @@ console.log(filteredData);
  * 写一个 function，传入两个或两个以上的数组，返回一个以给定的原始数组排序的不包含重复值的新数组。
  */
 function unite() {
-    return Array.prototype.slice.call(arguments).reduce((total = [], curEle) => {
-        return total.concat(curEle.filter(item => !total.includes(item)));
-    });
+  return Array.prototype.slice.call(arguments).reduce((total = [], curEle) => {
+    return total.concat(curEle.filter(item => !total.includes(item)));
+  });
 }
 
 console.log(unite([19, 'Male', '80kg'], [20, 'Female', '50kg'], [20, 'Female', '51kg'], [24, 'Female', '60kg']));

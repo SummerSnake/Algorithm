@@ -10,11 +10,10 @@ const str = "1.1.1.1";
  * 直接正则匹配
  */
 const invalidIPv4 = (address) => {
-  return address.replace(/\./g,'[.]');
+  return address.replace(/\./g, '[.]');
 };
 
 console.log(invalidIPv4(str));
-
 
 
 /**
@@ -33,7 +32,6 @@ const _invalidIPv4 = (address) => {
 console.log(_invalidIPv4(str));
 
 
-
 // 转数组 -- 字符串拼接截取
 const __invalidIPv4 = (address) => {
 
@@ -46,7 +44,6 @@ const __invalidIPv4 = (address) => {
 };
 
 console.log(__invalidIPv4(str));
-
 
 
 // 转数组 -- 再转字符串

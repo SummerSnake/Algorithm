@@ -10,30 +10,30 @@ const target = 9;
 
 // 嵌套 for 循环 方法
 function getIndex(arr, target) {
-    const len = arr.length;
-    for (let i = 0; i < len; i += 1) {
-        for (let j = i + 1; j < len; j += 1) {
-            if (arr[i] + arr[j] === target) {
-                return [i, j];
-            }
-        }
+  const len = arr.length;
+  for (let i = 0; i < len; i += 1) {
+    for (let j = i + 1; j < len; j += 1) {
+      if (arr[i] + arr[j] === target) {
+        return [i, j];
+      }
     }
+  }
 }
 
 // console.log(getIndex(array, target));
 
 // 哈希表
 function getIndex2(arr, target) {
-    const arrMap = new Map();
-    const len = arr.length;
+  const arrMap = new Map();
+  const len = arr.length;
 
-    for (let i = 0; i < len; i += 1) {
-        let complement = target - arr[i];
-        if (arrMap.has(complement)) {
-            return [arrMap.get(complement), i];
-        }
-        arrMap.set(arr[i], i);
+  for (let i = 0; i < len; i += 1) {
+    let complement = target - arr[i];
+    if (arrMap.has(complement)) {
+      return [arrMap.get(complement), i];
     }
+    arrMap.set(arr[i], i);
+  }
 }
 
 console.log(getIndex2(array, target));

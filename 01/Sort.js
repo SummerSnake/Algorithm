@@ -294,7 +294,7 @@ class QuickSort {
        * @param { array } right 右边的数，当前i位置的数
        */
       const swap = (array, left, right) => {
-        if(left === right){
+        if (left === right) {
           return;
         }
         var temp = array[right];
