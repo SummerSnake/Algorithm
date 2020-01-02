@@ -48,16 +48,16 @@ class Graph {
      * @desc 打印图
      */
     this.showGraph = () => {
-      let str = '';
+      let str = "";
 
       for (let i = 0; i < this.vertices.length; i += 1) {
-        str += vertices[i] + ' => '; // 将顶点数组依次加入到字符串
+        str += vertices[i] + " => "; // 将顶点数组依次加入到字符串
         const neighbors = this.adjacencyList.get(vertices[i]); // 取得每个顶点的邻接表
 
         for (let j = 0; j < neighbors.length; j += 1) {
-          str += neighbors[j] + ' '; // 将邻接表中的相邻顶点加入到字符串中
+          str += neighbors[j] + " "; // 将邻接表中的相邻顶点加入到字符串中
         }
-        str += '\n';  // 每输出一个顶点的邻接表，加一个换行
+        str += "\n"; // 每输出一个顶点的邻接表，加一个换行
       }
 
       return str;
@@ -74,7 +74,7 @@ class Graph {
       const color = [];
 
       for (let i = 0; i < this.vertices.length; i += 1) {
-        color[this.vertices[i]] = 'white';
+        color[this.vertices[i]] = "white";
       }
 
       return color;
@@ -97,25 +97,25 @@ class Graph {
       const color = initColor();
       const queue = [];
       queue.push(v);
-      let str = '广度优先遍历的顺序为：';
+      let str = "广度优先遍历的顺序为：";
 
       while (queue.length > 0) {
         const u = queue.shift();
-        color[u] = 'gray'; // 将 u 标注为被访问过的(灰色)
+        color[u] = "gray"; // 将 u 标注为被访问过的(灰色)
         const neighbors = this.adjacencyList.get(u); // 获取顶点u的所有相邻顶点
 
         // 将 u 所有未被访问过的相邻顶点(白色)，标注为被访问过(灰色)，并推入队列
         for (let i = 0; i < neighbors.length; i += 1) {
           const w = neighbors[i];
 
-          if (color[w] === 'white') {
-            color[w] = 'gray';
+          if (color[w] === "white") {
+            color[w] = "gray";
             queue.push(w);
           }
         }
 
-        color[u] = 'black'; // 将 u 标注为已被探索过的(黑色)
-        str += u + ' ';
+        color[u] = "black"; // 将 u 标注为已被探索过的(黑色)
+        str += u + " ";
       }
 
       return str;
@@ -126,20 +126,20 @@ class Graph {
      * @param { any } u 当前访问顶点
      * @param { array } color 标识图的各顶点颜色的数组
      */
-    let str = '深度优先遍历的顺序为：';
+    let str = "深度优先遍历的顺序为：";
     const dfsVisit = (u, color) => {
-      color[u] = 'gray';
-      str += u + ' ';
+      color[u] = "gray";
+      str += u + " ";
       const neighbors = this.adjacencyList.get(u); // 获取顶点u的所有相邻顶点
       // 依次访问 顶点v 的所有未被访问的相邻顶点
       for (let i = 0; i < neighbors.length; i += 1) {
         const w = neighbors[i];
 
-        if (color[w] === 'white') {
+        if (color[w] === "white") {
           dfsVisit(w, color);
         }
       }
-      color[u] = 'black'; // 将 u 标注为已被探索过的(黑色)
+      color[u] = "black"; // 将 u 标注为已被探索过的(黑色)
     };
 
     /**
@@ -155,33 +155,33 @@ class Graph {
 
       for (let i = 0; i < this.vertices.length; i += 1) {
         const w = this.vertices[i];
-        if (color[w] === 'white') {
+        if (color[w] === "white") {
           dfsVisit(w, color);
         }
       }
       return str;
-    }
+    };
   }
 }
 
 const graph = new Graph();
-const vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+const vertices = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 const len = vertices.length;
 
 for (let i = 0; i < len; i += 1) {
   graph.addVertex(vertices[i]);
 }
 
-graph.addEdge('A', 'B');
-graph.addEdge('A', 'C');
-graph.addEdge('A', 'D');
-graph.addEdge('C', 'D');
-graph.addEdge('C', 'G');
-graph.addEdge('D', 'G');
-graph.addEdge('D', 'H');
-graph.addEdge('B', 'E');
-graph.addEdge('B', 'F');
-graph.addEdge('E', 'I');
+graph.addEdge("A", "B");
+graph.addEdge("A", "C");
+graph.addEdge("A", "D");
+graph.addEdge("C", "D");
+graph.addEdge("C", "G");
+graph.addEdge("D", "G");
+graph.addEdge("D", "H");
+graph.addEdge("B", "E");
+graph.addEdge("B", "F");
+graph.addEdge("E", "I");
 
 console.log(graph.showGraph());
 console.log(graph.bfs(vertices[6]));

@@ -14,7 +14,7 @@ confirmEnding("He has to give me a new name", "name");
  * @desc 重复一个指定的字符串 num 次，如果 num 是一个负数则返回一个空字符串。
  */
 function repeatNum(str, num = 0) {
-  let originStr = '';
+  let originStr = "";
 
   if (num >= 0) {
     for (let i = 0; i < num; i += 1) {
@@ -57,7 +57,7 @@ function charEqual(arr = []) {
   let arrOne = arr[1].toLowerCase();
 
   Array.prototype.forEach.call(arrOne, item => {
-    isExist = (arrZero.indexOf(item) !== -1);
+    isExist = arrZero.indexOf(item) !== -1;
   });
 
   console.log(isExist);

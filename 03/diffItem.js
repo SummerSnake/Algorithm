@@ -19,7 +19,7 @@ diff(arr1, arr2);
  */
 function replaceWord(str, nowWord, newWord) {
   // 判断 nowWord 字符串首字母是否大写，若是，则将 newWord 字符串首字母也替换为大写；
-  if (nowWord.charAt(0) < 'a') {
+  if (nowWord.charAt(0) < "a") {
     let firstChar = newWord.charAt(0);
     newWord = newWord.replace(firstChar, firstChar.toUpperCase());
   }

@@ -31,9 +31,7 @@ console.log(arr2);
  */
 let arr3 = [];
 for (let key in obj) {
-  arr3.push([
-    key, obj[key]
-  ]);
+  arr3.push([key, obj[key]]);
 }
 
 arr3.sort((a, b) => a[1] - b[1]);

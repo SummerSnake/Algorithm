@@ -12,7 +12,7 @@
 /**
  * @desc 创建节点
  */
-const Node = function (element) {
+const Node = function(element) {
   this.element = element;
   this.next = null;
 };
@@ -20,7 +20,7 @@ const Node = function (element) {
 /**
  * @desc 创建链表
  */
-const LList = function (num) {
+const LList = function(num) {
   const head = new Node(1);
   let current = head; // 当前节点指向head
 
@@ -38,10 +38,10 @@ const LList = function (num) {
 const circularList = new LList(41);
 
 // 解题函数
-const getKilled = function () {
+const getKilled = function() {
   let current = circularList;
   let temp = {};
-  let str = '';
+  let str = "";
 
   // 循环链表，在链表删除到只剩一个节点之前链表当前数据域与指针域总是不相等, while 循环得以循环整个链表
   while (current.next.element !== current.element) {

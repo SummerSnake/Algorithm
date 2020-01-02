@@ -6,7 +6,6 @@
  * 7阶 需要 7*1 + 6*2 + 5*2 + 4*2 + 3*2 + 2*2 + 1*2，共13次循环。
  */
 
-
 /**
  * @desc 螺旋矩阵
  * @param { number } size 要输出的长与宽
@@ -31,7 +30,7 @@ const HelixMatrix = (size, startNum, directions, startX, startY, rule) => {
   let x = startX; // 当前的x坐标
   let y = startY; // 当前的y坐标
   let num = startNum; // 当前的数字
-  let result = ''; // 输出结果
+  let result = ""; // 输出结果
 
   // 修正开始坐标
   const firstDirection = directions[directionID];
@@ -57,7 +56,8 @@ const HelixMatrix = (size, startNum, directions, startX, startY, rule) => {
     const direction = directions[directionID]; // 本次输出方向
     let j = 0;
     while (j < s) {
-      switch (direction) { // 首次循环，开始坐标与上方修正初始坐标相关联
+      // 首次循环，开始坐标与上方修正初始坐标相关联
+      switch (direction) {
         case 1:
           x -= 1;
           break;
@@ -92,9 +92,9 @@ const HelixMatrix = (size, startNum, directions, startX, startY, rule) => {
   // 计算输出结果
   for (let i = 0; i < size; i += 1) {
     for (let j = 0; j < size; j += 1) {
-      result += arr[i][j] + '\t';
+      result += arr[i][j] + "\t";
     }
-    result += '\n';
+    result += "\n";
   }
   return result;
 };

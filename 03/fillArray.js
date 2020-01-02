@@ -7,7 +7,7 @@ function flat(arr, result) {
   let newArr = Array.isArray(result) ? result : [];
 
   arr.map(item => {
-    if (typeof item === 'number') {
+    if (typeof item === "number") {
       newArr.push(item);
     } else {
       flat(item, newArr);
@@ -36,7 +36,7 @@ function fillArray(start = 1, end = 100, arr) {
   // console.log(newArr);
 }
 
-fillArray(100, 1000, ['n']);
+fillArray(100, 1000, ["n"]);
 
 /**
  * @desc 将类数组对象转换为数组
@@ -52,10 +52,10 @@ function objTurnArr(obj = {}) {
 
 // 有 length, 为类数组对象
 let obj = {
-  0: 'China',
-  1: 'ShanDong',
-  2: 'QingDao',
-  3: 'SummerSnake',
+  0: "China",
+  1: "ShanDong",
+  2: "QingDao",
+  3: "SummerSnake",
   length: 4
 };
 

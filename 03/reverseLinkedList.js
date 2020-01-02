@@ -1,12 +1,12 @@
 /**
  * @desc 创建节点
  */
-const Node = function (element) {
+const Node = function(element) {
   this.element = element;
   this.next = null;
 };
 
-const LList = function (num) {
+const LList = function(num) {
   const head = new Node(1);
   let current = head; // 当前节点指向head
 
@@ -23,7 +23,7 @@ const LList = function (num) {
 
 const circularList = new LList(3);
 
-const reverseList = (list) => {
+const reverseList = list => {
   if (list === null || list.next === null) {
     return list;
   }

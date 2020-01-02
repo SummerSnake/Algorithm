@@ -31,7 +31,7 @@ class AVLTree {
      * @desc 计算树的高度
      * @param { object } element 当前节点
      */
-    const getHeight = function (element) {
+    const getHeight = function(element) {
       return !element ? 0 : Math.max(getHeight(element.left), getHeight(element.right)) + 1;
     };
 
@@ -39,7 +39,7 @@ class AVLTree {
      * @desc 向左单旋转
      * @param { object } element 当前节点
      */
-    const rotateLL = function (element) {
+    const rotateLL = function(element) {
       if (!element) {
         return null;
       }
@@ -53,7 +53,7 @@ class AVLTree {
      * @desc 向右单旋转
      * @param { object } element 当前节点
      */
-    const rotateRR = function (element) {
+    const rotateRR = function(element) {
       if (!element) {
         return null;
       }
@@ -67,7 +67,7 @@ class AVLTree {
      * @desc 先左后右双旋转
      * @param { object } element 当前节点
      */
-    const rotateLR = function (element) {
+    const rotateLR = function(element) {
       if (!element) {
         return null;
       }
@@ -79,7 +79,7 @@ class AVLTree {
      * @desc 先右后左双旋转
      * @param { object } element 当前节点
      */
-    const rotateRL = function (element) {
+    const rotateRL = function(element) {
       if (!element) {
         return null;
       }
@@ -91,7 +91,7 @@ class AVLTree {
      * @desc 将树旋转至平衡
      * @param { object } element 当前节点
      */
-    const makeBalance = function (element) {
+    const makeBalance = function(element) {
       let node = element;
       if (!node) {
         return null;
@@ -105,10 +105,15 @@ class AVLTree {
       // 如果左子树高度比右子树高度大
       if (leftHeight - rightHeight > 1) {
         // 如果左子树的左子树高度大于等于左子树的右子树高度，进行右单旋，否则需要先左后右双旋
-        node = getHeight(node.left.left) >= getHeight(node.left.right) ? rotateRR(node) : rotateLR(node);
-      } else { // 右子树高度比左子树高度大
+        node =
+          getHeight(node.left.left) >= getHeight(node.left.right) ? rotateRR(node) : rotateLR(node);
+      } else {
+        // 右子树高度比左子树高度大
         // 如果右子树的右子树高度大于等于右子树的左子树高度, 进行左单旋，否则需要先右后左双旋转
-        node = getHeight(node.right.right) >= getHeight(node.right.left) ? rotateLL(node) : rotateRL(node);
+        node =
+          getHeight(node.right.right) >= getHeight(node.right.left)
+            ? rotateLL(node)
+            : rotateRL(node);
       }
       return node;
     };
@@ -118,7 +123,7 @@ class AVLTree {
      * @param { object } element 要插入的位置所存在的节点（当前节点）
      * @param { object } newElement 要插入的节点
      */
-    const _insert = function (element, newElement) {
+    const _insert = function(element, newElement) {
       let node = element;
       // 当前节点不存在，直接将新节点插入
       if (!node) {
@@ -131,14 +136,17 @@ class AVLTree {
       }
       // 如果新节点值小于当前节点，则插入到当前节点左子树
       if (newElement.val < node.val) {
-        if (!node.left) { // 如果左子树为空，则直接插入
+        if (!node.left) {
+          // 如果左子树为空，则直接插入
           node.left = newElement;
-        } else { // 否则递归循环插入
+        } else {
+          // 否则递归循环插入
           node.left = _insert(node.left, newElement);
           // 将树旋转至平衡
           node = makeBalance(node);
         }
-      } else { // 插入右子树
+      } else {
+        // 插入右子树
         if (!node.right) {
           node.right = newElement;
         } else {
@@ -148,7 +156,7 @@ class AVLTree {
       }
       return node;
     };
-    this.insert = function (key, val) {
+    this.insert = function(key, val) {
       const newElement = new AVLTreeNode(key, val);
       this.root = _insert(this.root, newElement);
     };
@@ -158,7 +166,7 @@ class AVLTree {
      * @param { object } element 当前节点
      * @param { object } delElement 要删除的节点
      */
-    const _delete = function (element, delElement) {
+    const _delete = function(element, delElement) {
       let node = element;
       if (!node) {
         return null;
@@ -173,7 +181,7 @@ class AVLTree {
         if (!!node.left && !!node.right) {
           let temp = node.right;
           // 查找右子树中最小的节点
-          while (temp['left'] !== null) {
+          while (temp["left"] !== null) {
             temp = temp.left;
           }
           // 右子树中最小的节点赋值给当前节点
@@ -182,7 +190,8 @@ class AVLTree {
           // 递归删除右子树中最小的节点
           node.right = _delete(node.right, temp.val);
           node = makeBalance(node);
-        } else { // 如果只有一个节点
+        } else {
+          // 如果只有一个节点
           node = !node.left ? node.right : node.left;
         }
         return node;
@@ -191,21 +200,22 @@ class AVLTree {
       if (delElement < node.val) {
         node.left = _delete(node.left, delElement);
         node = makeBalance(node);
-      } else { // 如果要删除节点的val大于根节点值，则从右子树查找
+      } else {
+        // 如果要删除节点的val大于根节点值，则从右子树查找
         node.right = _delete(node.right, delElement);
         node = makeBalance(node);
       }
       return node;
     };
-    this.delete = function (delElement) {
+    this.delete = function(delElement) {
       this.root = _delete(this.root, delElement);
     };
     /**
      * @desc 打印树
      */
-    this.print = function () {
+    this.print = function() {
       console.log(this.root);
-    }
+    };
   }
 }
 

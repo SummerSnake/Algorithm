@@ -42,7 +42,6 @@ const selfDividingNumbers = (left, right) => {
 
 // console.log(selfDividingNumbers(0, 123));
 
-
 /**
  * @desc 嵌套for循环(数字特性取余法)
  * @param { number } left 下边界

@@ -9,6 +9,7 @@
  * 2. 一个指向右节点的指针 right
  * 3. 一个数据域，存放节点的值 val
  */
+
 class BinaryTreeNode {
   constructor(val) {
     this.left = null;
@@ -24,7 +25,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
 
-    this.insert = function (val) {
+    this.insert = function(val) {
       const node = new BinaryTreeNode(val);
       let prev = this.root;
       let tail = this.root;
@@ -36,8 +37,8 @@ class BinarySearchTree {
       // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
       while (tail) {
         prev = tail; // 将当前节点赋值给prev
-
-        if (node.val < tail.val) { // 要插入的节点值比当前节点小
+        // 要插入的节点值比当前节点小
+        if (node.val < tail.val) {
           tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
         } else {
           tail = tail.right;
@@ -54,7 +55,7 @@ class BinarySearchTree {
   }
 }
 
-const tree = new BinarySearchTree;
+const tree = new BinarySearchTree();
 tree.insert(4);
 tree.insert(2);
 tree.insert(1);
@@ -95,10 +96,12 @@ const invertTree2 = root => {
     node.left = node.right;
     node.right = tmp;
 
-    if (node.left) { // 交换后当前节点左子节点入栈
+    if (node.left) {
+      // 交换后当前节点左子节点入栈
       stack.push(node.left);
     }
-    if (node.right) { // 交换后当前节点右子节点入栈，进入下次循环
+    if (node.right) {
+      // 交换后当前节点右子节点入栈，进入下次循环
       stack.push(node.right);
     }
   }

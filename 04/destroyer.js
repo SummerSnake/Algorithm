@@ -29,7 +29,7 @@ function destroyer(arr) {
   console.log(filtered);
 }
 
-destroyer([3, 5, 7, 9, 'Willa'], 'Willa', 9);
+destroyer([3, 5, 7, 9, "Willa"], "Willa", 9);
 
 /**
  * 验证一个数是否是素数
@@ -51,8 +51,10 @@ function isPrime(num) {
   let divisor = 3; // 除数
   const limit = Math.sqrt(num); // 求平方根
 
-  while (limit >= divisor) { // 3 ~ num 的平方根
-    if (num % divisor === 0) { // 素数不能被3整除
+  while (limit >= divisor) {
+    // 3 ~ num 的平方根
+    if (num % divisor === 0) {
+      // 素数不能被3整除
       return false;
     } else {
       divisor += 2; // 除数可以每次递增2(排除偶数)

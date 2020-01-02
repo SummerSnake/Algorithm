@@ -28,7 +28,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
 
-    this.insert = function (val) {
+    this.insert = function(val) {
       const node = new BinaryTreeNode(val);
       let prev = this.root;
       let tail = this.root;
@@ -40,8 +40,8 @@ class BinarySearchTree {
       // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
       while (tail) {
         prev = tail; // 将当前节点赋值给prev
-
-        if (node.val < tail.val) { // 要插入的节点值比当前节点小
+        // 要插入的节点值比当前节点小
+        if (node.val < tail.val) {
           tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
         } else {
           tail = tail.right;
@@ -60,7 +60,7 @@ class BinarySearchTree {
   }
 }
 
-const tree = new BinarySearchTree;
+const tree = new BinarySearchTree();
 tree.insert(10);
 tree.insert(5);
 tree.insert(15);

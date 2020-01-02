@@ -28,7 +28,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
 
-    this.insert = function (val) {
+    this.insert = function(val) {
       const node = new BinaryTreeNode(val);
       let prev = this.root;
       let tail = this.root;
@@ -40,8 +40,8 @@ class BinarySearchTree {
       // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
       while (tail) {
         prev = tail; // 将当前节点赋值给prev
-
-        if (node.val < tail.val) { // 要插入的节点值比当前节点小
+        // 要插入的节点值比当前节点小
+        if (node.val < tail.val) {
           tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
         } else {
           tail = tail.right;
@@ -60,7 +60,7 @@ class BinarySearchTree {
   }
 }
 
-const tree = new BinarySearchTree;
+const tree = new BinarySearchTree();
 tree.insert(10);
 tree.insert(5);
 tree.insert(15);
@@ -111,21 +111,26 @@ const mergeTrees2 = (t1, t2) => {
     while (stack.length > 0) {
       const node = stack.pop(); // 取出栈顶元素
 
-      if (!node[1]) { // 空节点跳出本次循环(node[1]为t2节点，如果为空则保留t1节点)
+      if (!node[1]) {
+        // 空节点跳出本次循环(node[1]为t2节点，如果为空则保留t1节点)
         continue;
       }
 
       node[0].val += node[1].val; // 两节点同时存在值相加
 
-      if (!node[0].left) { // t1左节点为空，则将t2左节点赋值给t1
+      if (!node[0].left) {
+        // t1左节点为空，则将t2左节点赋值给t1
         node[0].left = node[1].left;
-      } else { // t1左节点不为空，则将t1左节点、t2左节点入栈
+      } else {
+        // t1左节点不为空，则将t1左节点、t2左节点入栈
         stack.push([node[0].left, node[1].left]);
       }
 
-      if (!node[0].right) { // t1右节点为空，则将t2右节点赋值给t1
+      if (!node[0].right) {
+        // t1右节点为空，则将t2右节点赋值给t1
         node[0].right = node[1].right;
-      } else { // t1右节点不为空，则将t1右节点、t2右节点入栈
+      } else {
+        // t1右节点不为空，则将t1右节点、t2右节点入栈
         stack.push([node[0].right, node[1].right]);
       }
     }

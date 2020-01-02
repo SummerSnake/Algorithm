@@ -22,7 +22,7 @@ class HashMap {
      * 数组的长度应该在 100 以上，这是为了让数据在散列表中分布得更加均匀。
      */
     const hashCode = data => {
-      const H = 37;  //质数
+      const H = 37; //质数
       const len = data.length;
       let total = 0;
 
@@ -34,12 +34,10 @@ class HashMap {
       return parseInt(total);
     };
 
-
     // --------------  碰撞处理：开链法  --------------
 
     // 开链法：当碰撞发生时，仍然将键存储到通过散列算法产生的索引位置上，
     // 但实际上，每个数组元素又是一个新的数据结构，比如另一个数组，这样就能存储多个键了（即用二维数组实现）。
-
 
     /**
      * @desc 创建二维数组
@@ -83,13 +81,11 @@ class HashMap {
       return this.table[index][i + 1];
     };
 
-
     // --------------  碰撞处理：线性探测法  --------------
 
     // 当发生碰撞时，线性探测法检查散列表中的下一个位置是否为空，
     // 如果为空， 就将数据存入该位置；如果不为空，则继续检查下一个位置，直到找到一个空的位置为止。
     // 当存储数据使用的数组特别大时，选择线性探测法要比开链法好。
-
 
     /**
      * @desc 往哈希表中存储值
@@ -122,7 +118,7 @@ class HashMap {
         }
         index += 1;
       }
-      return 'null';
+      return "null";
     }
 
     this.table = new Array(137);
@@ -137,6 +133,6 @@ class HashMap {
 
 const hashMap = new HashMap();
 hashMap.buildChains();
-hashMap.put('青岛', '八大关');
-hashMap.put('黄岛', '金沙滩');
-console.log(hashMap.get('黄岛'));
+hashMap.put("青岛", "八大关");
+hashMap.put("黄岛", "金沙滩");
+console.log(hashMap.get("黄岛"));

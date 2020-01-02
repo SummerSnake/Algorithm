@@ -16,7 +16,7 @@
  */
 class TrieNode {
   constructor() {
-    this.value = ''; // value 为单个字符
+    this.value = ""; // value 为单个字符
     this.numPass = 0; // 有多少个单词经过这节点
     this.numEnd = 0; // 有多少个单词在此结束
     this.edges = [];
@@ -41,14 +41,15 @@ class TrieTree {
   /**
    * 在ASCII码表的定义中48～57为0到9十个阿拉伯数字、65～90为26个大写英文字母、97～122号为26个小写英文字母
    */
-  static getIndex(c) { // 减少“0”的charCode
+  static getIndex(c) {
+    // 减少“0”的charCode
     switch (c) {
       case c < 58: // 48-57
         return c - 48;
       case c < 91: // 65-90
         return c - 65 + 11;
-      default: // > 97
-        return c - 97 + 26 + 11;
+      default:
+        return c - 97 + 26 + 11; // > 97
     }
   }
 
@@ -73,7 +74,7 @@ class TrieTree {
           node.numPass++;
         } else {
           // 在当前节点的边数组下标c处新建节点，此操作将初始化edges数组，长度为c
-          node = (cur.edges[c] = new TrieNode());
+          node = cur.edges[c] = new TrieNode();
           node.value = word.charAt(i);
           node.numPass = 1; // 有N个字符串经过它
         }
@@ -102,7 +103,8 @@ class TrieTree {
       let arr = [];
       let c = null;
 
-      for (let i = 0; i < len; i += 1) { // 遍历查找要删除的字符串是否在树中存在
+      for (let i = 0; i < len; i += 1) {
+        // 遍历查找要删除的字符串是否在树中存在
         c = word.charCodeAt(i);
         c = TrieTree.getIndex(c);
         let node = cur.edges[c];
@@ -115,10 +117,12 @@ class TrieTree {
         }
       }
       // 此处删除只改变字符状态，并未将字符从树中移除
-      if (arr.length === len) { // 判断存在成功，进行删除操作
-        arr.forEach((elem) => elem.numPass--); // 将每个字符的经过次数减一(利用引用数据类型特性)
+      if (arr.length === len) {
+        // 判断存在成功，进行删除操作
+        arr.forEach(elem => elem.numPass--); // 将每个字符的经过次数减一(利用引用数据类型特性)
         cur.numEnd--; // 将最后一个字符，即尾结点的结束状态减一
-        if (cur.numEnd === 0) { // 如果尾结点的结束状态为0，将尾结点标识符设为false
+        if (cur.numEnd === 0) {
+          // 如果尾结点的结束状态为0，将尾结点标识符设为false
           cur.isEnd = false;
           return true;
         }
@@ -146,7 +150,7 @@ class TrieTree {
       }
     }
 
-    _preTraversal(this.root, '', callback);
+    _preTraversal(this.root, "", callback);
   }
 
   /**
@@ -163,7 +167,8 @@ class TrieTree {
         c = word.charCodeAt(i);
         c = TrieTree.getIndex(c);
 
-        if (cur.edges[c]) { // 如果树中存在当前字符，则将当前字符所在的边指向的节点设为当前元素，进行下一次循环
+        if (cur.edges[c]) {
+          // 如果树中存在当前字符，则将当前字符所在的边指向的节点设为当前元素，进行下一次循环
           cur = cur.edges[c];
         } else {
           return false;
@@ -258,16 +263,16 @@ class TrieTree {
 }
 
 const TT = new TrieTree();
-TT.insert('word');
-TT.insert('Hello');
-TT.insert('Haha');
-TT.insert('Heha');
-console.log(TT.isContainPrefix('Ha'));
-console.log(TT.isContainWord('Hello'));
-console.log(TT.countPrefix('He'));
-console.log(TT.countWord('Hello'));
+TT.insert("word");
+TT.insert("Hello");
+TT.insert("Haha");
+TT.insert("Heha");
+console.log(TT.isContainPrefix("Ha"));
+console.log(TT.isContainWord("Hello"));
+console.log(TT.countPrefix("He"));
+console.log(TT.countWord("Hello"));
 TT.preTraversal((root, word) => {
-  console.log(word)
+  console.log(word);
 });
-console.log(TT.remove('Hello'));
+console.log(TT.remove("Hello"));
 console.log(TT);

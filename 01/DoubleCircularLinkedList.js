@@ -7,21 +7,21 @@ class LinkedList2 {
      * 双向链表节点的构造函数
      * @param element 要传入链表的节点
      */
-    const Node = function (element) {
+    const Node = function(element) {
       this.element = element;
       this.previous = null;
       this.next = null;
     };
 
     // this.head = null; // 不带头节点
-    this.head = new Node('head'); // 带头节点
+    this.head = new Node("head"); // 带头节点
     this.tail = null;
     this.length = 1; // 链表长度
 
     /**
      * 查找节点
      */
-    this.find = function (element) {
+    this.find = function(element) {
       let node = this.head;
       while (node !== null && node.element !== element) {
         node = node.next;
@@ -34,7 +34,7 @@ class LinkedList2 {
      * @param newElement 要插入的节点
      * @param currElement 要插入哪个节点后面
      */
-    this.insert = function (newElement, currElement) {
+    this.insert = function(newElement, currElement) {
       let newNode = new Node(newElement);
       let currNode = this.find(currElement);
       // head 指针域为 null, 则链表为空
@@ -74,7 +74,7 @@ class LinkedList2 {
     /**
      * 删除节点
      */
-    this.remove = function (element) {
+    this.remove = function(element) {
       const node = this.find(element);
 
       // 所要删除的节点刚好是第一个，也就是head指向的节点，
@@ -107,6 +107,6 @@ class LinkedList2 {
         node.next.previous = prevNode;
         this.length -= 1;
       }
-    }
+    };
   }
 }

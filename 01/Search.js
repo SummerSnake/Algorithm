@@ -78,8 +78,9 @@ class Search {
       let high = arr.length - 1;
 
       while (low <= high) {
-        mid = Math.floor(low + (data - arr[low]) / (arr[high] - arr[low]) * (high - low));
-        if (mid < low || mid > high) { // 出现mid与上一次mid相同的情况跳出，防止死循环
+        mid = Math.floor(low + ((data - arr[low]) / (arr[high] - arr[low])) * (high - low));
+        if (mid < low || mid > high) {
+          // 出现mid与上一次mid相同的情况跳出，防止死循环
           break;
         }
         if (data === arr[mid]) {
@@ -93,12 +94,35 @@ class Search {
       }
 
       return -1;
-    }
+    };
   }
 }
 
-
-const arr = [1, 19, 88, 109, 200, 230, 270, 299, 900, 1000, 1001, 5000, 5010, 5400,
-  5900, 7000, 8000, 8099, 9012, 9099, 9999, 10002, 12093, 15432];
+const arr = [
+  1,
+  19,
+  88,
+  109,
+  200,
+  230,
+  270,
+  299,
+  900,
+  1000,
+  1001,
+  5000,
+  5010,
+  5400,
+  5900,
+  7000,
+  8000,
+  8099,
+  9012,
+  9099,
+  9999,
+  10002,
+  12093,
+  15432
+];
 const search = new Search();
 console.log(search.insertSearch(arr, 9099));

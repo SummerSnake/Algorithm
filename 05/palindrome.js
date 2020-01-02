@@ -9,7 +9,13 @@
  * @desc 字符串反转法
  */
 function isPalindrome(num) {
-  return num >= 0 && String.prototype.split.call(num, '').reverse().join('') === num.toString();
+  return (
+    num >= 0 &&
+    String.prototype.split
+      .call(num, "")
+      .reverse()
+      .join("") === num.toString()
+  );
 }
 
 /**
@@ -46,7 +52,7 @@ function isPalindrome3(x) {
   let y = 0;
 
   while (s >= 1) {
-    y = y * 10 + s % 10;
+    y = y * 10 + (s % 10);
     s = Math.floor(s / 10);
   }
   return y === x;
@@ -65,14 +71,14 @@ function isPalindrome3(x) {
 function isPalindrome4(x) {
   // 所有负数都不可能是回文，例如：-123 不是回文，因为 - 不等于 3；
   // 如果数字的最后一位是 0，为了使该数字为回文，则其第一位数字也应该是 0，只有 0 满足这一属性
-  if (x < 0 || x % 10 < 0 && x !== 0) {
+  if (x < 0 || (x % 10 < 0 && x !== 0)) {
     return false;
   }
 
   let reverseNum = 0;
 
   while (x > reverseNum) {
-    reverseNum = reverseNum * 10 + x % 10;
+    reverseNum = reverseNum * 10 + (x % 10);
     x = Math.floor(x / 10);
   }
 

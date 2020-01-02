@@ -12,21 +12,24 @@ class PriorityQueue {
     this.size = () => this.queue.length;
     // 入队（优先队列）
     this.enQueue = item => {
-      if (this.isEmpty()) { // 如果队列是空的，则直接插入
+      if (this.isEmpty()) {
+        // 如果队列是空的，则直接插入
         this.queue.push(item);
       } else {
         let flag = false; // 验证是否排队
         let i = this.queue.length - 1;
 
         while (i > 0) {
-          if (item.priority <= this.queue[i].priority) { // 如果新增元素的优先级小于等于i的优先级
-            this.queue.splice(i += 1, 0, item); // 将新增元素插入到i的后面
+          if (item.priority <= this.queue[i].priority) {
+            // 如果新增元素的优先级小于等于i的优先级
+            this.queue.splice((i += 1), 0, item); // 将新增元素插入到i的后面
             flag = true;
             break;
           }
           i -= 1;
         }
-        if (!flag) { // 如果循环一圈都没有找到能插队的位置，说明新增元素优先级最大，直接插入队列头部
+        if (!flag) {
+          // 如果循环一圈都没有找到能插队的位置，说明新增元素优先级最大，直接插入队列头部
           this.queue.unshift(item);
         }
       }
@@ -38,7 +41,7 @@ class PriorityQueue {
     // 获取队列的第一个元素
     this.front = () => this.queue[0];
     // 清空队列
-    this.clear = () => this.queue = [];
+    this.clear = () => (this.queue = []);
   }
 }
 

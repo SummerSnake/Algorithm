@@ -15,11 +15,9 @@ function uniqueArray(array = []) {
         uniqueArr.push(item);
       }
     });
-    console.log(uniqueArr.sort((a, b) => {
-      return a - b;
-    }));
+    console.log(uniqueArr.sort((a, b) => a - b));
   } else {
-    console.log('This is not an array.');
+    console.log("This is not an array.");
   }
 }
 
@@ -41,11 +39,9 @@ function uniqueArray2(array = []) {
         arr.push(item);
       }
     });
-    console.log(arr.sort((a, b) => {
-      return a - b;
-    }));
+    console.log(arr.sort((a, b) => a - b));
   } else {
-    console.log('This is not an array.');
+    console.log("This is not an array.");
   }
 }
 
@@ -57,8 +53,6 @@ uniqueArray2(arr2);
  * ES6 Set
  */
 let arr3 = [1, 13, 24, 11, 11, 14, 1, 2];
-const set = new Set([...arr3].sort((a, b) => {
-  return a - b;
-}));
+const set = new Set([...arr3].sort((a, b) => a - b));
 
 console.log(Array.from(set));

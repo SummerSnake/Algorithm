@@ -26,7 +26,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
 
-    this.insert = function (val) {
+    this.insert = function(val) {
       const node = new BinaryTreeNode(val);
       let prev = this.root;
       let tail = this.root;
@@ -38,8 +38,8 @@ class BinarySearchTree {
       // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
       while (tail) {
         prev = tail; // 将当前节点赋值给prev
-
-        if (node.val < tail.val) { // 要插入的节点值比当前节点小
+        // 要插入的节点值比当前节点小
+        if (node.val < tail.val) {
           tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
         } else {
           tail = tail.right;
@@ -56,7 +56,7 @@ class BinarySearchTree {
   }
 }
 
-const tree = new BinarySearchTree;
+const tree = new BinarySearchTree();
 tree.insert(4);
 tree.insert(2);
 tree.insert(1);
@@ -78,7 +78,7 @@ console.log(maxDepth(tree.root));
  * @desc 迭代算法
  */
 const maxDepth2 = root => {
-  const stack = [{ 'key': root, 'val': 1 }]; // 根节点入栈
+  const stack = [{ key: root, val: 1 }]; // 根节点入栈
 
   let depth = 0;
   while (stack.length > 0) {
@@ -89,11 +89,12 @@ const maxDepth2 = root => {
       let currNodeDepth = currObj.val; // 获取当前节点深度
       depth = Math.max(depth, currNodeDepth); // 获取较大深度，并保存
 
-      if (currNode.left) { // 节点存在，则入栈，深度加1
-        stack.push({ 'key': currNode.left, 'val': currNodeDepth + 1 });
+      if (currNode.left) {
+        // 节点存在，则入栈，深度加1
+        stack.push({ key: currNode.left, val: currNodeDepth + 1 });
       }
       if (currNode.right) {
-        stack.push({ 'key': currNode.right, 'val': currNodeDepth + 1 });
+        stack.push({ key: currNode.right, val: currNodeDepth + 1 });
       }
     }
   }

@@ -1,7 +1,8 @@
 /**
- * 统计一个字符串出现次数最多的字符。
+ * @desc 统计一个字符串出现次数最多的字符。
+ * @param { string } str 初始字符串
  */
-function findMaxDuplicateChar(str = '') {
+function findMaxDuplicateChar(str = "") {
   if (str.length <= 1) {
     return str;
   }
@@ -14,7 +15,7 @@ function findMaxDuplicateChar(str = '') {
     }
   });
 
-  let maxChar = '';
+  let maxChar = "";
   let maxVal = 1;
   for (let key in charObj) {
     if (charObj[key] >= maxVal) {
@@ -25,30 +26,32 @@ function findMaxDuplicateChar(str = '') {
   console.info(` 出现次数最多的字符：${maxChar}\r\n`, `出现的次数：${maxVal}`);
 }
 
-let str = 'afjghdfraaaasdenas';
+let str = "afjghdfraaaasdenas";
 findMaxDuplicateChar(str);
 
 /**
  * @desc 打印出两个年份之间所有的闰年，并以每行四个数的形式输出
+ * @param { number } start 开始年份
+ * @param { number } end 结束年份
  *
  * 闰年规律：四年一闰，百年不闰，四百年再闰
  */
 function getLeapYear(start, end) {
   let i = start;
   let count = 0; // 计算闰年的个数
-  let str = ''; // 输出字符串
+  let str = ""; // 输出字符串
 
   while (i <= end) {
-    if (i % 4 === 0 && i % 100 !== 0 || i % 400 === 0) {
+    if ((i % 4 === 0 && i % 100 !== 0) || i % 400 === 0) {
       count += 1;
-      str = str + i + ' ';
+      str = str + i + " ";
 
-      if (str.split(' ').length === 5 || i === end) {
+      if (str.split(" ").length === 5 || i === end) {
         console.log(str);
       }
       if (count > 0 && count % 4 === 0) {
-        console.log('\n');
-        str = '';
+        console.log("\n");
+        str = "";
       }
     }
     i += 1;
@@ -59,20 +62,21 @@ getLeapYear(1000, 2000);
 
 /**
  * @desc 将数字12345678转化成RMB形式：12,345,678
+ * @param { number } num 要转换的数字
  */
 function formatNumberToRMB(num) {
-  let arr = num.toString().split('');
+  let arr = num.toString().split("");
   let len = arr.length;
 
   while (len > 3) {
     len -= 1;
 
     if (len % 3 === 0) {
-      arr.splice(len, 0, ',');
+      arr.splice(len, 0, ",");
     }
   }
 
-  return arr.join('');
+  return arr.join("");
 }
 
 console.log(formatNumberToRMB(12345678));

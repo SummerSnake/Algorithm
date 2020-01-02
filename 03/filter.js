@@ -19,10 +19,17 @@ multiple(2, 3, 4);
  * thisValue 可选。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。如果省略了 thisValue ，"this" 的值为 "undefined"
  */
 let ages = [19, 20];
-let students = [[19, 'Male', '80kg'], [20, 'Female', '50kg'], [20, 'Female', '51kg'], [24, 'Female', '60kg']];
+let students = [
+  [19, "Male", "80kg"],
+  [20, "Female", "50kg"],
+  [20, "Female", "51kg"],
+  [24, "Female", "60kg"]
+];
 
-const filteredData = students.filter(function (value) { // 不可以使用箭头函数
-  for (let i = 0; i < this.length; i += 1) { // this 指向ages
+const filteredData = students.filter(function(value) {
+  // 不可以使用箭头函数
+  for (let i = 0; i < this.length; i += 1) {
+    // this 指向ages
     if (this[i] === value[0]) {
       return true;
     }
@@ -41,4 +48,11 @@ function unite() {
   });
 }
 
-console.log(unite([19, 'Male', '80kg'], [20, 'Female', '50kg'], [20, 'Female', '51kg'], [24, 'Female', '60kg']));
+console.log(
+  unite(
+    [19, "Male", "80kg"],
+    [20, "Female", "50kg"],
+    [20, "Female", "51kg"],
+    [24, "Female", "60kg"]
+  )
+);

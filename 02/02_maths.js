@@ -3,7 +3,7 @@
  */
 
 // 暴力递归
-const calc = function (n) {
+const calc = function(n) {
   if (n <= 0) {
     return 0;
   }
@@ -19,7 +19,7 @@ const calc = function (n) {
 // 哈希表
 const map = new Map();
 
-const calc2 = function (n) {
+const calc2 = function(n) {
   if (n <= 0) {
     return 0;
   }
@@ -41,10 +41,9 @@ const calc2 = function (n) {
 
 // console.log(calc2(3));
 
-
 // 斐波那契数列
 // 这个数列从第3项开始，每一项都等于前两项之和。
-const calc3 = function (n) {
+const calc3 = function(n) {
   if (n <= 0) {
     return 0;
   }

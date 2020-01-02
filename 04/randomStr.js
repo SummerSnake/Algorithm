@@ -4,8 +4,8 @@
  * ~ floor() 方法返回小于等于所传参数的最大整数。
  */
 function randomStr(num) {
-  let str = 'abcdefghijkmnopqrstuvwxyz9876543210';
-  let result = '';
+  let str = "abcdefghijkmnopqrstuvwxyz9876543210";
+  let result = "";
   let len = str.length;
   let i = 0;
   while (i < num) {

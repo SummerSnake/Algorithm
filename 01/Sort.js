@@ -14,7 +14,8 @@ function bubbleSort(arr = []) {
   let temp = 0;
   // 数组的长度为11，所以i最大是9，当i等于9的时候，j只能等于0，所以最后比较的是arr[0]和arr[1]，刚好是数组的前两位。
   for (let i = 0; i < len - 1; i += 1) {
-    for (let j = 0; j < len - 1 - i; j += 1) { // 嵌套 for 循环，外层走一次，内层走一轮
+    for (let j = 0; j < len - 1 - i; j += 1) {
+      // 嵌套 for 循环，外层走一次，内层走一轮
       if (arr[j] > arr[j + 1]) {
         temp = arr[j + 1];
         arr[j + 1] = arr[j];
@@ -81,7 +82,8 @@ function insertionSort(arr = []) {
   for (let i = 0; i < len; i += 1) {
     preIndex = i - 1;
     current = arr[i]; // 新元素
-    while (preIndex >= 0 && arr[preIndex] > current) { // 已排序元素大于新元素
+    while (preIndex >= 0 && arr[preIndex] > current) {
+      // 已排序元素大于新元素
       arr[preIndex + 1] = arr[preIndex]; // 将已排序元素赋值给新元素
       preIndex--;
     }
@@ -128,7 +130,7 @@ class ShellSort {
       let gap = 1;
 
       while (gap < len / 3) {
-        gap = 3 * gap + 1;//设置间隔
+        gap = 3 * gap + 1; //设置间隔
       }
 
       while (gap >= 1) {
@@ -143,7 +145,7 @@ class ShellSort {
       }
 
       return arr;
-    }
+    };
   }
 }
 
@@ -222,7 +224,7 @@ class MergeSort {
       merge(arr, start, divider, endClone);
 
       return arr;
-    }
+    };
   }
 }
 
@@ -313,8 +315,10 @@ class QuickSort {
         let i = start - 1; // 初始化指针 i=-1
         let j = start;
 
-        while (j < end - 1) { // 循环数组
-          if (arr[j] <= pivot) { // 如果比基准点小就将 i 向右移动一个位置，然后交换元素位置
+        while (j < end - 1) {
+          // 循环数组
+          if (arr[j] <= pivot) {
+            // 如果比基准点小就将 i 向右移动一个位置，然后交换元素位置
             i += 1;
             swap(arr, i, j);
           }
@@ -345,7 +349,7 @@ class QuickSort {
       };
 
       return sortFunc(arr);
-    }
+    };
   }
 }
 
@@ -394,12 +398,13 @@ class CountSort {
       for (let i = 0; i < len; i += 1) {
         let tempIndex = tempArr[arr[i] - min]; // min 作为偏移量，用以记录相同元素的位置
 
-        tempArr[arr[i] - min] = tempIndex ? tempIndex += 1 : 1;
+        tempArr[arr[i] - min] = tempIndex ? (tempIndex += 1) : 1;
       }
 
       // 把临时数组统计好的数据汇总到原数组
       let k = 0;
-      for (let i = 0; i < tempArr.length; i += 1) { // 遍历临时数组，max 为临时数组长度
+      for (let i = 0; i < tempArr.length; i += 1) {
+        // 遍历临时数组，max 为临时数组长度
         // 遍历每个数，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
         for (let j = tempArr[i]; j > 0; j -= 1) {
           arr[k] = i + min; // 赋值给原始数组
@@ -408,7 +413,7 @@ class CountSort {
       }
 
       return arr;
-    }
+    };
   }
 }
 

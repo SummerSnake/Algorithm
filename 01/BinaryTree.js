@@ -40,7 +40,7 @@ class BinarySearchTree {
      * 定义两个指针，分别是 prev 和 tail，最初都指向 root，prev 是用来指向要插入的位置的父节点的指针，
      * 而 tail 是用来查找插入位置的，最终将会指向null。
      */
-    this.insert = function (key, val) {
+    this.insert = function(key, val) {
       const node = new BinaryTreeNode(key, val);
       let prev = this.root;
       let tail = this.root;
@@ -52,8 +52,8 @@ class BinarySearchTree {
       // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
       while (tail) {
         prev = tail; // 将当前节点赋值给prev
-
-        if (node.val < tail.val) { // 要插入的节点值比当前节点小
+        // 要插入的节点值比当前节点小
+        if (node.val < tail.val) {
           tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
         } else {
           tail = tail.right;
@@ -73,10 +73,10 @@ class BinarySearchTree {
     /**
      * @desc 查找节点
      */
-    this.find = function (val) {
+    this.find = function(val) {
       let prev = this.root;
       if (!prev) {
-        return '空树';
+        return "空树";
       }
       while (prev && prev.val !== val) {
         if (prev.val > val) {
@@ -99,7 +99,7 @@ class BinarySearchTree {
      */
     function* _inOrder(element) {
       if (!element) {
-        return '空树';
+        return "空树";
       }
       // 1. 中序遍历
       yield* _inOrder(element.left);
@@ -115,18 +115,18 @@ class BinarySearchTree {
       // yield element;
     }
 
-    this.inOrder = function () {
+    this.inOrder = function() {
       return _inOrder(this.root);
     };
   }
 }
 
-const tree = new BinarySearchTree;
-tree.insert('first', 10);
-tree.insert('second', 11);
-tree.insert('third', 6);
-tree.insert('fourth', 3);
-tree.insert('fifth', 13);
+const tree = new BinarySearchTree();
+tree.insert("first", 10);
+tree.insert("second", 11);
+tree.insert("third", 6);
+tree.insert("fourth", 3);
+tree.insert("fifth", 13);
 console.log(tree.find(13));
 const result = tree.inOrder();
 // let arr = [...tree.inOrder()].map(item => item.val);

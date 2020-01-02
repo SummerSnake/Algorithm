@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body></body>
+  <script>
+    /**
+     * @desc 杨辉三角
+     *
+     * 1. 每一行设为m行，每行上面的某个元素，设为第n个元素;
+     * 2. 每一行， 第一个元素为1，最后一个元素为1;
+     * 3. 第m行，有m个元素;
+     * 4. 第m行上面的第n个元素的值，等于第m-1行上面第n个元素与第m-1行上面第n-1个元素的值的和，
+     * 即排列组合公式：func(m, n) = func(m-1, n ) + func(m-1, m-n)。
+     */
 
-</body>
-<script>
-  /**
-   * @desc 杨辉三角
-   *
-   * 1. 每一行设为m行，每行上面的某个元素，设为第n个元素;
-   * 2. 每一行， 第一个元素为1，最后一个元素为1;
-   * 3. 第m行，有m个元素;
-   * 4. 第m行上面的第n个元素的值，等于第m-1行上面第n个元素与第m-1行上面第n-1个元素的值的和，
-   * 即排列组合公式：func(m, n) = func(m-1, n ) + func(m-1, m-n)。
-   */
-
-  /**
-   * @desc 计算当前值  假设当前行为m行，当前元素为第n个元素
-   * @param { number } m 当前行
-   * @param { number } n 当前元素
-   */
-  const calc = (m, n) => {
-    if (n === 0 || m === n) { // 每行第一个元素及最后一个元素为1
-      return 1;
-    }
-    return calc(m - 1, n) + calc(m - 1, m - n);
-  };
-
-  const YangHuiTriangle = length => {
-    for (let i = 0; i < length; i += 1) {
-      for (let j = 0; j <= i; j += 1) {
-        document.write(calc(i, j) + ' ');
+    /**
+     * @desc 计算当前值  假设当前行为m行，当前元素为第n个元素
+     * @param { number } m 当前行
+     * @param { number } n 当前元素
+     */
+    const calc = (m, n) => {
+      if (n === 0 || m === n) {
+        // 每行第一个元素及最后一个元素为1
+        return 1;
       }
-      document.write('<br/>');
-    }
-  };
+      return calc(m - 1, n) + calc(m - 1, m - n);
+    };
 
-  const YangHuiTriangleReverse = length => {
-    for (let i = length - 1; i >= 0; i -= 1) {
-      for (let j = i; j >= 0; j -= 1) {
-        document.write(calc(i, j) + ' ');
+    const YangHuiTriangle = length => {
+      for (let i = 0; i < length; i += 1) {
+        for (let j = 0; j <= i; j += 1) {
+          document.write(calc(i, j) + " ");
+        }
+        document.write("<br/>");
       }
-      document.write('<br/>');
-    }
-  };
+    };
 
-  YangHuiTriangle(7);
-  YangHuiTriangleReverse(7);
-</script>
+    const YangHuiTriangleReverse = length => {
+      for (let i = length - 1; i >= 0; i -= 1) {
+        for (let j = i; j >= 0; j -= 1) {
+          document.write(calc(i, j) + " ");
+        }
+        document.write("<br/>");
+      }
+    };
+
+    YangHuiTriangle(7);
+    YangHuiTriangleReverse(7);
+  </script>
 </html>

@@ -8,14 +8,17 @@
 function maxOfFour(arr) {
   let newArr = [];
   arr.forEach(item => {
-    newArr.push(item.sort((a, b) => {
-      return b - a;
-    })[0]);
+    newArr.push(item.sort((a, b) => b - a)[0]);
   });
   console.log(newArr);
 }
 
-let arr = [[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]];
+let arr = [
+  [13, 27, 18, 26],
+  [4, 5, 1, 3],
+  [32, 35, 37, 39],
+  [1000, 1001, 857, 1]
+];
 maxOfFour(arr);
 
 /**
@@ -23,11 +26,14 @@ maxOfFour(arr);
  */
 function maxOfFour2(arr) {
   let newArr2 = [];
-  arr.forEach(item => {
-    newArr2.push(Math.max.apply(null, item));
-  });
+  arr.forEach(item => newArr2.push(Math.max.apply(null, item)));
   console.log(newArr2);
 }
 
-let arr2 = [[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]];
+let arr2 = [
+  [13, 27, 18, 26],
+  [4, 5, 1, 3],
+  [32, 35, 37, 39],
+  [1000, 1001, 857, 1]
+];
 maxOfFour2(arr2);

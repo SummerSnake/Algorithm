@@ -156,7 +156,7 @@ class BinaryHeap {
       this.data.splice(index, 1);
       this.size -= 1;
       !isHeap() && buildHeap();
-    }
+    };
   }
 }
 

@@ -3,7 +3,8 @@
  * 求它在第10次落地时，共经过多少米？第10次反弹多高？
  */
 function calc() {
-  let nowHeight = 100, nextHeight = nowHeight / 2;
+  let nowHeight = 100,
+    nextHeight = nowHeight / 2;
   for (let i = 0; i < 9; i += 1) {
     // 每次增加弹起落地两次高度
     nowHeight = nowHeight + 2 * nextHeight;
