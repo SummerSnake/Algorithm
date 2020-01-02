@@ -106,9 +106,8 @@
           trArr.sort(function(tr1, tr2) {
             let value1 = 0;
             let value2 = 0;
-            switch (
-              type // 获取 td 的值
-            ) {
+            // 获取 td 的值
+            switch (type) {
               case "product":
                 value1 = parseFloat(tr1.getElementsByTagName("td")[0].innerHTML);
                 value2 = parseFloat(tr2.getElementsByTagName("td")[0].innerHTML);
