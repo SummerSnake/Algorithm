@@ -1,5 +1,5 @@
 /**
- * 二叉树的层次遍历(从根节点开始往叶子输出)
+ * 二叉树的层次遍历2(从叶子开始往根节点输出)
  */
 
 /**
@@ -41,7 +41,7 @@ const createBinaryTreeByArray = (arr, index) => {
   return null;
 };
 
-const arr = [3, 9, 20, null, null, 15, 7];
+const arr = [1, 2, 3, 4, null, null, 5];
 const root = createBinaryTreeByArray(arr, 0);
 
 // ----------------    题解    ----------------
@@ -62,7 +62,15 @@ const levelOrder = root => {
       continue;
     }
 
-    res[index] = res[index] ? [...res[index], node.val] : [node.val];
+    if (!Array.isArray(res[index])) {
+      res[index] = [];
+    }
+
+    if (index % 2 === 0) {
+      res[index].push(node.val);
+    } else {
+      res[index].unshift(node.val);
+    }
 
     queue.push({ index: index + 1, node: node.left });
     queue.push({ index: index + 1, node: node.right });
@@ -85,7 +93,15 @@ const levelOrder2 = (node, res = [], level = 0) => {
     return;
   }
 
-  res[level] = res[level] ? [...res[level], node.val] : [node.val];
+  if (!Array.isArray(res[level])) {
+    res[level] = [];
+  }
+
+  if (level % 2 === 0) {
+    res[level].push(node.val);
+  } else {
+    res[level].unshift(node.val);
+  }
 
   levelOrder2(node.left, res, level + 1);
   levelOrder2(node.right, res, level + 1);
