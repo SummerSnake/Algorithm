@@ -1,39 +1,47 @@
 /**
- * 比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。
+ * @desc 比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。
+ *       换言之，返回两个数组的差异。
+ * @param { array } arr1 要比较的数组
+ * @param { array } arr2 要比较的数组
+ * @return { array } 包含所有独有元素的数组
  */
-function diff(arr1, arr2) {
+const diff = (arr1 = [], arr2 = []) => {
   let arr3 = [...arr1, ...arr2];
-  let newArr = arr3.filter(item => {
-    return !arr1.includes(item) || !arr2.includes(item);
-  });
 
-  console.log(newArr);
-}
+  return arr3.filter(item => !arr1.includes(item) || !arr2.includes(item));
+};
 
 let arr1 = [1, 2, 3, 5, 6];
 let arr2 = [1, 2, 3, 4, 5];
-diff(arr1, arr2);
+console.log(diff(arr1, arr2));
 
 /**
- * 使用给定的参数对句子执行一次查找和替换，然后返回新句子。
+ * @desc 使用给定的参数对句子执行一次查找和替换，然后返回新句子。
+ * @param { string } str 原始字符串
+ * @param { string } nowWord 要替换的字符串
+ * @param { string } newWord 替换指定字符串的新字符串
+ * @return { string } 替换完成的新字符串
  */
-function replaceWord(str, nowWord, newWord) {
+const replaceWord = (str = '', nowWord = '', newWord = '') => {
   // 判断 nowWord 字符串首字母是否大写，若是，则将 newWord 字符串首字母也替换为大写；
   if (nowWord.charAt(0) < 'a') {
     let firstChar = newWord.charAt(0);
+
     newWord = newWord.replace(firstChar, firstChar.toUpperCase());
   }
-  str = str.replace(nowWord, newWord);
-  console.log(str);
-}
 
-replaceWord('Let us go to the store.', 'store', 'mall');
-replaceWord('His name is Tom.', 'Tom', 'john');
+  return str.replace(nowWord, newWord);
+};
+
+console.log(replaceWord('Let us go to the store.', 'store', 'mall'));
+console.log(replaceWord('His name is Tom.', 'Tom', 'john'));
 
 /**
- * 已知如下数组：
- * let arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
- * 编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+ * @desc 已知如下数组：
+ *       let arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+ *       编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+ * @param { array } arr 要格式化的数组
+ * @return { array } 格式化完成的数组
  */
 const formatArr = (arr = []) => {
   if (Array.isArray(arr) && arr.length < 1) {
@@ -54,3 +62,21 @@ const formatArr = (arr = []) => {
 
 let initArr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
 console.log(formatArr(initArr));
+
+/**
+ * @desc 已知如下对象：
+ *       let obj = {1:222, 2:123, 5:888}，
+ *       请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]
+ * @param { object } obj 要格式化的对象
+ * @return { array } 格式化完成的数组
+ */
+const formatObj = obj => {
+  if (!obj) {
+    return null;
+  }
+
+  return Array.from({ length: 12 }).map((_, index) => obj[index + 1] || null);
+};
+
+let obj = { 1: 222, 2: 123, 5: 888 };
+console.log(formatObj(obj));
