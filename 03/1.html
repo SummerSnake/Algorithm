@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const recursion = (result, n) => {
+        return result >= 10000 ? n - 1 : recursion(result + 1100 / n, n + 1);
+      };
+
+      console.log(recursion(0, 1));
+    </script>
+  </body>
+</html>
