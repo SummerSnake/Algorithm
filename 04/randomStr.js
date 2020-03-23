@@ -66,3 +66,12 @@ const createTargetArray = function(nums, index) {
 const nums = [1, 2, 3, 4, 0];
 const index = [0, 1, 2, 3, 0];
 console.log(createTargetArray(nums, index));
+
+/**
+ * @desc 把字符串前面的若干个字符转移到字符串的尾部
+ * @param { string } str 给定字符串
+ * @param { number } n 要转移的字符个数
+ * @return { string } 转移完成的字符串
+ */
+const reverseLeftWords = (str, n) => `${str.substring(n)}${str.substring(0, n)}`;
+console.log(reverseLeftWords('lrloseumgh', 6));
