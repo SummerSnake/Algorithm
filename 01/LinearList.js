@@ -8,7 +8,7 @@
  * 数组大小固定，查找迅速，增删复杂，需要完整的内存块，容易产生碎片。
  * js 中数据为动态数组，可以改变大小。
  */
-function arrFunc() {
+const arrFunc = () => {
   const arr = [1, 2, 5, 7, 8, 11, 0, 0];
   const len = arr.length;
   // 在数组第三项后增加一项
@@ -17,10 +17,11 @@ function arrFunc() {
     arr[i] = arr[i - 1];
   }
   arr[3] = 6;
-  return arr;
-}
 
-// console.log(arrFunc());
+  return arr;
+};
+
+console.log(arrFunc());
 
 /**
  * 线性存储要求一块完整的内存，在增删数据时也表现一般，而链式存储则正好解决了这些问题。
@@ -37,90 +38,117 @@ function arrFunc() {
  */
 
 /**
- * 单链表
+ * @desc 单向链表节点的构造函数
+ */
+class Node {
+  constructor(element) {
+    this.element = element;
+    this.next = null;
+  }
+}
+/**
+ * @desc 单链表
  */
 class LinkedList {
   constructor() {
-    /**
-     * 单向链表节点的构造函数
-     * @param element 要传入链表的节点
-     */
-    const Node = function(element) {
-      this.element = element;
-      this.next = null;
-    };
-
     // this.head = null; // 不带头节点
-    this.head = new Node("head"); // 带头节点
+    this.head = new Node('head'); // 带头节点
     this.length = 1; // 链表长度
+  }
 
-    /**
-     * 查找节点
-     */
-    this.find = function(element) {
-      let node = this.head;
-      while (node !== null && node.element !== element) {
-        node = node.next;
-      }
-      return node;
-    };
+  /**
+   * @desc 查找节点
+   * @param { any } element 要查找的节点
+   * @return { any } 查找到的节点
+   */
+  find(element) {
+    let node = this.head;
 
-    /**
-     * 向单向链表中某个位置插入元素
-     * @param newElement 要插入的节点
-     * @param currElement 要插入哪个节点后面
-     */
-    this.insert = function(newElement, currElement) {
-      let newNode = new Node(newElement);
-      let currNode = this.find(currElement);
+    while (node !== null && node.element !== element) {
+      node = node.next;
+    }
 
-      if (this.head) {
+    return node;
+  }
+
+  /**
+   * @desc 向单向链表中某个位置插入元素
+   * @param newElement 要插入的节点
+   * @param currElement 要插入哪个节点后面(当前节点)
+   */
+  insert(newElement, currElement) {
+    let newNode = new Node(newElement);
+    let currNode = null;
+
+    if (currElement) {
+      currNode = this.find(currElement);
+    }
+    // 不带头空链表，将head指向新节点
+    if (!this.head) {
+      newNode.next = null;
+      this.head = newNode;
+    } else {
+      if (currNode) {
+        // 将新节点插入到当前节点后边
         newNode.next = currNode.next;
         currNode.next = newNode;
       } else {
-        newNode.next = null;
-        this.head = newNode;
+        // 当前节点不存在，则将新节点插入到head后边
+        newNode.next = this.head.next;
+        this.head.next = newNode;
       }
-      this.length += 1;
-    };
+    }
 
-    /**
-     * 删除节点
-     */
-    this.remove = function(element) {
-      const node = this.find(element);
-      // 所要删除的节点刚好是第一个，也就是head指向的节点，
-      // 将head指向所要删除节点的下一个节点(node.next)。
-      if (node.element === this.head.element) {
-        this.head = this.head.next;
-        this.length -= 1;
-        return;
-      }
-      // 寻找到所要删除节点的上一个节点(prevNode)
-      let prevNode = this.head;
-      // 循环判断当前节点指针域是否指向要删除的节点，如果不是则将指向的节点赋值给当前节点，进行下一次遍历
-      while (prevNode.next.element !== node.element) {
-        prevNode = prevNode.next;
-      }
-      // 要删除的节点为最后一个节点
-      // 寻找到所要删除节点的上一个节点(prevNode)，将prevNode中的指针指向NULL。
-      if (node.next === null) {
-        prevNode.next = null;
-        this.length -= 1;
-        return;
-      }
-      // 在列表中间删除某个节点
-      // 将prevNode中的指针指向当前要删除的这个节点的下一个节点
-      if (node.next) {
-        prevNode.next = node.next;
-        this.length -= 1;
-      }
-    };
+    this.length += 1;
+  }
+
+  /**
+   * @desc 删除节点
+   * @param { any } element 要删除的节点
+   */
+  remove(element) {
+    if (!element) {
+      return;
+    }
+    const node = this.find(element);
+    // 所要删除的节点刚好是第一个，也就是head指向的节点，
+    // 将head指向所要删除节点的下一个节点(node.next)。
+    if (node.element === this.head.element) {
+      this.head = this.head.next;
+      this.length -= 1;
+      return;
+    }
+    // 寻找到所要删除节点的上一个节点(prevNode)
+    let prevNode = this.head;
+    // 循环判断当前节点指针域是否指向要删除的节点，如果不是则将指向的节点赋值给当前节点，进行下一次遍历
+    while (prevNode.next.element !== node.element) {
+      prevNode = prevNode.next;
+    }
+    // 要删除的节点为最后一个节点
+    // 寻找到所要删除节点的上一个节点(prevNode)，将prevNode中的指针指向NULL。
+    if (node.next === null) {
+      prevNode.next = null;
+      this.length -= 1;
+      return;
+    }
+    // 在列表中间删除某个节点
+    // 将prevNode中的指针指向当前要删除的这个节点的下一个节点
+    if (node.next) {
+      prevNode.next = node.next;
+      this.length -= 1;
+    }
   }
 }
 
+const list = new LinkedList();
+list.insert(1);
+list.insert(2, 1);
+list.insert(3, 2);
+list.insert(4, 3);
+console.log(list);
+
 /**
- * 双向链表
+ * @desc 双向链表
  */
 class LinkedList2 {
   constructor() {
@@ -128,14 +156,14 @@ class LinkedList2 {
      * 双向链表节点的构造函数
      * @param element 要传入链表的节点
      */
-    const Node = function(element) {
+    const Node2 = function(element) {
       this.element = element;
       this.previous = null;
       this.next = null;
     };
 
     // this.head = null; // 不带头节点
-    this.head = new Node("head"); // 带头节点
+    this.head = new Node2('head'); // 带头节点
     this.length = 1; // 链表长度
 
     /**
@@ -155,7 +183,7 @@ class LinkedList2 {
      * @param currElement 要插入哪个节点后面
      */
     this.insert = function(newElement, currElement) {
-      let newNode = new Node(newElement);
+      let newNode = new Node2(newElement);
       let currNode = this.find(currElement);
 
       if (this.head) {
