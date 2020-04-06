@@ -68,30 +68,60 @@ list.insert(4, 3);
 
 /**
  * @desc 迭代算法
+ *       1、 添加一个哨兵节点;
+ *       2、 三个节点外加一个哨兵节点之间作指针指向变换操作。
  * @param { ListNode } head
  * @return { ListNode }
  */
-const swapPairs = head => {
+const swapPairs = (head) => {
   // 新建 虚拟head，指向当前head
-  const dummyHead = new Node(0);
-  dummyHead.next = head;
+  const thead = new Node(0);
+  thead.next = head;
 
-  let prev = dummyHead;
-  let first = prev.next;
+  let tmp = thead;
 
-  while (first && first.next) {
-    let second = first.next;
-    let next = second.next;
+  while (tmp.next && tmp.next.next) {
+    const start = tmp.next;
+    const end = start.next;
 
-    second.next = first;
-    first.next = next;
-    prev.next = second;
+    tmp.next = end;
+    start.next = end.next;
+    end.next = start;
 
-    prev = first;
-    first = first.next;
+    tmp = start;
   }
 
-  return dummyHead.next;
+  return thead.next;
 };
 
 console.log(swapPairs(list.head));
+
+/**
+ * @desc 递归算法
+ *       1、终止条件
+ *          <1> 至少三个节点之间才可以互换;
+ *          <2> 只有一个节点或没有节点，返回此节点。
+ *       2、交换规则
+ *          <1> 将需要交换的两个节点定义为head、next;
+ *          <2> head 连接后面交换完成的子链表;
+ *          <3> next 连接 head;
+ *          <4> 完成交换。
+ * @param { ListNode } head
+ * @return { ListNode }
+ */
+const swapPairs2 = (head) => {
+  if (head === null || head.next === null) {
+    return head;
+  }
+
+  // 1、获得第2个节点;
+  const next = head.next;
+  // 2、第1个节点指向第3个节点，并从第3个节点开始递归;
+  head.next = swapPairs2(next.next);
+  // 3、第2个节点指向第1个节点。
+  next.next = head;
+
+  return next;
+};
+
+console.log(swapPairs2(list.head));
