@@ -89,4 +89,29 @@ const reverseList = (head) => {
   return current;
 };
 
-console.log(reverseList(list.head));
+// console.log(reverseList(list.head));
+
+/**
+ * @desc 递归算法
+ * @param { ListNode } head 链表
+ * @return { ListNode } 反转完成的链表
+ */
+const reverseList2 = (head) => {
+  if (head === null || head.next === null) {
+    return head;
+  }
+
+  // 递归逐级返回
+  const current = reverseList2(head.next);
+  // 例如，1 => 2 => 3 => 4 => 5 => null;
+  // 当 current 为5, head为4(current 为 head.next);
+  // 当 head.next 是5, head.next.next 就是5指向的指针;
+  // 将其指向当前的 head(4) 5 => 4。
+  head.next.next = head;
+  // 将 head.next 设置为 null，切断4指向5的指针，下次递归4即为最后一个节点。
+  head.next = null;
+
+  return current;
+};
+
+console.log(reverseList2(list.head));
