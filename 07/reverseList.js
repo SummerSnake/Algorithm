@@ -72,6 +72,10 @@ list.insert(5, 4);
  * @return { ListNode } 反转完成的链表
  */
 const reverseList = (head) => {
+  if (head === null || head.next === null) {
+    return head;
+  }
+
   let prev = head;
   let current = null;
 
@@ -114,4 +118,33 @@ const reverseList2 = (head) => {
   return current;
 };
 
-console.log(reverseList2(list.head));
+// console.log(reverseList2(list.head));
+
+/**
+ * @desc 迭代算法(根据栈后进先出特性构造新链表)
+ * @param { ListNode } head 链表
+ * @return { ListNode } 反转完成的链表
+ */
+const reverseList3 = (head) => {
+  if (head === null || head.next === null) {
+    return head;
+  }
+
+  let stack = [];
+  let dummyHead = new Node(0); // 虚拟头节点
+  let prev = dummyHead; // prev 为推进指针，初始指向虚拟头结点
+  // 将原链的节点值逐个推入栈
+  while (head) {
+    stack.push(head.element);
+    head = head.next;
+  }
+  // 遍历栈
+  while (stack.length) {
+    prev.next = new Node(stack.pop()); // 节点出栈， 创建节点， prev的next指向它
+    prev = prev.next; // 推进prev指针，指向新创建的节点
+  }
+
+  return dummyHead.next;
+};
+
+console.log(reverseList3(list.head));
