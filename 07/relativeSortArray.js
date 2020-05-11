@@ -38,4 +38,34 @@ const relativeSortArray = (arr1, arr2) => {
   return [...arr1.splice(0, lastIndex), ...arr];
 };
 
-console.log(relativeSortArray(arr1, arr2));
+// console.log(relativeSortArray(arr1, arr2));
+
+/**
+ * @desc sort() 若返回值>=1，则表示a在排序后的序列中出现在 b 之后，反之...
+ * @param { number[] } arr1
+ * @param { number[] } arr2
+ * @return { number[] }
+ */
+const relativeSortArray2 = (arr1, arr2) => {
+  return arr1.sort((a, b) => {
+    // 判断要排序的两个元素是否存在于 arr2 中
+    let ia = arr2.indexOf(a);
+    let ib = arr2.indexOf(b);
+
+    if (ia === -1 && ib === -1) {
+      // 如果都不存在，直接升序排列
+      return a - b;
+    } else if (ia === -1) {
+      // 如果元素仅a不存在，则将a排在b之后
+      return 1;
+    } else if (ib === -1) {
+      // 如果元素仅b不存在，则将b排在a之后
+      return -1;
+    } else {
+      // 如果都存在，则按a和b在arr2中的顺序进行排序
+      return ia - ib;
+    }
+  });
+};
+
+console.log(relativeSortArray2(arr1, arr2));
