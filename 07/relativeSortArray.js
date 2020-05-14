@@ -69,3 +69,38 @@ const relativeSortArray2 = (arr1, arr2) => {
 };
 
 console.log(relativeSortArray2(arr1, arr2));
+
+/**
+ * @desc 计数排序
+ */
+const relativeSortArray3 = (arr1, arr2) => {
+  let maxVal = Math.max(...arr1);
+  // 定义一个长度比数组1最大值大于1的新数组，此时新数组为包含数组1所有元素的有序数组
+  let bucket = new Array(maxVal + 1).fill(0);
+  let ret = [];
+
+  // 将数组1的元素作为新数组的下标，遍历数组1，统计其元素出现的次数
+  for (let i = 0; i < arr1.length; i++) {
+    bucket[arr1[i]]++;
+  }
+
+  // 遍历数组2，将新数组中所包含与数组2相同的元素依次存入结果数组
+  for (let j = 0; j < arr2.length; j++) {
+    while (bucket[arr2[j]] > 0) {
+      ret.push(arr2[j]);
+      bucket[arr2[j]]--;
+    }
+  }
+
+  // 遍历新数组，将新数组剩余的元素存入结果数组
+  for (let k = 0; k <= maxVal; k++) {
+    while (bucket[k] > 0) {
+      ret.push(k);
+      bucket[k]--;
+    }
+  }
+
+  return ret;
+};
+
+console.log(relativeSortArray3(arr1, arr2));

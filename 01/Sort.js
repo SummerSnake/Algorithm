@@ -125,7 +125,7 @@ class ShellSort {
      * @param { array } arr 要排序的数组
      * @return 排序完成的数组
      */
-    this.sort = arr => {
+    this.sort = (arr) => {
       let len = arr.length;
       let gap = 1;
 
@@ -253,7 +253,7 @@ class QuickSort {
      * ~ <3> concat操作会对数组进行一次拷贝，而它的复杂度也会是O(n)；
      * ~ <4> 对大量数据的排序来说相对会比较慢。
      */
-    this.sort1 = arr => {
+    this.sort1 = (arr) => {
       if (arr.length <= 1) {
         return arr;
       }
@@ -288,7 +288,7 @@ class QuickSort {
      *       例如：i=-1+1, arr[i]=找到的数；
      * ~ <3> 循环结束后，将 pivot 与i+1位置的元素进行交换。
      */
-    this.sort2 = arr => {
+    this.sort2 = (arr) => {
       /**
        * @desc 两个数位置互换
        * @param { array } array 归属数组
@@ -367,56 +367,51 @@ console.log(quickSort.sort2(arr6));
  *
  * ~ 时间复杂度：O(n+k); 空间复杂度：O(k); 稳定排序; 非原地排序。
  */
-class CountSort {
-  constructor() {
-    /**
-     * @desc 数组排序
-     * @param { array } arr 要排序的数组
-     * @return { array } 排序完成的数组
-     */
-    this.sort = arr => {
-      if (arr.length <= 1) {
-        return arr;
-      }
-
-      let len = arr.length;
-      let min = arr[0];
-      let max = arr[0];
-      // 获取数组中的最大值和最小值
-      for (let i = 1; i < len; i += 1) {
-        if (arr[i] > max) {
-          max = arr[i];
-        }
-        if (arr[i] < min) {
-          min = arr[i];
-        }
-      }
-      // 创建大小为 max-min+1 的临时数组，+1确保数组的最后一个下标是 max
-      // 例如取值范围为 0-10的数组，需要长度为11的数组才能存储完所有的数
-      let tempArr = new Array(max - min + 1);
-      // 统计元素 i 出现的次数
-      for (let i = 0; i < len; i += 1) {
-        let tempIndex = tempArr[arr[i] - min]; // min 作为偏移量，用以记录相同元素的位置
-
-        tempArr[arr[i] - min] = tempIndex ? (tempIndex += 1) : 1;
-      }
-
-      // 把临时数组统计好的数据汇总到原数组
-      let k = 0;
-      for (let i = 0; i < tempArr.length; i += 1) {
-        // 遍历临时数组，max 为临时数组长度
-        // 遍历每个数，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
-        for (let j = tempArr[i]; j > 0; j -= 1) {
-          arr[k] = i + min; // 赋值给原始数组
-          k += 1;
-        }
-      }
-
-      return arr;
-    };
+const countSort = (arr) => {
+  /**
+   * @desc 数组排序
+   * @param { array } arr 要排序的数组
+   * @return { array } 排序完成的数组
+   */
+  if (arr.length <= 1) {
+    return arr;
   }
-}
+
+  let len = arr.length;
+  let min = arr[0];
+  let max = arr[0];
+  // 获取数组中的最大值和最小值
+  for (let i = 1; i < len; i += 1) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+    if (arr[i] < min) {
+      min = arr[i];
+    }
+  }
+  // 创建大小为 max-min+1 的临时数组，数组下标从0开始，+1确保数组的最后一个下标是 max
+  // 例如取值范围为 0-10的数组，需要长度为11的数组才能存储完所有的数
+  let tempArr = new Array(max - min + 1);
+  // 统计元素 i 出现的次数
+  for (let i = 0; i < len; i += 1) {
+    let tempIndex = tempArr[arr[i] - min]; // min 作为偏移量，用以记录相同元素的位置
+
+    tempArr[arr[i] - min] = tempIndex ? (tempIndex += 1) : 1;
+  }
+
+  // 把临时数组统计好的数据汇总到原数组
+  let k = 0;
+  for (let i = 0; i < tempArr.length; i += 1) {
+    // 遍历临时数组，max 为临时数组长度
+    // 遍历每个数，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
+    for (let j = tempArr[i]; j > 0; j -= 1) {
+      arr[k] = i + min; // 赋值给原始数组
+      k += 1;
+    }
+  }
+
+  return arr;
+};
 
 const arr7 = [91, 93, 45, 32, 66, 92, 79, 36, 90, 99, 111];
-const countSort = new CountSort();
-console.log(countSort.sort(arr7));
+console.log(countSort(arr7));
