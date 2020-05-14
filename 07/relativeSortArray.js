@@ -72,6 +72,9 @@ console.log(relativeSortArray2(arr1, arr2));
 
 /**
  * @desc 计数排序
+ * @param { number[] } arr1
+ * @param { number[] } arr2
+ * @return { number[] }
  */
 const relativeSortArray3 = (arr1, arr2) => {
   let maxVal = Math.max(...arr1);
@@ -104,3 +107,42 @@ const relativeSortArray3 = (arr1, arr2) => {
 };
 
 console.log(relativeSortArray3(arr1, arr2));
+
+/**
+ * @desc 计数排序(优化版)
+ * @param { number[] } arr1
+ * @param { number[] } arr2
+ * @return { number[] }
+ */
+const relativeSortArray4 = (arr1, arr2) => {
+  let maxVal = Math.max(...arr1);
+  let minVal = Math.min(...arr1);
+
+  let bucket = new Array(maxVal - minVal + 1).fill(0);
+  let ret = [];
+
+  // 将数组1的元素作为新数组的下标，遍历数组1，统计其元素出现的次数
+  for (let i = 0; i < arr1.length; i++) {
+    bucket[arr1[i] - minVal]++;
+  }
+
+  // 遍历数组2，将新数组中所包含与数组2相同的元素依次存入结果数组
+  for (let j = 0; j < arr2.length; j++) {
+    while (bucket[arr2[j] - minVal] > 0) {
+      ret.push(arr2[j]);
+      bucket[arr2[j] - minVal]--;
+    }
+  }
+
+  // 遍历新数组，将新数组剩余的元素存入结果数组
+  for (let k = 0; k <= maxVal; k++) {
+    while (bucket[k] > 0) {
+      ret.push(k + minVal);
+      bucket[k]--;
+    }
+  }
+
+  return ret;
+};
+
+console.log(relativeSortArray4(arr1, arr2));

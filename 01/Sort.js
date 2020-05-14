@@ -391,21 +391,20 @@ const countSort = (arr) => {
   }
   // 创建大小为 max-min+1 的临时数组，数组下标从0开始，+1确保数组的最后一个下标是 max
   // 例如取值范围为 0-10的数组，需要长度为11的数组才能存储完所有的数
-  let tempArr = new Array(max - min + 1);
+  let tempArr = new Array(max - min + 1).fill(0);
   // 统计元素 i 出现的次数
   for (let i = 0; i < len; i += 1) {
-    let tempIndex = tempArr[arr[i] - min]; // min 作为偏移量，用以记录相同元素的位置
-
-    tempArr[arr[i] - min] = tempIndex ? (tempIndex += 1) : 1;
+    // min 作为偏移量，用以记录相同元素的位置，arr[i]-min 得到 arr[i] 在 tempArr 中的位置
+    tempArr[arr[i] - min]++;
   }
 
   // 把临时数组统计好的数据汇总到原数组
   let k = 0;
-  for (let i = 0; i < tempArr.length; i += 1) {
-    // 遍历临时数组，max 为临时数组长度
-    // 遍历每个数，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
+  // 遍历临时数组，max 为临时数组长度
+  for (let i = 0; i <= max; i += 1) {
+    // 遍历临时数组，tempArr[i]为出现的次数，tempArr[i]为0则不满足遍历条件，因此遍历次数与原始数组长度保持一致
     for (let j = tempArr[i]; j > 0; j -= 1) {
-      arr[k] = i + min; // 赋值给原始数组
+      arr[k] = i + min; // 下标加上偏移量即为原数组相对应元素的值
       k += 1;
     }
   }
