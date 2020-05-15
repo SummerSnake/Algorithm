@@ -8,7 +8,7 @@
 const diff = (arr1 = [], arr2 = []) => {
   let arr3 = [...arr1, ...arr2];
 
-  return arr3.filter(item => !arr1.includes(item) || !arr2.includes(item));
+  return arr3.filter((item) => !arr1.includes(item) || !arr2.includes(item));
 };
 
 let arr1 = [1, 2, 3, 5, 6];
@@ -70,7 +70,7 @@ console.log(formatArr(initArr));
  * @param { object } obj 要格式化的对象
  * @return { array } 格式化完成的数组
  */
-const formatObj = obj => {
+const formatObj = (obj) => {
   if (!obj) {
     return null;
   }
@@ -80,3 +80,21 @@ const formatObj = obj => {
 
 let obj = { 1: 222, 2: 123, 5: 888 };
 console.log(formatObj(obj));
+
+/**
+ * @desc 给定一个数组 candies 和一个整数 extraCandies ，其中 candies[i] 代表第 i 个孩子拥有的糖果数目。
+ *       对每一个孩子，检查是否存在一种方案，将额外的 extraCandies 个糖果分配给孩子们之后，此孩子有 最多 的糖果。
+ *       允许有多个孩子同时拥有 最多 的糖果数目。
+ * @param { number[] } candies
+ * @param { number } extraCandies
+ * @return { boolean[] }
+ */
+const kidsWithCandies = function (candies, extraCandies) {
+  let max = Math.max(...candies);
+
+  return candies.map((candie) => !(candie + extraCandies < max));
+};
+
+const candies = [2, 3, 5, 1, 3];
+const extraCandies = 3;
+console.log(kidsWithCandies(candies, extraCandies));
