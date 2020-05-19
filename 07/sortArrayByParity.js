@@ -34,4 +34,28 @@ const sortArrayByParity = (A) => {
   return ret;
 };
 
-console.log(sortArrayByParity(A));
+// console.log(sortArrayByParity(A));
+
+/**
+ * @desc 双指针
+ *       遍历数组，当发现偶数部分下标对应的值不是偶数时，不断增加指向奇数部分的指针，
+ *       直到找到一个偶数，然后交换指针 i，j 所指的数。
+ * @param { number[] } A
+ * @return { number[] }
+ */
+const sortArrayByParity2 = (A) => {
+  let j = 1;
+
+  // 通过偶数下标来遍历
+  for (let i = 0; i < A.length; i += 2) {
+    // 如果为奇数，就用指针j找到一个奇数下标的值为偶数来交换
+    if (A[i] % 2 === 1) {
+      while (A[j] % 2 === 1) {
+        j += 2;
+        [A[i], A[j]] = [A[j], A[i]];
+      }
+    }
+  }
+
+  return A;
+};
