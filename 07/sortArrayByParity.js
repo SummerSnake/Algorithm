@@ -52,10 +52,13 @@ const sortArrayByParity2 = (A) => {
     if (A[i] % 2 === 1) {
       while (A[j] % 2 === 1) {
         j += 2;
-        [A[i], A[j]] = [A[j], A[i]];
       }
+
+      [A[i], A[j]] = [A[j], A[i]];
     }
   }
 
   return A;
 };
+
+console.log(sortArrayByParity2(A));
