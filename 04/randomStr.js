@@ -4,7 +4,7 @@
  * ~ charAt() 方法可返回指定位置的字符。
  * ~ floor() 方法返回小于等于所传参数的最大整数。
  */
-const randomStr = length => {
+const randomStr = (length) => {
   let str = 'abcdefghijkmnopqrstuvwxyz9876543210';
   let result = '';
   let len = str.length;
@@ -24,7 +24,7 @@ console.log(randomStr(11));
  * @desc 删除数组中的所有假值(false , null , 0 , NaN, undefined , "")。
  * @param { any[] } 给定数组
  */
-const bouncer = arr => arr.filter(Boolean);
+const bouncer = (arr) => arr.filter(Boolean);
 
 console.log(bouncer([7, 'ate', '', false, 9, null, NaN, undefined, 0]));
 
@@ -50,7 +50,7 @@ console.log(slasher([1, 2, 'chicken', 3, 'potatoes', 'cheese', 4], 5));
  * @return { number[] } 目标数组 target
  */
 
-const createTargetArray = function(nums, index) {
+const createTargetArray = function (nums, index) {
   const len = nums.length > index.length ? nums.length : index.length;
   let i = 0;
   let target = [];
@@ -75,3 +75,26 @@ console.log(createTargetArray(nums, index));
  */
 const reverseLeftWords = (str, n) => `${str.substring(n)}${str.substring(0, n)}`;
 console.log(reverseLeftWords('lrloseumgh', 6));
+
+/**
+ * @desc 桌上有 n 堆硬币，每堆的数量保存在数组 coins 中。
+ *       每次可以选择任意一堆，拿走其中的一枚或者两枚，求拿完所有硬币的最少次数。
+ * @param { number[] } coins
+ * @return { number }
+ */
+const minCount = (coins) => {
+  let ret = 0;
+
+  for (let item of coins) {
+    if (item % 2 === 0) {
+      ret += item / 2;
+    } else {
+      ret += Math.ceil(item / 2);
+    }
+  }
+
+  return ret;
+};
+
+const coins = [4, 2, 1];
+console.log(minCount(coins));

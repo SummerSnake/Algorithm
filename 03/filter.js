@@ -28,12 +28,12 @@ const students = [
   [19, 'Male', '80kg'],
   [20, 'Female', '50kg'],
   [20, 'Female', '51kg'],
-  [24, 'Female', '60kg']
+  [24, 'Female', '60kg'],
 ];
 
-const filteredData = arr => {
+const filteredData = (arr) => {
   // 不可以使用箭头函数，箭头函数不会绑定关键字this，arguments，super，new.target
-  const result = arr.filter(function(value) {
+  const result = arr.filter(function (value) {
     for (let i = 0; i < this.length; i += 1) {
       // this 指向ages
       if (this[i] === value[0]) {
@@ -55,7 +55,7 @@ console.log(filteredData(students));
  */
 const uniteArray = (...rest) =>
   rest.reduce((total = [], currEle) =>
-    Array.from(new Set(total.concat(currEle.filter(item => !total.includes(item)))))
+    Array.from(new Set(total.concat(currEle.filter((item) => !total.includes(item)))))
   );
 
 const arr1 = [2, 3, 4, 4, 5];
@@ -68,7 +68,7 @@ console.log(uniteArray(arr1, arr2));
  * @param { number } x 随机正整数
  * @return { number } 符合条件的数
  */
-const concatRandom = x => {
+const concatRandom = (x) => {
   let i = 0;
 
   while (i <= 255) {
