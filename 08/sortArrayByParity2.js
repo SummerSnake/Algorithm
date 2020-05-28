@@ -66,7 +66,7 @@ const sortArrayByParity4 = (A) => {
       i++;
     }
     // 尾指针为奇数，递减
-    if (A[i] % 2 === 1) {
+    if (A[j] % 2 === 1) {
       j--;
     }
   }
