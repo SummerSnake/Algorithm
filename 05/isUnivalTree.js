@@ -51,14 +51,14 @@ const root = createBinaryTreeByArray(arr, 0);
  * @desc 深度优先遍历
  * @param { object } root 二叉树
  */
-const isUnivalTree = root => {
+const isUnivalTree = (root) => {
   if (!root) {
     return false;
   }
   const map = new Map();
   let index = -1;
 
-  const dfs = node => {
+  const dfs = (node) => {
     if (node) {
       index += 1;
       map.set(index, node.val);
@@ -86,7 +86,7 @@ console.log(isUnivalTree(root));
  * @desc 迭代算法
  * @param { object } root 二叉树
  */
-const isUnivalTree2 = root => {
+const isUnivalTree2 = (root) => {
   if (!root) {
     return false;
   }

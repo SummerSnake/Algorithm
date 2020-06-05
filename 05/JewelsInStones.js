@@ -8,7 +8,7 @@
 /**
  * @desc 嵌套for循环对比
  */
-const numJewelsInStones = function(J, S) {
+const numJewelsInStones = (J, S) => {
   let obj = {};
 
   for (let i = 0; i < J.length; i += 1) {
@@ -34,7 +34,7 @@ const numJewelsInStones = function(J, S) {
 /**
  * @desc 哈希表
  */
-const numJewelsInStones2 = function(J, S) {
+const numJewelsInStones2 = (J, S) => {
   const map = new Map();
 
   for (let i = 0; i < J.length; i += 1) {
@@ -54,27 +54,27 @@ const numJewelsInStones2 = function(J, S) {
 /**
  * @desc 将字符串分割成数组进行筛选
  */
-const numJewelsInStones3 = function(J, S) {
-  const jArr = J.split("");
-  const sArr = S.split("");
+const numJewelsInStones3 = (J, S) => {
+  const jArr = J.split('');
+  const sArr = S.split('');
 
-  return sArr.filter(item => jArr.includes(item)).length;
+  return sArr.filter((item) => jArr.includes(item)).length;
 };
 
 /**
  * @desc 把第二个数组中包含的第一个数组的元素替换掉
  */
-const numJewelsInStones4 = function(J, S) {
+const numJewelsInStones4 = (J, S) => {
   let newS = S;
 
   for (let i = 0; i < J.length; i++) {
-    newS = newS.replace(new RegExp(J[i], "g"), "");
+    newS = newS.replace(new RegExp(J[i], 'g'), '');
   }
 
   return S.length - newS.length;
 };
 
-console.log(numJewelsInStones("aA", "aAAbbbb"));
-console.log(numJewelsInStones2("aA", "aAAbbbb"));
-console.log(numJewelsInStones3("aA", "aAAbbbb"));
-console.log(numJewelsInStones4("aA", "aAAbbbb"));
+console.log(numJewelsInStones('aA', 'aAAbbbb'));
+console.log(numJewelsInStones2('aA', 'aAAbbbb'));
+console.log(numJewelsInStones3('aA', 'aAAbbbb'));
+console.log(numJewelsInStones4('aA', 'aAAbbbb'));

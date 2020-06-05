@@ -7,21 +7,18 @@
 
 /**
  * @desc 字符串反转法
+ * @param { number } num
+ * @param { boolean }
  */
-function isPalindrome(num) {
-  return (
-    num >= 0 &&
-    String.prototype.split
-      .call(num, "")
-      .reverse()
-      .join("") === num.toString()
-  );
-}
+const isPalindrome = (num) =>
+  num >= 0 && String.prototype.split.call(num, '').reverse().join('') === num.toString();
 
 /**
  * @desc 中心扩展法
+ * @param { number } num
+ * @param { boolean }
  */
-function isPalindrome2(num) {
+const isPalindrome2 = (num) => {
   const numStr = num.toString();
   const len = numStr.length;
   const center = parseInt(len / 2);
@@ -37,26 +34,30 @@ function isPalindrome2(num) {
     left -= 1;
     right += 1;
   }
+
   return true;
-}
+};
 
 /**
  * @desc 将数字反转，进行判断
+ *       1. 如 s=121 ， 第一次循环先取模 是 y=1，s除以10向下取整s=12；
+ *       2. 第二次循环 y= 1*10+2 =12 , s=1；
+ *       3. 第三次循环 y= 12*10+1 =121, s=0。
  *
- * 1. 如 s=121 ， 第一次循环先取模 是 y=1，s除以10向下取整s=12；
- * 2. 第二次循环 y= 1*10+2 =12 , s=1；
- * 3. 第三次循环 y= 12*10+1 =121, s=0。
+ * @param { number } num
+ * @param { boolean }
  */
-function isPalindrome3(x) {
-  let s = x;
+const isPalindrome3 = (num) => {
+  let s = num;
   let y = 0;
 
   while (s >= 1) {
     y = y * 10 + (s % 10);
     s = Math.floor(s / 10);
   }
-  return y === x;
-}
+
+  return y === num;
+};
 
 /**
  * @desc 反转数字后半部分，然后与前半部分进行比较
@@ -66,24 +67,27 @@ function isPalindrome3(x) {
  *    再重复步骤一，122 % 10 = 2，就可以得到倒数第二位数字。
  * 3. 如果我们把最后一位数字(步骤一结果)乘以 10，再加上倒数第二位数字(步骤二结果)，1 * 10 + 2 = 12，
  *    就得到了我们想要的反转后的数字。
- * 4. 将原始数字除以 10，然后给反转后的数字乘上 10，当原始数字小于反转后的数字时，就意味着我们已经处理了一半位数的数字
+ * 4. 将原始数字除以 10，然后给反转后的数字乘上 10，当原始数字小于反转后的数字时，就意味着我们已经处理了一半位数的数字。
+ * @param { number } num
+ * @param { boolean }
  */
-function isPalindrome4(x) {
+const isPalindrome4 = (num) => {
   // 所有负数都不可能是回文，例如：-123 不是回文，因为 - 不等于 3；
   // 如果数字的最后一位是 0，为了使该数字为回文，则其第一位数字也应该是 0，只有 0 满足这一属性
-  if (x < 0 || (x % 10 < 0 && x !== 0)) {
+  if (num < 0 || (num % 10 < 0 && num !== 0)) {
     return false;
   }
 
   let reverseNum = 0;
 
-  while (x > reverseNum) {
-    reverseNum = reverseNum * 10 + (x % 10);
-    x = Math.floor(x / 10);
+  while (num > reverseNum) {
+    reverseNum = reverseNum * 10 + (num % 10);
+    num = Math.floor(num / 10);
   }
 
-  return x === reverseNum || x === Math.floor(reverseNum / 10); // 处理奇数数字 reverseNum 比原始数字多一位的情况
-}
+  // 处理奇数数字 reverseNum 比原始数字多一位的情况
+  return num === reverseNum || num === Math.floor(reverseNum / 10);
+};
 
 console.log(isPalindrome(121));
 console.log(isPalindrome2(121));

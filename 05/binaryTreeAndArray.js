@@ -46,10 +46,10 @@ console.log(root);
  * @param { object } tree 要转换的二叉树
  * @return { array } 转换完成的数组
  */
-const createArrayByBinaryTree = tree => {
+const createArrayByBinaryTree = (tree) => {
   const arr = [];
 
-  const recursion = node => {
+  const recursion = (node) => {
     if (node) {
       arr.push(node.val);
       if (!(node.left && node.right) && (node.left || node.right)) {

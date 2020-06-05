@@ -27,36 +27,36 @@ class BinaryTreeNode {
 class BinarySearchTree {
   constructor() {
     this.root = null;
+  }
 
-    this.insert = function(val) {
-      const node = new BinaryTreeNode(val);
-      let prev = this.root;
-      let tail = this.root;
-      // 若根节点为null，则直接插入到根节点；
-      if (this.root === null) {
-        this.root = node;
-        return;
-      }
-      // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
-      while (tail) {
-        prev = tail; // 将当前节点赋值给prev
-        // 要插入的节点值比当前节点小
-        if (node.val < tail.val) {
-          tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
-        } else {
-          tail = tail.right;
-        }
-      }
-
-      // 当 tail 为空时，prev为最后一个节点
-      if (prev.val < node.val) {
-        prev.right = node;
+  insert(val) {
+    const node = new BinaryTreeNode(val);
+    let prev = this.root;
+    let tail = this.root;
+    // 若根节点为null，则直接插入到根节点；
+    if (this.root === null) {
+      this.root = node;
+      return;
+    }
+    // tail 不为null 则进行循环，tail 为null则说明root为null，或已成为叶子节点
+    while (tail) {
+      prev = tail; // 将当前节点赋值给prev
+      // 要插入的节点值比当前节点小
+      if (node.val < tail.val) {
+        tail = tail.left; // 把当前节点的 left 节点赋值给tail，用以下一次循环
       } else {
-        prev.left = node;
+        tail = tail.right;
       }
-      // 将新节点的 parent 指针指向prev
-      node.parent = prev;
-    };
+    }
+
+    // 当 tail 为空时，prev为最后一个节点
+    if (prev.val < node.val) {
+      prev.right = node;
+    } else {
+      prev.left = node;
+    }
+    // 将新节点的 parent 指针指向prev
+    node.parent = prev;
   }
 }
 
