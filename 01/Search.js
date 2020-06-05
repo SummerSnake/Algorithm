@@ -4,8 +4,9 @@
 class Search {
   /**
    * @desc for循环遍历查找    时间复杂度O(n)
-   * @param { any[] } arr 要查找的数据所属数组
-   * @param { any } data 要查找的数据
+   * @param { number[] } arr 要查找的数据所属数组
+   * @param { number } data 要查找的数据
+   * @return { number }
    */
   forLoop(arr, data) {
     const len = arr.length;
@@ -20,8 +21,9 @@ class Search {
 
   /**
    * @desc while循环遍历查找    时间复杂度O(n)
-   * @param { any[] } arr 要查找的数据所属数组
-   * @param { any } data 要查找的数据
+   * @param { number[] } arr 要查找的数据所属数组
+   * @param { number } data 要查找的数据
+   * @return { number }
    */
   whileLoop(arr, data) {
     const arrClone = [...arr];
@@ -37,8 +39,9 @@ class Search {
 
   /**
    * @desc 二分查找(要求数据为有序表) 时间复杂度O(logn)
-   * @param { any[] } arr 要查找的数据所属数组
-   * @param { any } data 要查找的数据
+   * @param { number[] } arr 要查找的数据所属数组
+   * @param { number } data 要查找的数据
+   * @return { number }
    */
   binarySearch(arr, data) {
     let low = 0;
@@ -46,6 +49,8 @@ class Search {
     let high = arr.length - 1;
 
     while (low <= high) {
+      // 防止溢出，比如start = 2147483646, end = 2147483647
+      // 如果mid = start + (end - start) / 2就不会溢出，而mid = (start + end)/2会溢出
       mid = Math.floor(low + (high - low) / 2);
       if (data === arr[mid]) {
         return mid;
@@ -62,8 +67,9 @@ class Search {
 
   /**
    * @desc 插值查找(要求数据为有序表)    时间复杂度O(logn)
-   * @param { any[] } arr 要查找的数据所属数组
-   * @param { any } data 要查找的数据
+   * @param { number[] } arr 要查找的数据所属数组
+   * @param { number } data 要查找的数据
+   * @return { number }
    *
    * 折半查找：mid=low+1/2*(high-low);
    * 插值查找：mid=low+ (data-a[low])/(a[high]-a[low]) *(high-low);
