@@ -6,3 +6,5 @@ node_modules/
 .DS_Store/
 .history/
 .temp/
+yarn-error.log
+.cache
