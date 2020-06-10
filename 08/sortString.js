@@ -52,3 +52,45 @@ const sortString = (s) => {
 };
 
 console.log(sortString('summersnake'));
+
+/**
+ * @desc 桶计数
+ * @param { string } s
+ * @return { string }
+ */
+const sortString2 = (s) => {
+  let ret = '';
+  let total = s.length;
+  const bucket = new Int16Array(26); // 创建存储26个小写字母的桶
+
+  // 小写字母 ASCII码 为 97~122
+  for (const char of s) {
+    // 统计每个字母出现的次数
+    bucket[char.charCodeAt(0) - 97]++;
+  }
+
+  while (total) {
+    // 正序取最小
+    for (let i = 0; i < 26; i++) {
+      if (bucket[i]) {
+        // fromCharCode() 可接受一个指定的 Unicode 值，然后返回一个字符串。
+        ret += String.fromCharCode(i + 97);
+        total--;
+        bucket[i]--;
+      }
+    }
+
+    // 倒序取最大
+    for (let i = 25; i >= 0; i--) {
+      if (bucket[i]) {
+        ret += String.fromCharCode(i + 97);
+        total--;
+        bucket[i]--;
+      }
+    }
+  }
+
+  return ret;
+};
+
+console.log(sortString2('summersnake'));
