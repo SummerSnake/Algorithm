@@ -42,9 +42,12 @@ const LinkedList = {
 };
 
 /**
- * @desc 将倒数第一项的指针指向 head，倒数第二项的指针指向 null
- *       k 有多少就需要操作多少遍，当 k 大于长度时，就会重复，所以可以 k%长度 来避免
- * @param { ListNode } head
+ * @desc 穷举法
+ *       1. 遍历链表，获取链表长度；
+ *       2. 对 k 取余进行去重；
+ *       3. 循环 去重后的num 次，每次把最后一项移动到第一项。
+ *          <1> 第一步变成: 5->1->2->3->4->NULL
+ *          <2> 第二步变成: 4->5->1->2->3->NULL
  * @param { number } k
  * @return { ListNode }
  */
@@ -56,6 +59,7 @@ const rotateLinkedList = (head, k) => {
   let size = 1;
   let curr = head;
 
+  // 遍历链表计算其长度
   while (curr.next) {
     curr = curr.next;
     size++;
@@ -86,4 +90,40 @@ const rotateLinkedList = (head, k) => {
   return node;
 };
 
-console.log(rotateLinkedList(LinkedList, 2));
+// console.log(rotateLinkedList(LinkedList, 2));
+
+/**
+ * @desc 哈希法
+ *       1. 以 k 为分界将链表拆分为：1->2->3->NULL 和 4->5->NULL；
+ *       2. 再合并：4->5->1->2->3->NULL
+ * @param { number } k
+ * @return { ListNode }
+ */
+const rotateLinkedList2 = (head, k) => {
+  if (!head || !head.next) {
+    return head;
+  }
+
+  let size = 0;
+  let curr = head;
+  let map = new Map();
+
+  // 遍历并将数据存入map
+  while (curr) {
+    size++;
+    map.set(size, curr);
+    curr = curr.next;
+  }
+
+  // 因为当 k 大于长度时, 又是一个轮回
+  // 每个轮回旋转一圈，旋转一圈后又变成最初的链表，所以使用 k % size 避免重复旋转
+  let num = k % size;
+  // 通过查找 map 对链表进行操作
+  map.get(size).next = head; // 链表最后一项指向头部形成环
+  head = map.get(size - num).next; // 定位新的头节点
+  map.get(size - num).next = null; // 打断链表环
+
+  return head;
+};
+
+console.log(rotateLinkedList2(LinkedList, 2));
