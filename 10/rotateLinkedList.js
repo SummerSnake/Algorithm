@@ -95,7 +95,7 @@ const rotateLinkedList = (head, k) => {
 /**
  * @desc 哈希法
  *       1. 以 k 为分界将链表拆分为：1->2->3->NULL 和 4->5->NULL；
- *       2. 再合并：4->5->1->2->3->NULL
+ *       2. 再合并：4->5->1->2->3->NULL。
  * @param { number } k
  * @return { ListNode }
  */
@@ -127,3 +127,52 @@ const rotateLinkedList2 = (head, k) => {
 };
 
 console.log(rotateLinkedList2(LinkedList, 2));
+
+/**
+ * @desc 快慢指针
+ *       1. 定义 fast 和 slow 两个指针，fast先走k步；
+ *       2. 当 slow === fast 时,说明k会被链表长度整除，直接返回head即可；
+ *       3. 快慢指针同时移动，当快指针到达链表最后一项时，慢指针正好在链表需要打断的位置；
+ *       1. 以 慢指针 为分界将链表拆分为：1->2->3->NULL 和 4->5->NULL；
+ *       2. 再合并：4->5->1->2->3->NULL。
+ * @param { number } k
+ * @return { ListNode }
+ */
+const rotateLinkedList3 = (head, k) => {
+  if (!head || !head.next) {
+    return head;
+  }
+
+  let fast = head;
+  let slow = head;
+
+  // fast 先走 k 步
+  while (k > 0) {
+    if (fast && fast.next) {
+      fast = fast.next;
+    } else {
+      fast = head;
+    }
+
+    k--;
+  }
+
+  // slow === fast 说明 k 会被链表长度整除，故无需操作 head 直接返回即可
+  if (slow === fast) {
+    return head;
+  }
+
+  // 快慢指针并行
+  while (fast.next) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+
+  fast.next = head;
+  head = slow.next;
+  slow.next = null;
+
+  return head;
+};
+
+console.log(rotateLinkedList3(LinkedList, 2));
