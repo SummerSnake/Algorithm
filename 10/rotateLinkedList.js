@@ -126,7 +126,7 @@ const rotateLinkedList2 = (head, k) => {
   return head;
 };
 
-console.log(rotateLinkedList2(LinkedList, 2));
+// console.log(rotateLinkedList2(LinkedList, 2));
 
 /**
  * @desc 快慢指针
@@ -175,4 +175,46 @@ const rotateLinkedList3 = (head, k) => {
   return head;
 };
 
-console.log(rotateLinkedList3(LinkedList, 2));
+// console.log(rotateLinkedList3(LinkedList, 2));
+
+/**
+ * @desc 链表转环
+ *       1. 将单链表转为单向循环链表；
+ *       2. 然后在循环链表中找到 k 的位置将其打断。
+ * @param { number } k
+ * @return { ListNode }
+ */
+const rotateLinkedList4 = (head, k) => {
+  if (!head || !head.next) {
+    return head;
+  }
+
+  let size = 1;
+  let curr = head;
+
+  // 获取链表长度，找到链表尾结点
+  while (curr.next) {
+    size++;
+    curr = curr.next;
+  }
+
+  // 链表尾结点指向head，形成循环链表
+  curr.next = head;
+  // 因为当 k 大于长度时, 又是一个轮回
+  // 每个轮回旋转一圈，旋转一圈后又变成最初的链表，所以使用 k % size 避免重复旋转
+  let num = k % size;
+
+  // 找到打断位置(num + 1 标识头结点下标，后续每走一步加一)
+  while (num + 1 < size) {
+    head = head.next;
+    num++;
+  }
+
+  let tmp = head;
+  head = head.next;
+  tmp.next = null;
+
+  return head;
+};
+
+console.log(rotateLinkedList4(LinkedList, 2));
