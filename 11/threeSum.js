@@ -16,12 +16,11 @@ const arr = [-1, 0, 1, 2, -1, -4];
  *       5. 如果 nums[i] === nums[i-1]，则说明该数字重复，会导致结果重复，所以应该跳过;
  *       6. 当 sum === 0 时，nums[L] === nums[L+1] 则会导致结果重复，应该跳过，L++;
  *       7. 当 sum === 0 时，nums[R] === nums[R−1] 则会导致结果重复，应该跳过，R--;
- * @param { number[] } height
+ * @param { number[] } nums
  * @return { number }
  */
-
 const threeSum = (nums) => {
-  let ans = [];
+  const ans = [];
   const len = nums.length;
 
   // 校验
