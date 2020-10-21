@@ -14,7 +14,7 @@ const height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
  *       4. 根据较矮的那个墙和当前列的墙的高度可以分为三种情况:
  *          <1> 较矮的墙的高度大于当前列的墙的高度 => 可存的水 = 较矮墙的高度 - 当前列墙的高度；
  *          <2> 较矮的墙的高度小于当前列的墙的高度 => 无法存水；
- *          <2> 较矮的墙的高度等于当前列的墙的高度 => 无法存水。
+ *          <3> 较矮的墙的高度等于当前列的墙的高度 => 无法存水。
  * @param { number[] } height
  * @return { number }
  */
@@ -52,3 +52,45 @@ const trap = (height) => {
 };
 
 console.log(trap(height));
+
+/**
+ * @desc 暴力解法 (按行求)
+ *       1. 求第 i 层的水，遍历每个位置，如果当前的高度小于 i，并且两边有高度大于等于 i 的，
+ *          说明这个地方一定有水，水就可以加 1。
+ *          <1> 求高度为 i 的水，首先用一个变量 tmp 保存当前累积的水，初始化为 0；
+ *          <2> 从左到右遍历墙的高度，遇到高度大于等于 i 的时候，开始更新 tmp；
+ *          <3> 遇到高度小于 i 的就把 tmp 加 1；
+ *          <4> 遇到高度大于等于 i 的，就把 tmp 加到最终的答案 sum 里，并且 tmp 置零，然后继续循环。
+ * @param { number[] } height
+ * @return { number }
+ */
+const trap2 = (height) => {
+  let sum = 0;
+  // 寻找最高的列
+  const maxCol = Math.max(...height);
+
+  // 遍历行，以最高列的高度为边界
+  for (let i = 0; i <= maxCol; i++) {
+    let tmp = 0;
+    let isTmpPlus = false;
+
+    // 遍历列
+    for (let j = 0; j < height.length; j++) {
+      // 遇到高度小于 i 的就把 tmp 加 1
+      if (isTmpPlus && height[j] < i) {
+        tmp++;
+      }
+
+      // 遇到高度大于等于 i 的，就把 tmp 加到最终的答案 sum 里，并且 tmp 置零
+      if (height[j] >= i) {
+        sum += tmp;
+        tmp = 0;
+        isTmpPlus = true;
+      }
+    }
+  }
+
+  return sum;
+};
+
+console.log(trap2(height));
