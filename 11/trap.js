@@ -137,3 +137,48 @@ const trap3 = (height) => {
 };
 
 console.log(trap3(height));
+
+/**
+ * @desc 双指针
+ *       1. 动态规划解法，通常可以对空间复杂度进行进一步的优化；
+ *       2. maxLeft[i] 和 maxRight[i] 只使用了一次，所以可以不使用数组，而使用一个元素来保存；
+ *       3. 只使用一次循环，循环是从左到右遍历的，而 maxRight 的更新是从右向左的，所以这里要用到两个指针，
+ *          left = 1 和 right = height.length - 1，从两个方向去遍历；
+ *       4. 在某个位置 i 处，它能存的水，取决于它左右两边的最大值中较小的一个；
+ *       5. 当我们从左往右处理到 left 下标时，左边的最大值 maxLeft 对它而言是可信的，由于两个指针没有相遇，中间
+ *          可能有其他元素，所以 maxRight 未必就是它右边最大的值，同理，当我们从右往左处理到 right 下标时，右边
+ *          的最大值 maxRight 对它而言是可信的，但 maxLeft 对它而言是不可信的。
+ *       6. 对于指针 left 而言，它左边最大值一定是 maxLeft，右边最大值 >= maxRight，如果 maxLeft < maxRight
+ *          成立，那么它就知道自己能存多少水了，无论右边将来会不会出现更大的 maxRight，都不影响这个结果，
+ *          所以当 maxLeft < maxRight 时，我们就希望去处理 left 指针，反之，我们希望去处理 right 指针。
+ * @param { number[] } height
+ * @return { number }
+ */
+const trap4 = (height) => {
+  let sum = 0;
+  let maxLeft = 0;
+  let maxRight = 0;
+  let left = 0;
+  let right = height.length - 1;
+
+  // 首尾指针相遇结束循环
+  while (left <= right) {
+    // 从左往右走
+    if (maxLeft < maxRight) {
+      // 如果上一次求出的最高的墙比当前列高，则更新 sum
+      sum += Math.max(0, maxLeft - height[left]);
+      // 取上一次求出的最高的墙与当前列较高的值，更新最高墙的值
+      maxLeft = Math.max(maxLeft, height[left]);
+      left++;
+    } else {
+      // 从右往左走
+      sum += Math.max(0, maxRight - height[right]);
+      maxRight = Math.max(maxRight, height[right]);
+      right--;
+    }
+  }
+
+  return sum;
+};
+
+console.log(trap4(height));
