@@ -182,3 +182,41 @@ const trap4 = (height) => {
 };
 
 console.log(trap4(height));
+
+/**
+ * @desc 单调栈
+ *       1. 单调栈中存放的数据应该是有序的，所以单调栈也分为单调递增栈和单调递减栈：
+ *          <1> 单调递增栈：栈中数据出栈的序列为单调递增序列；
+ *          <2> 单调递减栈：栈中数据出栈的序列为单调递减序列。
+ * @param { number[] } height
+ * @return { number }
+ */
+const trap5 = (height) => {
+  let sum = 0;
+  let i = 0;
+  const stack = []; // 单调递增栈 (存储下标)
+
+  while (i < height.length) {
+    // 空栈 或 栈顶元素 >= 当前元素
+    if (stack.length === 0 || height[stack[stack.length - 1]] >= height[i]) {
+      // 当前元素入栈
+      stack.push(i++);
+    } else {
+      // 栈顶元素 < 当前元素， 栈顶元素出栈，两元素组成容器，只取栈顶元素，则相邻相等元素被忽略
+      const stackTop = stack.pop();
+
+      if (stack.length > 0) {
+        // i - stack[stack.length - 1] - 1 是雨水的宽度(左右边界下标 - 1)。
+        const width = i - stack[stack.length - 1] - 1;
+        // height[stack[stack.length - 1]] 此时指向的是此次接住的雨水的左边界的位置。右边界是当前的柱体，即i
+        // Math.min(height[stack[stack.length - 1]], height[i]) 是左右柱子高度的较小值
+        // 减去 height[stackTop] 上一次栈顶高度， 就是雨水的高度
+        sum += width * (Math.min(height[stack[stack.length - 1]], height[i]) - height[stackTop]);
+      }
+    }
+  }
+
+  return sum;
+};
+
+console.log(trap5(height));
