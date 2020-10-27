@@ -220,3 +220,42 @@ const trap5 = (height) => {
 };
 
 console.log(trap5(height));
+
+/**
+ * @desc 韦恩图解法
+ *       1. 从左往右遍历，不管是雨水还是柱子，都计算在有效面积内，并且每次累加的值根据遇到的最高的柱子逐步上升；
+ *       2. 记录最高柱子面积，每一步加上最高柱子面积，最终得出左边有效面积；
+ *       3. 同理，求出右边有效面积；
+ *       4. 左边有效面积 + 右边有效面积 会覆盖整个矩形，并且：重复面积 = 柱子面积 + 积水面积；
+ *       5. 最终， 积水面积 = 左边有效面积 + 右边有效面积 - 矩形面积 - 柱子面积
+ * @param { number[] } height
+ * @return { number }
+ */
+const trap6 = (height) => {
+  let sum = 0;
+  const len = height.length;
+  let maxLeft = 0;
+  let maxRight = 0;
+  let leftArea = 0;
+  let rightArea = 0;
+
+  for (let i = 0; i < len; i++) {
+    // 所有柱子的宽度均为1，所以柱子的高度就是它的面积
+    if (height[i] > maxLeft) {
+      maxLeft = height[i];
+    }
+
+    if (height[len - i - 1] > maxRight) {
+      maxRight = height[len - i - 1];
+    }
+
+    leftArea += maxLeft; // 左边有效面积
+    rightArea += maxRight; // 右边有效面积
+    sum += height[i]; // 所有柱子总面积
+  }
+
+  // 积水面积 = 左边有效面积 + 右边有效面积 - 矩形面积 - 柱子面积
+  return leftArea + rightArea - maxLeft * len - sum;
+};
+
+console.log(trap6(height));
