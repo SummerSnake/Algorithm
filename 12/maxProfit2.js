@@ -170,3 +170,32 @@ const maxProfit4 = (prices) => {
 };
 
 console.log(maxProfit4(prices));
+
+/**
+ * @desc 贪心算法
+ * @param { number[] } prices
+ * @return { number }
+ */
+const maxProfit5 = (prices) => {
+  const len = prices.length;
+  if (len < 2) {
+    return 0;
+  }
+
+  let i = 1;
+  let ret = 0;
+
+  while (i < len) {
+    const tmp = prices[i] - prices[i - 1];
+
+    if (tmp > 0) {
+      ret += tmp;
+    }
+
+    i++;
+  }
+
+  return ret;
+};
+
+console.log(maxProfit5(prices));
