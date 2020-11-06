@@ -134,3 +134,39 @@ const maxProfit3 = (prices) => {
 };
 
 console.log(maxProfit3(prices));
+
+/**
+ * @desc 峰谷法
+ * @param { number[] } prices
+ * @return { number }
+ */
+const maxProfit4 = (prices) => {
+  const len = prices.length;
+  if (len < 2) {
+    return 0;
+  }
+
+  let i = 0;
+  let valley = prices[0];
+  let peak = prices[0];
+  let max = 0;
+
+  // 每次循环找出峰顶和谷底，峰顶-谷底即为利润
+  while (i < len - 1) {
+    while (i < len - 1 && prices[i] >= prices[i + 1]) {
+      i++;
+    }
+    valley = prices[i];
+
+    while (i < len - 1 && prices[i] <= prices[i + 1]) {
+      i++;
+    }
+    peak = prices[i];
+
+    max += peak - valley;
+  }
+
+  return max;
+};
+
+console.log(maxProfit4(prices));
