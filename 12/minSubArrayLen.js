@@ -5,8 +5,8 @@
  * 如果不存在符合条件的子数组，返回 0。
  */
 
-const nums = [2, 3, 1, 2, 4, 3];
-const s = 7;
+const nums = [10, 2, 3];
+const s = 6;
 
 /**
  * @desc 暴力解法
@@ -39,3 +39,40 @@ const minSubArrayLen = (s, nums) => {
 };
 
 console.log(minSubArrayLen(s, nums));
+
+/**
+ * @desc 双指针
+ * @param { number } s
+ * @param { number[] } nums
+ * @return { number }
+ */
+const minSubArrayLen2 = (s, nums) => {
+  const len = nums.length;
+  if (len === 0) {
+    return 0;
+  }
+
+  let ret = Infinity;
+  let i = 0;
+  let j = 0;
+  let sum = 0;
+
+  while (j < len) {
+    // 遍历求和
+    sum += nums[j];
+
+    while (sum >= s) {
+      // j - i 为当前下标 - 开始下标， j - i + 1为元素个数
+      ret = Math.min(ret, j - i + 1);
+      // 和 减去首指针元素，首指针指向下个元素
+      sum -= nums[i];
+      i++;
+    }
+
+    j++;
+  }
+
+  return ret === Infinity ? 0 : ret;
+};
+
+console.log(minSubArrayLen2(s, nums));
