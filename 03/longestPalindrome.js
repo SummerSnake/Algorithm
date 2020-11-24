@@ -35,7 +35,7 @@ const longestPalindrome = (s) => {
   return res;
 };
 
-// console.log(longestPalindrome(s));
+console.log(longestPalindrome(s));
 
 /**
  * @desc 动态规划
@@ -70,3 +70,54 @@ const longestPalindrome2 = (s) => {
 };
 
 console.log(longestPalindrome2(s));
+
+/**
+ * @desc 中心扩展法
+ *         1. 中心点的选取有两种
+ *            <1> aba，中心点是b，即 i 指向b， 扩展指针为：left：i，right：i；
+ *            <2> aa，中心点是两个a之间，即 left：i，right：i + 1。
+ * @param { string } s
+ * @return { string }
+ */
+const longestPalindrome3 = (s) => {
+  if (s.length < 2) {
+    return s;
+  }
+
+  let len = s.length;
+
+  const centerSpread = (left, right) => {
+    let i = left;
+    let j = right;
+    while (i >= 0 && j < len) {
+      if (s[i] === s[j]) {
+        i--;
+        j++;
+      } else {
+        break;
+      }
+    }
+
+    // 当跳出 while 循环时，s[i] !== s[j]，应该取 i,j 之间的子串，不包括 i,j
+    return s.substring(i + 1, j);
+  };
+
+  let res = s[0];
+  let maxLen = 1;
+  for (let i = 0; i < len - 1; i++) {
+    // 传入重合的索引编码，进行中心扩散，此时得到的回文子串的长度是奇数；
+    const oddStr = centerSpread(i, i);
+    // 传入相邻的索引编码，进行中心扩散，此时得到的回文子串的长度是偶数。
+    const evenStr = centerSpread(i, i + 1);
+    const maxLenStr = oddStr.length > evenStr.length ? oddStr : evenStr;
+
+    if (maxLenStr.length > maxLen) {
+      maxLen = maxLenStr.length;
+      res = maxLenStr;
+    }
+  }
+
+  return res;
+};
+
+console.log(longestPalindrome3(s));
