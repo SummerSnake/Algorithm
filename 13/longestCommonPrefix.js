@@ -64,3 +64,42 @@ const longestCommonPrefix2 = (strs) => {
 };
 
 console.log(longestCommonPrefix2(strs));
+
+/**
+ * @desc 仅比较最大、最小字符串的最长公共前缀
+ *        1. 获取数组中的最大值及最小值字符串；
+ *        2. 最小字符串与最大字符串的最长公共前缀即为字符串数组的最长公共前缀。
+ * @param { string[] } strs
+ * @return { string }
+ */
+const longestCommonPrefix3 = (strs) => {
+  if (!strs || strs.length === 0) {
+    return '';
+  }
+  if (strs.length === 1) {
+    return strs[0];
+  }
+
+  let min = 0;
+  let max = 0;
+  // 获取数组中的最大值及最小值字符串
+  for (let i = 1; i < strs.length; i++) {
+    if (strs[min] > strs[i]) {
+      min = i;
+    }
+    if (strs[max] < strs[i]) {
+      max = i;
+    }
+  }
+
+  // 最小字符串与最大字符串的最长公共前缀即为字符串数组的最长公共前缀
+  for (let j = 0; j < strs[min].length; j++) {
+    if (strs[min].charAt(j) !== strs[max].charAt(j)) {
+      return strs[min].substring(0, j);
+    }
+  }
+
+  return strs[min];
+};
+
+console.log(longestCommonPrefix3(strs));
