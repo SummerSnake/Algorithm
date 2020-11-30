@@ -1,5 +1,5 @@
 /**
- * 荷兰旗问题
+ * 荷兰旗问题(颜色分类 力扣 75)
  *
  * 给定一个包含红色、白色和蓝色，一共 n 个元素的数组，
  * 原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
@@ -38,3 +38,40 @@ const sortColors = (nums) => {
 };
 
 console.log(sortColors(nums));
+
+/**
+ * @desc 双指针(一次循环)
+ * @param { number[] } nums
+ * @return { number[] }
+ */
+const sortColors2 = (nums) => {
+  const arr = [...nums];
+  const len = arr.length;
+
+  let i = 0;
+  let j = 0;
+
+  for (let k = 0; k < len; k++) {
+    // 将 1 往前交换
+    if (arr[k] === 1) {
+      [arr[k], arr[j]] = [arr[j], arr[k]];
+      j++;
+    }
+
+    // 将 0 往前交换
+    if (arr[k] === 0) {
+      [arr[k], arr[i]] = [arr[i], arr[k]];
+      // i < j 说明把 0 后面排好的 1 又换出去了，需要再换回来
+      if (i < j) {
+        [arr[k], arr[j]] = [arr[j], arr[k]];
+      }
+
+      i++;
+      j++;
+    }
+  }
+
+  return arr;
+};
+
+console.log(sortColors2(nums));
