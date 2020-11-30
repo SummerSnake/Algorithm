@@ -40,11 +40,55 @@ const sortColors = (nums) => {
 console.log(sortColors(nums));
 
 /**
- * @desc 双指针(一次循环)
+ * @desc 双指针(两次循环)
  * @param { number[] } nums
  * @return { number[] }
  */
 const sortColors2 = (nums) => {
+  const arr = [...nums];
+  const len = arr.length;
+
+  let i = 0;
+  let j = len - 1;
+  // 先将 2 交换到数组尾部
+  while (i < j) {
+    if (arr[i] !== 2) {
+      i++;
+    }
+    if (arr[j] === 2) {
+      j--;
+    }
+    if (i < j && arr[i] === 2 && arr[j] < 2) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  i = 0;
+  j = len - 1;
+  // 再将 0 交换到数组头部
+  while (i < j) {
+    if (arr[i] === 0) {
+      i++;
+    }
+    if (arr[j] !== 0) {
+      j--;
+    }
+    if (i < j && arr[i] === 1 && arr[j] === 0) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  return arr;
+};
+
+console.log(sortColors2(nums));
+
+/**
+ * @desc 双指针(一次循环)
+ * @param { number[] } nums
+ * @return { number[] }
+ */
+const sortColors3 = (nums) => {
   const arr = [...nums];
   const len = arr.length;
 
@@ -74,4 +118,4 @@ const sortColors2 = (nums) => {
   return arr;
 };
 
-console.log(sortColors2(nums));
+console.log(sortColors3(nums));
