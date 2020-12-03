@@ -119,3 +119,28 @@ const sortColors3 = (nums) => {
 };
 
 console.log(sortColors3(nums));
+
+/**
+ * @desc 计数排序
+ * @param { number[] } nums
+ * @return { number[] }
+ */
+const sortColors4 = (nums) => {
+  const arr = [...nums];
+  const bucket = new Int16Array(3); // 初始化桶
+
+  // 将数组中元素的个数作为桶的下标存储
+  arr.forEach((item) => {
+    bucket[item] += 1;
+  });
+
+  // array.fill(value, start, end)
+  // value：必需，填充的值；  start：可选，开始填充位置(包括)； end：可选，停止填充位置，默认为 array.length(不包括)
+  arr.fill(0, 0, bucket[0]);
+  arr.fill(1, bucket[0], bucket[0] + bucket[1]);
+  arr.fill(2, bucket[0] + bucket[1]);
+
+  return arr;
+};
+
+console.log(sortColors4(nums));
