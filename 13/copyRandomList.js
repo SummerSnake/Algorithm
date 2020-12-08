@@ -67,3 +67,50 @@ const copyRandomList = (head) => {
 };
 
 console.log(copyRandomList(LinkedList));
+
+/**
+ * @desc 新旧节点交替
+ * @param { ListNode } head
+ * @return { ListNode }
+ */
+const copyRandomList2 = (head) => {
+  // 1. 在每个原节点后面创建一个新节点  1->1'->2->2'->3->3'
+  let node = head;
+  while (node) {
+    const newNode = new ListNode(node.val);
+    newNode.next = node.next;
+    node.next = newNode;
+
+    // 指针移动
+    node = newNode.next;
+  }
+
+  // 2. 设置新节点的随机节点
+  //   <1> 原节点 i 的随机指针(如果有的话)，指向的是原节点 j；
+  //   <2> 基于新链表(1->1'->2->2'->3->3')，则新节点 i 的随机指针，指向的是原节点 j 的 next。
+  node = head;
+  while (node) {
+    if (node.random) {
+      node.next.random = node.random.next;
+    }
+
+    node = node.next.next;
+  }
+
+  // 3. 将链表分离
+  let dummy = new ListNode(-1);
+  node = head;
+  let curr = dummy;
+  while (node) {
+    curr.next = node.next;
+    curr = curr.next;
+
+    // 指针移动
+    node.next = curr.next;
+    node = node.next;
+  }
+
+  return dummy.next;
+};
+
+console.log(copyRandomList2(LinkedList));
