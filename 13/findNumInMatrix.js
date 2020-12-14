@@ -81,3 +81,43 @@ const findNumInMatrix2 = (matrix, target) => {
 };
 
 console.log(findNumInMatrix2(matrix, target));
+
+/**
+ * @desc 二叉搜索树模拟
+ *        1. 以矩阵右上角元素为起点，横轴为左子树，纵轴为右子树；
+ *        2. 如果比当前元素大则往右边查找；
+ *        3. 如果比当前元素小则往左边查找；
+ * @param { number[] } matrix
+ * @param { number } target
+ * @return { number }
+ */
+const findNumInMatrix3 = (matrix, target) => {
+  let i = 0;
+  let j = matrix[0].length - 1;
+
+  while (j >= 0 && i < matrix.length) {
+    if (target === matrix[i][j]) {
+      return true;
+    }
+    if (target < matrix[i][j]) {
+      j--;
+    }
+    if (target > matrix[i][j]) {
+      i++;
+    }
+  }
+
+  return false;
+};
+
+console.log(findNumInMatrix3(matrix, target));
+
+/**
+ * @desc 数组扁平化，再查找 (flat() node.js 版本12以下不支持)
+ * @param { number[] } matrix
+ * @param { number } target
+ * @return { number }
+ */
+const findNumInMatrix4 = (matrix, target) => matrix.flat(Infinity).includes(target);
+
+console.log(findNumInMatrix4(matrix, target));
