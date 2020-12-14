@@ -33,3 +33,51 @@ const findNumInMatrix = (matrix, target) => {
 };
 
 console.log(findNumInMatrix(matrix, target));
+
+/**
+ * @desc 二分查找
+ * @param { number[] } matrix
+ * @param { number } target
+ * @return { number }
+ */
+const findNumInMatrix2 = (matrix, target) => {
+  if (matrix.length < 1) {
+    return false;
+  }
+
+  const binarySearch = (arr, data) => {
+    let low = 0;
+    let high = arr.length - 1;
+    let mid = 0;
+
+    while (low <= high) {
+      mid = low + ((high - low) >> 1);
+      if (arr[mid] === data) {
+        return true;
+      }
+
+      if (data < arr[mid]) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    }
+
+    return false;
+  };
+
+  for (let item of matrix) {
+    if (target >= item[0]) {
+      if (binarySearch(item, target)) {
+        return true;
+      }
+    } else {
+      // 双向递增，如果小于当前元素，则必然小于后边的元素，直接返回 false
+      return false;
+    }
+  }
+
+  return false;
+};
+
+console.log(findNumInMatrix2(matrix, target));
