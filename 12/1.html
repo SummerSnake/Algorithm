@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const digits = '23';
+      const json = {
+        0: '',
+        1: '',
+        2: 'abc',
+        3: 'def',
+        4: 'ghi',
+        5: 'jkl',
+        6: 'mno',
+        7: 'pqrs',
+        8: 'tuv',
+        9: 'wxyz',
+      };
+
+      /**
+       * @desc DFS (深度优先搜索)
+       * @param { string } digits
+       * @return { string[] }
+       */
+      const letterCombinations = (digits) => {
+        if (!digits || !digits.length) {
+          return [];
+        }
+
+        const res = [];
+        const dfs = (currStr, i) => {
+          if (i >= digits.length) {
+            res.push(currStr);
+            return;
+          }
+
+          let letters = '';
+          while (!json[digits[i]]) {
+            i++;
+          }
+          letters = json[digits[i]];
+
+          for (let item of letters) {
+            dfs(currStr + item, i + 1);
+          }
+        };
+
+        dfs('', 0);
+
+        return res;
+      };
+
+      console.log(letterCombinations(digits));
+    </script>
+  </body>
+</html>
