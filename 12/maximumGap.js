@@ -72,3 +72,65 @@ const maximumGap2 = (nums) => {
 };
 
 console.log(maximumGap2(nums));
+
+/**
+ * @desc 快速排序 + 双指针
+ * @param { number[] } nums
+ * @return { number }
+ */
+const maximumGap3 = (nums) => {
+  const array = [...nums];
+  const len = array.length;
+
+  const partition = (arr = [], left = 0, right = 0) => {
+    const pivot = arr[left];
+    let i = left + 1;
+    let j = right;
+
+    while (true) {
+      while (i <= j && arr[i] <= pivot) {
+        i++;
+      }
+      while (i <= j && arr[j] >= pivot) {
+        j--;
+      }
+      if (i >= j) {
+        break;
+      }
+
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    arr[left] = arr[j];
+    arr[j] = pivot;
+    return j;
+  };
+
+  const quickSort = (arr = [], left = 0, right) => {
+    const i = left;
+    const j = typeof right === 'undefined' ? arr.length - 1 : right;
+
+    if (i < j) {
+      const mid = partition(arr, i, j);
+      arr = quickSort(arr, i, mid - 1);
+      arr = quickSort(arr, mid + 1, j);
+    }
+
+    return arr;
+  };
+
+  nums = quickSort(array);
+
+  let res = 0;
+  let i = 0;
+  let j = 1;
+  while (j < len) {
+    res = Math.max(res, array[j] - array[i]);
+    i++;
+    j++;
+  }
+
+  return res;
+};
+
+console.log(maximumGap3(nums));
