@@ -5,7 +5,7 @@
  * 如果数组元素个数小于 2，则返回 0。
  */
 
-const nums = [7, 1, 5, 3, 6, 4];
+const nums = [7, 1, 5, 3, 6, 4, 21];
 
 /**
  * @desc 冒泡排序 + 双指针
@@ -134,3 +134,47 @@ const maximumGap3 = (nums) => {
 };
 
 console.log(maximumGap3(nums));
+
+/**
+ * @desc 计数排序 + 双指针
+ * @param { number[] } nums
+ * @return { number }
+ */
+const maximumGap4 = (nums) => {
+  if (!nums || nums.length < 2) {
+    return 0;
+  }
+  const arr = [...nums];
+  const len = arr.length;
+  let min = arr[0];
+  let max = arr[0];
+
+  for (let i = 0; i < len; i++) {
+    min = Math.min(min, arr[i]);
+    max = Math.max(max, arr[i]);
+  }
+
+  const bucket = new Int32Array(max - min + 1);
+  arr.forEach((item) => bucket[item - min]++);
+
+  let k = 0;
+  for (let i = 0; i < bucket.length; i++) {
+    while (bucket[i] > 0) {
+      arr[k++] = i + min;
+      bucket[i]--;
+    }
+  }
+
+  let res = 0;
+  let i = 0;
+  let j = 1;
+  while (j < len) {
+    res = Math.max(res, arr[j] - arr[i]);
+    i++;
+    j++;
+  }
+
+  return res;
+};
+
+console.log(maximumGap4(nums));
