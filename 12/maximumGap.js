@@ -37,3 +37,38 @@ const maximumGap = (nums) => {
 };
 
 console.log(maximumGap(nums));
+
+/**
+ * @desc 选择排序 + 双指针
+ * @param { number[] } nums
+ * @return { number }
+ */
+const maximumGap2 = (nums) => {
+  const arr = [...nums];
+  const len = arr.length;
+  let minIndex = 0;
+
+  for (let i = 0; i < len - 1; i++) {
+    minIndex = i;
+    for (let j = i + 1; j < len; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+
+    [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+  }
+
+  let res = 0;
+  let i = 0;
+  let j = 1;
+  while (j < len) {
+    res = Math.max(res, arr[j] - arr[i]);
+    i++;
+    j++;
+  }
+
+  return res;
+};
+
+console.log(maximumGap2(nums));
