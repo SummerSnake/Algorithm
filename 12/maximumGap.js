@@ -178,3 +178,59 @@ const maximumGap4 = (nums) => {
 };
 
 console.log(maximumGap4(nums));
+
+/**
+ * @desc 基数排序 + 单指针
+ * @param { number[] } nums
+ * @return { number }
+ */
+const maximumGap5 = (nums) => {
+  if (!nums || nums.length < 2) {
+    return 0;
+  }
+  const arr = [...nums];
+  const len = arr.length;
+
+  // 找出最大值
+  let max = Math.max(...arr);
+
+  // 计算最大值是几位数
+  let num = 1;
+  while (Math.floor(max / 10) > 0) {
+    num++;
+    max = Math.floor(max / 10);
+  }
+
+  // 创建 10 个桶
+  const bucket = Array.from({ length: 10 }, () => []);
+
+  // 从个位数开始，对每一位进行排序
+  for (let i = 1; i <= num; i++) {
+    // 遍历数组
+    for (let j = 0; j < len; j++) {
+      // 取出每一位数， Math.pow() 方法可返回 x 的 y 次幂的值。
+      const digit = Math.floor(arr[j] / Math.pow(10, i - 1)) % 10;
+      // 放入桶中
+      bucket[digit].push(arr[j]);
+    }
+
+    // 从桶中取出元素放入数组
+    let m = 0;
+    for (let n = 0; n < 10; n++) {
+      while (bucket[n].length > 0) {
+        arr[m++] = bucket[n].shift();
+      }
+    }
+  }
+
+  let res = 0;
+  let i = 0;
+  while (i < len - 1) {
+    res = Math.max(res, arr[i + 1] - arr[i]);
+    i++;
+  }
+
+  return res;
+};
+
+console.log(maximumGap5(nums));
