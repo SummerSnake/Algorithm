@@ -39,3 +39,32 @@ const plusOne = (digits) => {
 };
 
 console.log(plusOne(digits));
+
+/**
+ * @desc 递归
+ * @param { number[] } digits
+ * @return { number[] }
+ */
+const plusOne2 = (digits) => {
+  const arr = [...digits];
+  let last = arr.length - 1;
+
+  const add = (i) => {
+    arr[i] = arr[i] + 1;
+
+    if (arr[i] === 10) {
+      if (i === 0) {
+        arr[i] = 0;
+        arr.unshift(1);
+      } else {
+        arr[i] = 0;
+        add(--i);
+      }
+    }
+  };
+
+  add(last);
+  return arr;
+};
+
+console.log(plusOne2(digits));
