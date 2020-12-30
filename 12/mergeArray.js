@@ -75,3 +75,32 @@ const mergeArray2 = (nums1, m, nums2, n) => {
 };
 
 console.log(mergeArray2(nums1, m, nums2, n));
+
+/**
+ * @desc 双指针 + 从后往前
+ * @param { number[] } nums1
+ * @param { number } m
+ * @param { number[] } nums2
+ * @param { number } n
+ * @return { number[] }
+ */
+const mergeArray3 = (nums1, m, nums2, n) => {
+  const arr = [...nums1];
+  let i = m + n - 1; // 合并后数组的最后一个元素下标
+  m--;
+  n--;
+
+  while (n >= 0) {
+    // 取出 nums1 数组元素
+    while (m >= 0 && arr[m] > nums2[n]) {
+      arr[i--] = arr[m--];
+    }
+
+    // 取出 nums2 数组元素
+    arr[i--] = nums2[n--];
+  }
+
+  return arr;
+};
+
+console.log(mergeArray3(nums1, m, nums2, n));
