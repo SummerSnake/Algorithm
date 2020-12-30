@@ -34,3 +34,44 @@ const mergeArray = (nums1, m, nums2, n) => {
 };
 
 console.log(mergeArray(nums1, m, nums2, n));
+
+/**
+ * @desc 双指针 + 从前往后
+ *        1. 将 nums1 和 nums2 中的元素从小到大按顺序缓存到一个数组中；
+ *        2. 将 nums1 中的元素按顺序替换为缓存数组中的元素。
+ * @param { number[] } nums1
+ * @param { number } m
+ * @param { number[] } nums2
+ * @param { number } n
+ * @return { number[] }
+ */
+const mergeArray2 = (nums1, m, nums2, n) => {
+  const arr = [...nums1];
+  let i = 0;
+  let j = 0;
+  let tmp_nums1 = arr.slice(0, m);
+  let tmp_nums2 = nums2.slice(0, n);
+  let result = [];
+
+  while (i < m && j < n) {
+    if (tmp_nums1[i] < tmp_nums2[j]) {
+      result.push(tmp_nums1[i]);
+      i++;
+    } else {
+      result.push(tmp_nums2[j]);
+      j++;
+    }
+  }
+
+  // 合并剩余元素
+  result = [...result, ...tmp_nums1.slice(i), ...tmp_nums2.slice(j)];
+
+  // 替换 nums1 中的元素
+  for (let i = 0; i < result.length; i++) {
+    arr[i] = result[i];
+  }
+
+  return arr;
+};
+
+console.log(mergeArray2(nums1, m, nums2, n));
