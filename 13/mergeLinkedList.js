@@ -59,3 +59,28 @@ const mergeLinkedList = (list_01, list_02) => {
 };
 
 mergeLinkedList(list_01, list_02);
+
+/**
+ * @desc 递归
+ * @param { ListNode } list_01
+ * @param { ListNode } list_02
+ * @return { ListNode }
+ */
+const mergeLinkedList2 = (list_01, list_02) => {
+  if (!list_01) {
+    return list_02;
+  }
+  if (!list_02) {
+    return list_01;
+  }
+
+  if (list_01.val < list_02.val) {
+    list_01.next = mergeLinkedList2(list_01.next, list_02);
+    return list_01;
+  } else {
+    list_02.next = mergeLinkedList2(list_01, list_02.next);
+    return list_02;
+  }
+};
+
+let res = mergeLinkedList2(list_01, list_02);
