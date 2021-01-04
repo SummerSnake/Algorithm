@@ -63,3 +63,47 @@ const isSameTree = (p, q) => {
 };
 
 isSameTree(binaryTree_01, binaryTree_02);
+
+/**
+ * @desc 广度优先搜索
+ * @param { TreeNode } p
+ * @param { TreeNode } q
+ * @return { boolean }
+ */
+const isSameTree2 = (p, q) => {
+  const queue = [{ p, q }];
+
+  while (queue.length > 0) {
+    const curr = queue.shift();
+
+    // 两个节点都为 null 跳出本次循环，继续下一次循环
+    if (curr.p === null && curr.q === null) {
+      continue;
+    }
+
+    // 两个节点其中一个不为空，一个为空则返回 false
+    if (curr.p === null || curr.q === null) {
+      return false;
+    }
+
+    // 值不相等返回 false
+    if (curr.p.val !== curr.q.val) {
+      return false;
+    }
+
+    queue.push(
+      {
+        p: curr.p.left,
+        q: curr.q.left,
+      },
+      {
+        p: curr.p.right,
+        q: curr.q.right,
+      }
+    );
+  }
+
+  return true;
+};
+
+isSameTree2(binaryTree_01, binaryTree_02);
