@@ -32,24 +32,23 @@ function ListNode(val, next) {
  * @return { ListNode }
  */
 const deleteDuplicates = (head) => {
-  let node = head;
   let dummy = new ListNode(0);
   let prev = dummy;
 
-  while (node) {
-    while (node.next && node.val === node.next.val) {
-      node = node.next;
+  while (head) {
+    while (head.next && head.val === head.next.val) {
+      head = head.next;
     }
 
-    prev.next = node;
+    prev.next = head;
     prev = prev.next;
-    node = node.next;
+    head = head.next;
   }
 
   return dummy.next;
 };
 
-deleteDuplicates(linkedList);
+// deleteDuplicates(linkedList);
 
 /**
  * @desc 原地删除
@@ -70,4 +69,31 @@ const deleteDuplicates2 = (head) => {
   return head;
 };
 
-deleteDuplicates2(linkedList);
+// deleteDuplicates2(linkedList);
+
+/**
+ * @desc 快慢指针
+ * @param { ListNode } head
+ * @return { ListNode }
+ */
+const deleteDuplicates3 = (head) => {
+  if (!head) {
+    return null;
+  }
+
+  let slow = head;
+  let fast = head;
+  while (fast) {
+    if (slow.val !== fast.val) {
+      slow.next = fast;
+      slow = fast;
+    }
+
+    fast = fast.next;
+  }
+
+  slow.next = null;
+  return head;
+};
+
+deleteDuplicates3(linkedList);
