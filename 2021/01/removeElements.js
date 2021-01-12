@@ -89,3 +89,25 @@ const removeElements2 = (head, val) => {
 };
 
 removeElements2(linkedList, 6);
+
+/**
+ * @desc 递归
+ * @param { ListNode } head
+ * @param { number } val
+ * @return { ListNode }
+ */
+const removeElements3 = (head, val) => {
+  if (!head) {
+    return null;
+  }
+
+  head.next = removeElements3(head.next, val);
+
+  if (head.val === val) {
+    return head.next;
+  } else {
+    return head;
+  }
+};
+
+removeElements3(linkedList, 6);
