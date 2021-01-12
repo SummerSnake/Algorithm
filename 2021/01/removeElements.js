@@ -62,3 +62,30 @@ const removeElements = (head, val) => {
 };
 
 removeElements(linkedList, 6);
+
+/**
+ * @desc 哨兵节点(存储前一个节点)
+ * @param { ListNode } head
+ * @param { number } val
+ * @return { ListNode }
+ */
+const removeElements2 = (head, val) => {
+  let sentinel = new ListNode(0);
+  sentinel.next = head;
+
+  let prev = sentinel;
+  let curr = head;
+  while (curr) {
+    if (curr.val === val) {
+      prev.next = curr.next;
+    } else {
+      prev = curr;
+    }
+
+    curr = curr.next;
+  }
+
+  return sentinel.next;
+};
+
+removeElements2(linkedList, 6);
