@@ -62,3 +62,38 @@ const twoSum2 = (numbers, target) => {
 };
 
 twoSum2(numbers, target);
+
+/**
+ * @desc 二分查找 + 双指针
+ * @param { number[] } numbers
+ * @param { number } target
+ * @return { number[] }
+ */
+const twoSum3 = (numbers, target) => {
+  let i = 0;
+  let j = numbers.length - 1;
+
+  while (i < j) {
+    let mid = Math.floor(i + (j - i) / 2);
+
+    if (numbers[i] + numbers[j] === target) {
+      return [i + 1, j + 1];
+    }
+    if (numbers[i] + numbers[mid] > target) {
+      j = mid - 1;
+    }
+    if (numbers[j] + numbers[mid] < target) {
+      i = mid + 1;
+    }
+    if (numbers[i] + numbers[j] > target) {
+      j--;
+    }
+    if (numbers[i] + numbers[j] < target) {
+      i++;
+    }
+  }
+
+  return [];
+};
+
+twoSum3(numbers, target);
