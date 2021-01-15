@@ -37,3 +37,28 @@ const twoSum = (numbers, target) => {
 };
 
 twoSum(numbers, target);
+
+/**
+ * @desc 哈希表
+ * @param { number[] } numbers
+ * @param { number } target
+ * @return { number[] }
+ */
+const twoSum2 = (numbers, target) => {
+  const map = new Map();
+  let len = numbers.length;
+
+  for (let i = 0; i < len; i++) {
+    let complement = target - numbers[i];
+
+    if (map.has(complement)) {
+      return [map.get(complement) + 1, i + 1];
+    }
+
+    map.set(numbers[i], i);
+  }
+
+  return [];
+};
+
+twoSum2(numbers, target);
