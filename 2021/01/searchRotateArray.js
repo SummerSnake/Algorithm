@@ -48,3 +48,32 @@ const searchRotateArray = (nums, target) => {
 };
 
 searchRotateArray(nums, target);
+
+/**
+ * @desc 递归
+ * @param { number[] } nums
+ * @param { number } target
+ * @return { number }
+ */
+const searchRotateArray2 = (nums, target) => {
+  let mid = 0;
+
+  const recursion = (low, high) => {
+    if (low > high) {
+      return -1;
+    }
+
+    mid = Math.floor(low + (high - low) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    }
+
+    // 效率较低，将数组二分后，分别遍历两部分，最后整个数组所有元素都会遍历到；
+    // Math.max() 如果数组中存在元素，则一边会获取到元素下标，另一边会返回 -1；
+    return Math.max(recursion(low, mid - 1), recursion(mid + 1, high));
+  };
+
+  return recursion(0, nums.length - 1);
+};
+
+searchRotateArray2(nums, target);
