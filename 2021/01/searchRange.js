@@ -37,3 +37,74 @@ const searchRange = (nums, target) => {
 };
 
 searchRange(nums, target);
+
+/**
+ * @desc 二分查找
+ * @param { number[] } nums
+ * @param { number } target
+ * @return { number }
+ */
+const searchRange2 = (nums, target) => {
+  // 查找第一个位置
+  const firstIndex = () => {
+    let left = 0;
+    let right = nums.length - 1;
+    let mid = 0;
+
+    while (left <= right) {
+      mid = Math.floor(left + (right - left) / 2);
+
+      // 找到相等的继续往左查找
+      if (target === nums[mid]) {
+        right = mid - 1;
+      }
+      if (target > nums[mid]) {
+        left = mid + 1;
+      }
+      if (target < nums[mid]) {
+        right = mid - 1;
+      }
+    }
+
+    // 防止 left 越界 (查找不到 target 时，left = mid + 1)
+    if (left <= nums.length && nums[left] === target) {
+      return left;
+    }
+
+    return -1;
+  };
+
+  const firstIdx = firstIndex();
+  // 查找不到 target，直接返回
+  if (firstIdx === -1) {
+    return [-1, -1];
+  }
+
+  // 查找第二个位置，以第一个位置为左边界，无需从0开始。
+  const secondIndex = (firstIdx) => {
+    let left = firstIdx;
+    let right = nums.length - 1;
+    let mid = 0;
+
+    while (left <= right) {
+      mid = Math.floor(left + (right - left) / 2);
+
+      // 找到相等的继续往右查找
+      if (target === nums[mid]) {
+        left = mid + 1;
+      }
+      if (target > nums[mid]) {
+        left = mid + 1;
+      }
+      if (target < nums[mid]) {
+        right = mid - 1;
+      }
+    }
+
+    return right;
+  };
+
+  return [firstIdx, secondIndex(firstIdx)];
+};
+
+searchRange2(nums, target);
