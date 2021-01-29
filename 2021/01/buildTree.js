@@ -45,3 +45,50 @@ const buildTree = (preorder, inorder) => {
 };
 
 buildTree(preorder, inorder);
+
+/**
+ * @desc 迭代
+ * @param { number[] } preorder
+ * @param { number[] } inorder
+ * @return { TreeNode }
+ */
+const buildTree2 = (preorder, inorder) => {
+  if (!preorder.length || !inorder.length) {
+    return null;
+  }
+
+  const stack = [];
+
+  const len = preorder.length;
+  const root = new TreeNode(preorder[0]);
+
+  let curr = root;
+
+  for (let i = 1, j = 0; i < len; i++) {
+    // 前序遍历当前节点 是 中序遍历当前节点 的左子树节点
+    if (curr.val !== inorder[j]) {
+      curr.left = new TreeNode(preorder[i]);
+      stack.push(curr);
+      curr = curr.left;
+    } else {
+      // 1. 如果一个结点没有左子树只有右子树;
+      // 2. 则前序遍历当前节点 是 中序遍历当前节点 的右子树节点;
+      // 1. 如果一个结点既没有左子树也没有右子树;
+      // 2. 则前序遍历当前节点 是 中序遍历当前节点某个祖先节点 的右子树节点;
+      j++;
+
+      // 找到合适的 curr，然后确定他的右节点
+      while (stack.length > 0 && stack[0].val === inorder[j]) {
+        curr = stack.pop();
+        j++;
+      }
+
+      // 给curr添加右节点
+      curr = curr.right = new TreeNode(preorder[i]);
+    }
+  }
+
+  return root;
+};
+
+buildTree2(preorder, inorder);
