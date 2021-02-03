@@ -10,7 +10,7 @@
  * @param { number } n
  * @return { string }
  */
-const countAndSay = (n) =>{
+const countAndSay = (n) => {
   if (n === 1) {
     return '1';
   }
@@ -33,3 +33,33 @@ const countAndSay = (n) =>{
 };
 
 countAndSay(4);
+
+/**
+ * @desc 滚动数组
+ * @param { number } n
+ * @return { string }
+ */
+const countAndSay2 = (n) => {
+  let prev = '1';
+  let curr = '1';
+
+  for (let i = 1; i < n; i++) {
+    prev = curr;
+    curr = '';
+
+    let j = 0;
+    let k = 0;
+    while (k < prev.length) {
+      while (prev[j] === prev[k] && k < prev.length) {
+        k++;
+      }
+
+      curr = `${curr}${k - j}${prev[j]}`;
+      j = k;
+    }
+  }
+
+  return curr;
+};
+
+countAndSay2(4);
