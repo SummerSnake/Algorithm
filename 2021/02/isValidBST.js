@@ -84,3 +84,37 @@ const isValidBST2 = (root) => {
 };
 
 isValidBST2(binaryTree);
+
+/**
+ * @desc 中序遍历(迭代)
+ * @param { TreeNode } root
+ * @return { boolean }
+ */
+const isValidBST3 = (root) => {
+  const stack = [];
+  let prev = -Infinity;
+
+  while (stack.length || root) {
+    // 所有左节点入栈
+    while (root) {
+      stack.push(root);
+      root = root.left;
+    }
+
+    // 左节点出栈(后进先出)
+    root = stack.pop();
+
+    if (root.val <= prev) {
+      return false;
+    }
+
+    // 保存上一个节点值
+    prev = root.val;
+    // 遍历右子树
+    root = root.right;
+  }
+
+  return true;
+};
+
+isValidBST3(binaryTree);
