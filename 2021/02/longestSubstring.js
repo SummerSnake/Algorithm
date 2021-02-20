@@ -8,12 +8,57 @@ const s = 'ababbc';
 const k = 2;
 
 /**
- * @desc 分治算法
+ * @desc 暴力解法
  * @param { string } s
  * @param { number } k
  * @return { number }
  */
 const longestSubstring = (s, k) => {
+  if (!s || s.length < k) {
+    return 0;
+  }
+
+  const len = s.length;
+  let res = 0;
+
+  // 1. 枚举所有的子串;
+  for (let i = 0; i < len; i++) {
+    const record = new Int16Array(26);
+
+    for (let j = i; j < len; j++) {
+      // 'a' 字符的 charCode 为 97
+      record[s[j].charCodeAt() - 97]++;
+
+      // 2. 检验子串是否有效(检验的条件：子串中每个字符出现的个数是否都大于k)
+      let numUnique = 0; // 不同字符数
+      let numUniqueLeastK = 0; // 大于等于k的字符数
+      for (let item of record) {
+        if (item > 0) {
+          numUnique++;
+        }
+        if (item >= k) {
+          numUniqueLeastK++;
+        }
+      }
+
+      if (numUnique === numUniqueLeastK) {
+        res = Math.max(res, j - i + 1);
+      }
+    }
+  }
+
+  return res;
+};
+
+longestSubstring(s, k);
+
+/**
+ * @desc 分治算法
+ * @param { string } s
+ * @param { number } k
+ * @return { number }
+ */
+const longestSubstring2 = (s, k) => {
   const len = s.length;
   const map = new Map();
   let max = 0;
@@ -52,4 +97,4 @@ const longestSubstring = (s, k) => {
   return Math.max(max, longestSubstring(s.slice(j), k));
 };
 
-longestSubstring(s, k);
+longestSubstring2(s, k);
