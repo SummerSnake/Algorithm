@@ -23,12 +23,20 @@ const binaryTree = {
   },
 };
 
+function TreeNode(val, left, right) {
+  this.val = val ? 0 : val;
+  this.left = left ? null : left;
+  this.right = right ? null : right;
+}
+
 /**
  * @desc 显式中序遍历
  * @param { TreeNode } root
  * @return { TreeNode }
  */
 const recoverTree = (root) => {
+  const tree = JSON.parse(JSON.stringify(root));
+
   function* _inOrder(node, x, y) {
     if (!node) {
       return null;
@@ -47,7 +55,7 @@ const recoverTree = (root) => {
     yield* _inOrder(node.right, x, y);
   }
 
-  let arr = [..._inOrder(root)].map((item) => item && item.val);
+  let arr = [..._inOrder(tree)].map((item) => item && item.val);
   let x = null;
   let y = null;
 
@@ -59,7 +67,7 @@ const recoverTree = (root) => {
   // 5. 同理，第二次冲突选后一个结点。
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] > arr[i + 1]) {
-      // 第二次冲突选后一个结点
+      // 第二次冲突取 "后一个结点"
       y = arr[i + 1];
 
       // 第一次冲突取 "前一个结点"
@@ -69,13 +77,58 @@ const recoverTree = (root) => {
     }
   }
 
-  const g = _inOrder(root, x, y);
+  const g = _inOrder(tree, x, y);
   let res = g.next();
   while (!res.done) {
     res = g.next();
   }
 
-  return root;
+  return tree;
 };
 
 recoverTree(binaryTree);
+
+/**
+ * @desc 隐式中序遍历
+ *       1. 比较前后访问的节点值，prev 保存上一个访问的节点，当前访问的是 root 节点；
+ *       2. 每访问一个节点，如果 prev.val >= root.val，就找到了一次“冲突”；
+ *       3. 检查一下它是第一次冲突，还是第二次冲突；
+ *       4. 遍历结束，就确定了待交换的两个错误点，进行交换。
+ * @param { TreeNode } root
+ * @return { TreeNode }
+ */
+const recoverTree2 = (root) => {
+  const tree = JSON.parse(JSON.stringify(root));
+
+  let prev = new TreeNode(-Infinity);
+  let x = null;
+  let y = null;
+
+  const _inOrder = (node) => {
+    if (!node) {
+      return null;
+    }
+
+    _inOrder(node.left);
+    // 第一次冲突取 "前一个结点"
+    if (prev.val >= node.val && x === null) {
+      x = prev;
+    }
+
+    // 第二次冲突取 "后一个结点"
+    if (prev.val >= node.val && x !== null) {
+      y = node;
+    }
+
+    prev = node;
+
+    _inOrder(node.right);
+  };
+
+  _inOrder(tree);
+  [x.val, y.val] = [y.val, x.val];
+
+  return tree;
+};
+
+recoverTree2(binaryTree);
