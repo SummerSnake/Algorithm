@@ -36,4 +36,27 @@ const transposeMatrix = (matrix) => {
   return res;
 };
 
-transpose(matrix);
+transposeMatrix(matrix);
+
+/**
+ * @desc 模拟
+ *       1. 如果矩阵 matrix 为 m 行 n 列，则转置后的矩阵为 n 行 m 列；
+ *       2. 原来矩阵中 matrix[i][j] 的位置，会交换到新矩阵的 res[j][i] 位置。
+ * @param { number[][] } matrix
+ * @return { number[][] }
+ */
+const transposeMatrix2 = (matrix) => {
+  const m = matrix.length;
+  const n = matrix[0].length;
+  const res = Array.from({ length: n }, () => []);
+
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      res[j][i] = matrix[i][j];
+    }
+  }
+
+  return res;
+};
+
+transposeMatrix2(matrix);
