@@ -46,3 +46,18 @@ const myAtoi = (s) => {
 };
 
 myAtoi('   +0 123');
+
+/**
+ * @desc parseInt()
+ * @param { string } s
+ * @return { number }
+ */
+const myAtoi2 = (s) => {
+  const num = parseInt(s, 10);
+  const INT_MAX = 2147483647;
+  const INT_MIN = -2147483648;
+
+  return isNaN(num) ? 0 : Math.max(Math.min(num, INT_MAX), INT_MIN);
+};
+
+myAtoi2('   -42');
