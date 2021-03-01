@@ -148,3 +148,53 @@ const findNumOfValidWords2 = (words, puzzles) => {
 };
 
 findNumOfValidWords2(words, puzzles);
+
+/**
+ * @desc TrieTree(字典树模拟)
+ * @param { string[] } words
+ * @param { string[] } puzzles
+ * @return { number[] }
+ */
+const findNumOfValidWords3 = (words, puzzles) => {
+  const check = (puzzle = '', word = '') => {
+    for (let i = 0; i < word.length; i++) {
+      if (puzzle.indexOf(word[i]) < 0) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const groups = {};
+  for (let i = 97; i <= 122; i++) {
+    const char = String.fromCharCode(i);
+    groups[char] = [];
+
+    for (let j = 0; j < words.length; j++) {
+      if (words[j].indexOf(char) > -1) {
+        groups[char].push(j);
+      }
+    }
+  }
+
+  const ans = [];
+  for (let puzzle of puzzles) {
+    const group = groups[puzzle[0]];
+    let sum = 0;
+
+    for (let j = 0; j < group.length; j++) {
+      const word = words[group[j]];
+
+      if (check(puzzle, word)) {
+        sum++;
+      }
+    }
+
+    ans.push(sum);
+  }
+
+  return ans;
+};
+
+findNumOfValidWords3(words, puzzles);
