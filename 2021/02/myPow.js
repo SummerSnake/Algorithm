@@ -44,3 +44,33 @@ const myPow = (x, n) => {
 };
 
 myPow(2.1, 3);
+
+/**
+ * @desc 快速幂
+ *        1. 快速幂算法本质为分治算法；
+ *        2. x => Pow(x, 2) => Pow(x, 4) => Pow(x, 8) => ... => Pow(x, 64)；
+ *        3. 从 x 开始，每次直接把上一次的结果进行平方，计算 6 次就可以得到 Pow(x, 64)；
+ * @param { number } x
+ * @param { number } n
+ * @return { number }
+ */
+const myPow2 = (x, n) => {
+  let res = 1;
+
+  for (let i = n; i !== 0; i /= 2) {
+    i = n < 0 ? Math.ceil(i) : Math.floor(i);
+
+    // 由于 i/2 在i为奇数时会造成损失，损失量刚好是上一次的x值，需要把这个值乘到res里面做弥补；
+    // 同时最后一次 i/2 必然为1即奇数，所以最终得到的x和损失量相乘得到最终结果。
+    if (i % 2 !== 0) {
+      res *= x;
+    }
+
+    x *= x;
+  }
+
+  // 求x的n次幂，只要将x乘n次即可，求x的-n次幂，只要将1除以x n次即可。
+  return n < 0 ? 1 / res : res;
+};
+
+myPow2(2.1, 3);
