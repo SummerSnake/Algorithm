@@ -40,3 +40,25 @@ const burlary = (nums) => {
 };
 
 burlary([2, 1, 1, 2]);
+
+/**
+ * @desc 动态规划(空间优化)
+ * @param { number[] } nums
+ * @return { number }
+ */
+const burlary2 = (nums) => {
+  let prev = 0;
+  let curr = 0;
+
+  // 每次循环，计算“偷到当前房子为止的最大金额”
+  for (let item of nums) {
+    // dp[i] = Math.max(dp[i - 1], dp[i - 2] + num)
+    let tmp = Math.max(curr, prev + item);
+    prev = curr;
+    curr = tmp;
+  }
+
+  return curr;
+};
+
+burlary2([2, 1, 1, 2]);
