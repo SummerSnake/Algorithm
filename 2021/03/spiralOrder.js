@@ -70,3 +70,48 @@ const spiralOrder = matrix => {
 };
 
 spiralOrder(matrix);
+
+/**
+ * @desc 方向模拟
+ *        1. 按照顺时针方向遍历，寻找转向时机。
+ * @param { number[][] } matrix
+ * @return { number[] }
+ */
+const spiralOrder2 = matrix => {
+  const res = [];
+  const m = matrix.length;
+  const n = matrix[0].length;
+
+  // 定义四个方向
+  const dirs = [
+    [0, 1], // right
+    [1, 0], // down
+    [0, -1], // left
+    [-1, 0] // up
+  ];
+
+  for (let x = 0, y = 0, d = 0, i = 0; i < m * n; i++) {
+    res.push(matrix[x][y]);
+    // 101 代表已访问过
+    matrix[x][y] = 101;
+
+    // 下一步要到达的位置
+    let nx = x + dirs[d][0];
+    let ny = y + dirs[d][1];
+
+    // 如果下一步发生「溢出」或者已经访问过（说明四个方向已经走过一次）
+    if (nx < 0 || nx >= m || ny < 0 || ny >= n || matrix[nx][ny] === 101) {
+      d = (d + 1) % 4; // d 小于 4 则为它本身
+
+      nx = x + dirs[d][0];
+      ny = y + dirs[d][1];
+    }
+
+    x = nx;
+    y = ny;
+  }
+
+  return res;
+};
+
+spiralOrder2(matrix);
