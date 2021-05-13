@@ -94,3 +94,34 @@ const searchMatrix2 = (matrix, target) => {
 };
 
 searchMatrix2(matrix, target);
+
+/**
+ * @desc 模拟坐标轴
+ *        1. 以矩阵左下角为原点，建立坐标轴；
+ *        2. 如果 target 大于当前元素，上移一位；
+ *        3. 如果 target 小于当前元素，右移一位。
+ *         时间复杂度：O(log(m * n))
+ *         空间复杂度：O(1)
+ * @param { number[][] } matrix
+ * @return { number[] }
+ */
+const searchMatrix3 = (matrix, target) => {
+  let x = matrix.length - 1;
+  let y = 0;
+
+  while (x >= 0 && y < matrix[0].length) {
+    if (target === matrix[x][y]) {
+      return true;
+    }
+
+    if (target > matrix[x][y]) {
+      y++;
+    } else {
+      x--;
+    }
+  }
+
+  return false;
+};
+
+searchMatrix3(matrix, target);
