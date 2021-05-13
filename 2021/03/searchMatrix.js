@@ -35,3 +35,62 @@ const searchMatrix = (matrix, target) => {
 };
 
 searchMatrix(matrix, target);
+
+/**
+ * @desc 二分查找
+ *         时间复杂度：O(logm + logn)
+ *         空间复杂度：O(1)
+ * @param { number[][] } matrix
+ * @return { number[] }
+ */
+const searchMatrix2 = (matrix, target) => {
+  let left = 0;
+  let mid = 0;
+  let right = matrix.length - 1;
+
+  // target 比矩阵首元素小，直接返回 false
+  if (target < matrix[0][0]) {
+    return false;
+  }
+
+  // 1. 首次二分查找行，如果 target 比当前行的首个元素大，则必然不存在于当前行；
+  //    则循环结束 right 所在行即为 target 可能在的行。
+  while (left <= right) {
+    mid = left + ((right - left) >> 1);
+    if (target === matrix[mid][0]) {
+      return true;
+    }
+    if (target > matrix[mid][0]) {
+      left = mid + 1;
+    }
+    if (target < matrix[mid][0]) {
+      right = mid - 1;
+    }
+  }
+
+  // 比当前行首元素小，直接返回 false
+  if (target < matrix[right][0]) {
+    return false;
+  }
+
+  // 2. 第二次二分查找元素
+  left = 1;
+  row = matrix[right];
+  right = row.length - 1;
+  while (left <= right) {
+    mid = left + ((right - left) >> 1);
+    if (target === row[mid]) {
+      return true;
+    }
+    if (target > row[mid]) {
+      left = mid + 1;
+    }
+    if (target < row[mid]) {
+      right = mid - 1;
+    }
+  }
+
+  return false;
+};
+
+searchMatrix2(matrix, target);
