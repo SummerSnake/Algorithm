@@ -57,7 +57,7 @@ const romanToInt2 = (s) => {
 
   let res = 0;
   const n = s.length;
-  for (let i = 0; i < n; ++i) {
+  for (let i = 0; i < n; i++) {
     const value = map.get(s[i]);
 
     if (i < n - 1 && value < map.get(s[i + 1])) {
@@ -71,3 +71,42 @@ const romanToInt2 = (s) => {
 };
 
 romanToInt2('XXIV');
+
+/**
+ * @desc 字符串替换
+ * @param { string } s
+ * @return { number }
+ */
+const romanToInt3 = (s) => {
+  const map = new Map();
+  map.set('I', 1);
+  map.set('V', 5);
+  map.set('X', 10);
+  map.set('L', 50);
+  map.set('C', 100);
+  map.set('D', 500);
+  map.set('M', 1000);
+  map.set('a', 4);
+  map.set('b', 9);
+  map.set('c', 40);
+  map.set('d', 90);
+  map.set('e', 400);
+  map.set('f', 900);
+
+  let str = s;
+  str = str.replace('IV', 'a');
+  str = str.replace('IX', 'b');
+  str = str.replace('XL', 'c');
+  str = str.replace('XC', 'd');
+  str = str.replace('CD', 'e');
+  str = str.replace('CM', 'f');
+
+  let res = 0;
+  for (let i = 0; i < str.length; i++) {
+    res += map.get(str[i]);
+  }
+
+  return res;
+};
+
+romanToInt3('XXIV');
