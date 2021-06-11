@@ -33,7 +33,6 @@ const premute = (nums = []) => {
       if (!used[i]) {
         path.push(nums[i]);
         used[i] = true;
-        debugger;
         dfs(depth + 1);
 
         // 回溯 => 重置状态
