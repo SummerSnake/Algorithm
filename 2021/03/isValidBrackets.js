@@ -41,3 +41,31 @@ const isValidBrackets = (s = '') => {
 };
 
 isValidBrackets(s);
+
+/**
+ * @desc 栈(简化)
+ * @param { string } s
+ */
+const isValidBrackets2 = (s = '') => {
+  const len = s.length;
+  if (len % 2 !== 0) {
+    return false;
+  }
+
+  const stack = [];
+  for (let char of s) {
+    if (char === '(') {
+      stack.push(')');
+    } else if (char === '[') {
+      stack.push(']');
+    } else if (char === '{') {
+      stack.push('}');
+    } else if (stack.length < 1 || char !== stack.pop()) {
+      return false;
+    }
+  }
+
+  return stack.length === 0;
+};
+
+isValidBrackets2(s);
