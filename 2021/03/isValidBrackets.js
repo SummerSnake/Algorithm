@@ -12,6 +12,7 @@ const s = '{[]}';
 /**
  * @desc 栈
  * @param { string } s
+ * @return { boolean }
  */
 const isValidBrackets = (s = '') => {
   const len = s.length;
@@ -45,6 +46,7 @@ isValidBrackets(s);
 /**
  * @desc 栈(简化)
  * @param { string } s
+ * @return { boolean }
  */
 const isValidBrackets2 = (s = '') => {
   const len = s.length;
@@ -69,3 +71,26 @@ const isValidBrackets2 = (s = '') => {
 };
 
 isValidBrackets2(s);
+
+/**
+ * @desc 字符串替换
+ * @param { string } s
+ * @return { boolean }
+ */
+const isValidBrackets3 = (s = '') => {
+  while (s.indexOf('()') > -1 || s.indexOf('[]') > -1 || s.indexOf('{}') > -1) {
+    if (s.indexOf('()') > -1) {
+      s = s.replace('()', '');
+    }
+    if (s.indexOf('[]') > -1) {
+      s = s.replace('[]', '');
+    }
+    if (s.indexOf('{}') > -1) {
+      s = s.replace('{}', '');
+    }
+  }
+
+  return s.length === 0;
+};
+
+isValidBrackets3(s);
