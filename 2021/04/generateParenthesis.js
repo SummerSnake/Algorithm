@@ -76,3 +76,28 @@ const generateParenthesis2 = (n) => {
 };
 
 generateParenthesis2(4);
+
+/**
+ * @desc 动态规划
+ * @param { number } n
+ * @return { string[] }
+ */
+const generateParenthesis3 = (n) => {
+  // n === 1 时，只有一个结果 '()'
+  const dp = [['()']];
+
+  for (let i = 1; i < n; i++) {
+    dp[i] = [];
+    const prev = dp[i - 1];
+    // 当前能生成的括号组合都是基于 i - 1 生成的结果
+    for (let j = 0; j < prev.length; j++) {
+      const v = prev[j];
+      // 每个 i - 1 的结果都有三种组合方式（需去重处理）
+      dp[i].push(...new Set([`(${v})`, `${v}()`, `()${v}`]));
+    }
+  }
+
+  return dp[n - 1];
+};
+
+generateParenthesis3(4);
