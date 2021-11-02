@@ -36,3 +36,43 @@ const generateParenthesis = (n) => {
 };
 
 generateParenthesis(3);
+
+/**
+ * @desc 广度优先遍历
+ * @param { number } n
+ * @return { string[] }
+ */
+const generateParenthesis2 = (n) => {
+  const res = [];
+  // val 为已生成的括号，left 为左括号的数量，right 为右括号的数量
+  const queue = [{ val: '', left: n, right: n }];
+
+  while (queue.length > 0) {
+    for (let i = 0; i < queue.length; i++) {
+      const node = queue.shift();
+
+      // 只要左括号有剩，就可以选它
+      if (node.left > 0) {
+        queue.push({ val: `${node.val}(`, left: node.left - 1, right: node.right });
+      }
+
+      // 右括号比左括号剩的多，才能选右括号
+      if (node.left < node.right) {
+        const newNode = { val: `${node.val})`, left: node.left, right: node.right - 1 };
+
+        // 由于最后一个括号一定是右括号，如果当前右括号的数量已经到达 0
+        // 代表括号已经生成完毕，直接将当前节点的值存入 res 即可
+        if (newNode.right === 0) {
+          res.push(newNode.val);
+          continue;
+        }
+
+        queue.push(newNode);
+      }
+    }
+  }
+
+  return res;
+};
+
+generateParenthesis2(4);
