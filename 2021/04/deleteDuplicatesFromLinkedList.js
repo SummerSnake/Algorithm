@@ -40,7 +40,7 @@ const LinkedList = {
  * @return { ListNode }
  */
 const deleteDuplicates = function (head) {
-  let dummy = new ListNode();
+  const dummy = new ListNode();
   let node = dummy;
   let prev = new ListNode(101);
 
@@ -56,7 +56,35 @@ const deleteDuplicates = function (head) {
     head = head.next;
   }
 
-  return dummy.next || head;
+  return dummy.next;
 };
 
 deleteDuplicates(LinkedList);
+
+/**
+ * @desc 递归
+ * @param { ListNode } head
+ * @return { ListNode }
+ */
+const deleteDuplicates2 = function (head) {
+  if (!head || !head.next) {
+    return head;
+  }
+
+  // 非重复节点，保留当前节点，递归处理 next 节点
+  if (head.val !== head.next.val) {
+    head.next = deleteDuplicates2(head.next);
+
+    return head;
+  } else {
+    // 重复节点，往后寻找不重复节点
+    let node = head.next.next;
+    while (node && node.val === head.val) {
+      node = node.next;
+    }
+
+    return deleteDuplicates2(node);
+  }
+};
+
+deleteDuplicates2(LinkedList);
