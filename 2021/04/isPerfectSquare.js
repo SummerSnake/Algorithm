@@ -26,6 +26,7 @@ isPerfectSquare(16);
 const isPerfectSquare2 = (num) => {
   let x = 1;
   square = 1;
+
   while (square <= num) {
     if (square === num) {
       return true;
@@ -39,3 +40,30 @@ const isPerfectSquare2 = (num) => {
 };
 
 isPerfectSquare2(16);
+
+/**
+ * @desc 二分查找
+ * @param { number } num
+ * @return { boolean }
+ */
+const isPerfectSquare3 = (num) => {
+  let left = 0;
+  let right = num;
+
+  while (left <= right) {
+    const mid = Math.floor((right - left) / 2) + left;
+
+    const square = mid * mid;
+    if (square < num) {
+      left = mid + 1;
+    } else if (square > num) {
+      right = mid - 1;
+    } else {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+isPerfectSquare3(16);
