@@ -17,3 +17,25 @@ const isPerfectSquare = (num) => {
 };
 
 isPerfectSquare(16);
+
+/**
+ * @desc 暴力解法
+ * @param { number } num
+ * @return { boolean }
+ */
+const isPerfectSquare2 = (num) => {
+  let x = 1;
+  square = 1;
+  while (square <= num) {
+    if (square === num) {
+      return true;
+    }
+
+    x++;
+    square = x * x;
+  }
+
+  return false;
+};
+
+isPerfectSquare2(16);
