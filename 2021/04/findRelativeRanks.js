@@ -59,4 +59,35 @@ const findRelativeRanks = (score) => {
   return res;
 };
 
-findRelativeRanks(score);
+// findRelativeRanks(score);
+
+/**
+ * @desc Map 辅助，排序
+ * @param { number[] } score
+ * @return { string[] }
+ */
+const findRelativeRanks2 = (score) => {
+  const map = new Map();
+  const len = score.length;
+  const arr = [...score];
+
+  arr.sort((a, b) => b - a);
+
+  let i = 0;
+  while (i < len) {
+    map.set(arr[i], i + 1);
+    i++;
+  }
+
+  const rankingMap = {
+    1: 'Gold Medal',
+    2: 'Silver Medal',
+    3: 'Bronze Medal',
+  };
+
+  return score.map((item) => {
+    return map.get(item) > 3 ? `${map.get(item)}` : rankingMap[map.get(item)];
+  });
+};
+
+findRelativeRanks2(score);
