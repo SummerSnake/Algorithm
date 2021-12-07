@@ -22,7 +22,7 @@ const converStrToN = (s, numCols) => {
 
   let col = 1;
   let flag = true;
-  for (let i = 0; i < s.length; i++) {
+  for (let char of s) {
     if (col === numCols) {
       flag = false;
     }
@@ -30,7 +30,7 @@ const converStrToN = (s, numCols) => {
       flag = true;
     }
 
-    vector[col - 1].push(s[i]);
+    vector[col - 1].push(char);
     col = col < numCols && flag ? (col += 1) : (col -= 1);
   }
 
@@ -44,5 +44,39 @@ const converStrToN = (s, numCols) => {
   return res;
 };
 
-const r = converStrToN(s, numCols);
-console.log(r);
+converStrToN(s, numCols);
+
+/**
+ * @desc 字符串数组存储，flag 转向
+ * @param { string } s
+ * @param { number } numCols 每列字符的个数
+ * @return { string }
+ */
+const converStrToN2 = (s, numCols) => {
+  if (numCols <= 1) {
+    return s;
+  }
+
+  const cols = Array.from({ length: numCols }, () => '');
+
+  let col = 0;
+  let flag = -1;
+  for (let char of s) {
+    cols[col] += char;
+
+    if (col === 0 || col === numCols - 1) {
+      flag = -flag;
+    }
+
+    col += flag;
+  }
+
+  let res = '';
+  for (let item of cols) {
+    res = `${res}${item}`;
+  }
+
+  return res;
+};
+
+converStrToN2(s, numCols);
