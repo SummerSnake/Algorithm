@@ -88,3 +88,35 @@ const longestValidParentheses2 = (s) => {
 };
 
 longestValidParentheses2(s);
+
+/**
+ * @desc 动态规划
+ * @param { string } s
+ * @return { number }
+ */
+const longestValidParentheses3 = (s) => {
+  const dp = new Int16Array(s.length);
+
+  for (let i = 1; i < s.length; i++) {
+    // 有效括号只能以 ')' 结尾，所以，以 '(' 结尾的字符串，最长有效括号长度就是 0，直接忽略
+    if (s[i] === ')') {
+      // dp[i - 1] 是以 s[i - 1] 结尾的字符串的最长有效括号长度，设它为 k，
+      // 也就是 [i - k, i - 1] 这段是有效括号字符串，
+      const k = dp[i - 1];
+
+      // 如果这段字符串前面的那个字符 s[i - k - 1] 是 '(' 的话，那么有效长度加 2
+      if (i - k - 1 >= 0 && s[i - k - 1] === '(') {
+        dp[i] = k + 2;
+
+        // 如果匹配到的 '(' 前面还有有效长度的话，也加上
+        if (i - k - 2 > 0) {
+          dp[i] += dp[i - k - 2];
+        }
+      }
+    }
+  }
+
+  return Math.max(...dp, 0);
+};
+
+longestValidParentheses3(s);
