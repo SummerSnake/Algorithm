@@ -42,16 +42,12 @@ const numColor = (root) => {
   const inOrder = (root) => {
     if (root !== null) {
       if (root.left !== null) {
-        set.add(root.left.val);
-
         inOrder(root.left);
       }
 
       set.add(root.val);
 
       if (root.right !== null) {
-        set.add(root.right.val);
-
         inOrder(root.right);
       }
     }
@@ -63,3 +59,33 @@ const numColor = (root) => {
 };
 
 numColor(binaryTree);
+
+/**
+ * @desc 迭代前序遍历 + Set
+ * @param { TreeNode } root
+ * @return { number }
+ */
+const numColor2 = (root) => {
+  if (root === null) {
+    return 0;
+  }
+
+  const set = new Set();
+
+  const preOrder = (root) => {
+    const stack = [root];
+    while (stack.length) {
+      const node = stack.pop();
+
+      set.add(node.val);
+      node.right && stack.push(node.right);
+      node.left && stack.push(node.left);
+    }
+  };
+
+  preOrder(root);
+
+  return set.size;
+};
+
+numColor2(binaryTree);
